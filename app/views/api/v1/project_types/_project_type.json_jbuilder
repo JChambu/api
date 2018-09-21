@@ -1,0 +1,2 @@
+  json.id project_type.id
+  json.name project_type.name

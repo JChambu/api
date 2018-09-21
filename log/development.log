@@ -1,0 +1,2010 @@
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/" for ::1 at 2018-09-19 00:31:42 -0300
+  
+Mysql2::Error (Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2 "No such file or directory")):
+  
+mysql2 (0.4.10) lib/mysql2/client.rb:89:in `connect'
+mysql2 (0.4.10) lib/mysql2/client.rb:89:in `initialize'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/mysql2_adapter.rb:23:in `new'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/mysql2_adapter.rb:23:in `mysql2_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/abstract/connection_pool.rb:757:in `new_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/abstract/connection_pool.rb:801:in `checkout_new_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/abstract/connection_pool.rb:780:in `try_to_checkout_new_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/abstract/connection_pool.rb:741:in `acquire_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/abstract/connection_pool.rb:500:in `checkout'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/abstract/connection_pool.rb:374:in `connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/abstract/connection_pool.rb:929:in `retrieve_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_handling.rb:116:in `retrieve_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_handling.rb:88:in `connection'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:562:in `connection'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:553:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/" for 127.0.0.1 at 2018-09-19 08:26:42 -0300
+  
+URI::InvalidURIError (bad URI(is not URI?): public, postgis):
+  
+/home/sergio/.rvm/rubies/ruby-2.4.1/lib/ruby/2.4.0/uri/rfc2396_parser.rb:177:in `split'
+/home/sergio/.rvm/rubies/ruby-2.4.1/lib/ruby/2.4.0/uri/rfc2396_parser.rb:212:in `parse'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:38:in `initialize'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:268:in `new'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:268:in `resolve_url_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:229:in `resolve_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:141:in `resolve'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:161:in `block in resolve_all'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:160:in `each'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:160:in `resolve_all'
+activerecord (5.1.0.rc2) lib/active_record/connection_handling.rb:70:in `resolve'
+activerecord (5.1.0.rc2) lib/active_record/core.rb:46:in `configurations='
+activerecord (5.1.0.rc2) lib/active_record/railtie.rb:121:in `block (2 levels) in <class:Railtie>'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:45:in `instance_eval'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:45:in `execute_hook'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:52:in `block in run_load_hooks'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:51:in `each'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:51:in `run_load_hooks'
+activerecord (5.1.0.rc2) lib/active_record/base.rb:326:in `<module:ActiveRecord>'
+activerecord (5.1.0.rc2) lib/active_record/base.rb:25:in `<top (required)>'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `require'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `block in require'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:258:in `load_dependency'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `require'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:562:in `connection'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:553:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/" for 127.0.0.1 at 2018-09-19 08:27:35 -0300
+  
+ActiveRecord::AdapterNotSpecified ('development' database is not configured. Available: ["default", "adapter", "postgis_extension", "encoding", "host", "username", "password", "development", "<<", "database", "staging", "production"]):
+  
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:246:in `resolve_symbol_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:227:in `resolve_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:141:in `resolve'
+activerecord (5.1.0.rc2) lib/active_record/connection_handling.rb:55:in `establish_connection'
+activerecord (5.1.0.rc2) lib/active_record/railtie.rb:124:in `block (2 levels) in <class:Railtie>'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:45:in `instance_eval'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:45:in `execute_hook'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:52:in `block in run_load_hooks'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:51:in `each'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:51:in `run_load_hooks'
+activerecord (5.1.0.rc2) lib/active_record/base.rb:326:in `<module:ActiveRecord>'
+activerecord (5.1.0.rc2) lib/active_record/base.rb:25:in `<top (required)>'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `require'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `block in require'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:258:in `load_dependency'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `require'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:562:in `connection'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:553:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/" for 127.0.0.1 at 2018-09-19 08:28:28 -0300
+  
+LoadError (Could not load 'active_record/connection_adapters/postgis_adapter'. Make sure that the adapter in config/database.yml is valid. If you use an adapter other than 'mysql2', 'postgresql' or 'sqlite3' add the necessary adapter gem to the Gemfile.):
+  
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `require'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `block in require'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:258:in `load_dependency'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `require'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/connection_specification.rb:186:in `spec'
+activerecord (5.1.0.rc2) lib/active_record/connection_adapters/abstract/connection_pool.rb:878:in `establish_connection'
+activerecord (5.1.0.rc2) lib/active_record/connection_handling.rb:58:in `establish_connection'
+activerecord (5.1.0.rc2) lib/active_record/railtie.rb:124:in `block (2 levels) in <class:Railtie>'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:45:in `instance_eval'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:45:in `execute_hook'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:52:in `block in run_load_hooks'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:51:in `each'
+activesupport (5.1.0.rc2) lib/active_support/lazy_load_hooks.rb:51:in `run_load_hooks'
+activerecord (5.1.0.rc2) lib/active_record/base.rb:326:in `<module:ActiveRecord>'
+activerecord (5.1.0.rc2) lib/active_record/base.rb:25:in `<top (required)>'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `require'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `block in require'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:258:in `load_dependency'
+activesupport (5.1.0.rc2) lib/active_support/dependencies.rb:292:in `require'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:562:in `connection'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:553:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/" for 127.0.0.1 at 2018-09-19 08:35:06 -0300
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:576:in `check_pending!'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:553:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(8581283203696410480);[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to InitTables (0)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(8581283203696410480)[0m
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(8581283203696410480);[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to InitTables (0)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (37.4ms)[0m  [1m[35mCREATE TABLE "inventory_items" ("id" character varying, "name" character varying, "release_date" character varying, "manufacturer" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (6.2ms)[0m  [1m[35mCREATE TABLE "manufacturers" ("name" character varying, "home_page" character varying, "phone" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "0"]]
+  [1m[35m (3.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(8581283203696410480)[0m
+  [1m[35m (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/" for 127.0.0.1 at 2018-09-19 08:37:21 -0300
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/sergio/.rvm/gems/ruby-2.4.1/gems/railties-5.1.0.rc2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/sergio/.rvm/gems/ruby-2.4.1/gems/railties-5.1.0.rc2/lib/rails/templates/rails/welcome/index.html.erb (6.8ms)
+Completed 200 OK in 13ms (Views: 10.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "//sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-19 08:39:01 -0300
+Processing by DevelopersController#search_inventory as HTML
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-19 08:39:07 -0300
+Processing by DevelopersController#search_inventory as HTML
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-09-19 08:59:03 -0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/sergio/.rvm/gems/ruby-2.4.1/gems/railties-5.1.0.rc2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/sergio/.rvm/gems/ruby-2.4.1/gems/railties-5.1.0.rc2/lib/rails/templates/rails/welcome/index.html.erb (3.7ms)
+Completed 200 OK in 7ms (Views: 5.4ms | ActiveRecord: 0.0ms)
+
+
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/" for 127.0.0.1 at 2018-09-21 01:15:51 -0300
+  [1m[35m (5.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/sergio/.rvm/gems/ruby-2.4.1/gems/railties-5.1.0.rc2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/sergio/.rvm/gems/ruby-2.4.1/gems/railties-5.1.0.rc2/lib/rails/templates/rails/welcome/index.html.erb (4.6ms)
+Completed 200 OK in 14ms (Views: 10.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:16:14 -0300
+Processing by DevelopersController#search_inventory as HTML
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/sergiopalacios/gw_lite/1.0.0/developments" for 127.0.0.1 at 2018-09-21 01:18:25 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/developments"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/developers" for 127.0.0.1 at 2018-09-21 01:18:34 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/developers"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/developer" for 127.0.0.1 at 2018-09-21 01:26:32 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/developer"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:26:37 -0300
+Processing by DevelopersController#search_inventory as HTML
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:27:33 -0300
+Processing by DevelopersController#search_inventory as HTML
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+
+
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:47:34 -0300
+  [1m[35m (3.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/inventory"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:47:36 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/inventory"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:47:37 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/inventory"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:47:38 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/inventory"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:47:38 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/inventory"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:47:38 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/inventory"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/sergiopalacios/gw_lite/1.0.0/inventory" for 127.0.0.1 at 2018-09-21 01:47:38 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/sergiopalacios/gw_lite/1.0.0/inventory"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2018-09-21 01:47:40 -0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/sergio/.rvm/gems/ruby-2.4.1/gems/railties-5.1.0.rc2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/sergio/.rvm/gems/ruby-2.4.1/gems/railties-5.1.0.rc2/lib/rails/templates/rails/welcome/index.html.erb (3.6ms)
+Completed 200 OK in 7ms (Views: 5.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ap1" for 127.0.0.1 at 2018-09-21 01:47:50 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/ap1"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api" for 127.0.0.1 at 2018-09-21 01:47:53 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1" for 127.0.0.1 at 2018-09-21 01:47:57 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:48:02 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/project_types"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:48:29 -0300
+  [1m[35m (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1" for 127.0.0.1 at 2018-09-21 01:48:37 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/users" for 127.0.0.1 at 2018-09-21 01:48:40 -0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::UsersController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/users" for 127.0.0.1 at 2018-09-21 01:49:34 -0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::UsersController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:49:52 -0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:51:32 -0300
+  [1m[35m (3.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:56:57 -0300
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/Api/V1/project_types" for 127.0.0.1 at 2018-09-21 01:57:05 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/Api/V1/project_types"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:57:14 -0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:57:15 -0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:57:15 -0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:57:15 -0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 01:58:43 -0300
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::ProjectTypesController):
+  
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `const_get'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:271:in `block in constantize'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.0.rc2) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.0.rc2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 02:03:04 -0300
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for Api::V1::ProjectTypesController):
+  
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 02:03:07 -0300
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for Api::V1::ProjectTypesController):
+  
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/index.php" for 127.0.0.1 at 2018-09-21 02:03:35 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/project_types/index.php"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types/index.php" for 127.0.0.1 at 2018-09-21 02:06:10 -0300
+  [1m[35m (3.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for Api::V1::ProjectTypesController):
+  
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 02:06:13 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+Completed 406 Not Acceptable in 23ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionController::UnknownFormat (Api::V1::ProjectTypesController#index is missing a template for this request format and variant.
+
+request.formats: ["text/html"]
+request.variant: []):
+  
+actionpack (5.1.0.rc2) lib/action_controller/metal/implicit_render.rb:40:in `default_render'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `block in send_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `tap'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `send_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:186:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/rendering.rb:30:in `process_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.1.0.rc2) lib/active_support/notifications.rb:166:in `block in instrument'
+activesupport (5.1.0.rc2) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.1.0.rc2) lib/active_support/notifications.rb:166:in `instrument'
+actionpack (5.1.0.rc2) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/params_wrapper.rb:252:in `process_action'
+activerecord (5.1.0.rc2) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:124:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/project_types.json" for 127.0.0.1 at 2018-09-21 02:06:55 -0300
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for Api::V1::ProjectTypesController):
+  
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/index.json" for 127.0.0.1 at 2018-09-21 02:07:14 -0300
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for Api::V1::ProjectTypesController):
+  
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types.json" for 127.0.0.1 at 2018-09-21 02:08:21 -0300
+Processing by Api::V1::ProjectTypesController#index as JSON
+  Rendering api/v1/project_types/index.json.jbuilder
+  [1m[36mProjectType Load (26.8ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+  Rendered api/v1/project_types/index.json.jbuilder (79.1ms)
+Completed 200 OK in 84ms (Views: 34.0ms | ActiveRecord: 48.0ms)
+
+
+Started GET "/api/v1/project_types.json" for 127.0.0.1 at 2018-09-21 02:13:49 -0300
+Processing by Api::V1::ProjectTypesController#index as JSON
+  Rendering api/v1/project_types/index.json.jbuilder
+  [1m[36mProjectType Load (0.6ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+  Rendered api/v1/project_types/index.json.jbuilder (4.1ms)
+Completed 200 OK in 8ms (Views: 5.8ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/api/v1/project_types.json" for 127.0.0.1 at 2018-09-21 02:20:12 -0300
+Processing by Api::V1::ProjectTypesController#index as JSON
+  Rendering api/v1/project_types/index.json.jbuilder
+  [1m[36mProjectType Load (0.6ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+  Rendered api/v1/project_types/index.json.jbuilder (4.3ms)
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.6ms)
+
+
+  
+ActionView::Template::Error (Missing partial project_types/_project_type with {:locale=>[:en], :formats=>[:json], :variants=>[], :handlers=>[:jbuilder]}. Searched in:
+  * "/home/sergio/public_html/gw_lite_api/app/views"
+):
+    1: json.partial! partial: 'project_types/project_type', collection: @project_types, as: :project_type
+  
+app/views/api/v1/project_types/index.json.jbuilder:1:in `_app_views_api_v__project_types_index_json_jbuilder__3352276703778509855_47003072403380'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 02:20:16 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+Completed 406 Not Acceptable in 20ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionController::UnknownFormat (Api::V1::ProjectTypesController#index is missing a template for this request format and variant.
+
+request.formats: ["text/html"]
+request.variant: []):
+  
+actionpack (5.1.0.rc2) lib/action_controller/metal/implicit_render.rb:40:in `default_render'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `block in send_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `tap'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `send_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:186:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/rendering.rb:30:in `process_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.1.0.rc2) lib/active_support/notifications.rb:166:in `block in instrument'
+activesupport (5.1.0.rc2) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.1.0.rc2) lib/active_support/notifications.rb:166:in `instrument'
+actionpack (5.1.0.rc2) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/params_wrapper.rb:252:in `process_action'
+activerecord (5.1.0.rc2) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:124:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/_project_type.json.jbuilder" for 127.0.0.1 at 2018-09-21 02:20:24 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/project_types/_project_type.json.jbuilder"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types/_project_type.json.jbuilder" for 127.0.0.1 at 2018-09-21 02:21:26 -0300
+  [1m[35m (3.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/project_types/_project_type.json.jbuilder"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 02:21:50 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+Completed 406 Not Acceptable in 21ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionController::UnknownFormat (Api::V1::ProjectTypesController#index is missing a template for this request format and variant.
+
+request.formats: ["text/html"]
+request.variant: []):
+  
+actionpack (5.1.0.rc2) lib/action_controller/metal/implicit_render.rb:40:in `default_render'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `block in send_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `tap'
+actionpack (5.1.0.rc2) lib/action_controller/metal/basic_implicit_render.rb:4:in `send_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:186:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/rendering.rb:30:in `process_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.1.0.rc2) lib/active_support/notifications.rb:166:in `block in instrument'
+activesupport (5.1.0.rc2) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.1.0.rc2) lib/active_support/notifications.rb:166:in `instrument'
+actionpack (5.1.0.rc2) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.1.0.rc2) lib/action_controller/metal/params_wrapper.rb:252:in `process_action'
+activerecord (5.1.0.rc2) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:124:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/_project_type.json" for 127.0.0.1 at 2018-09-21 02:22:03 -0300
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for Api::V1::ProjectTypesController):
+  
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/_project_type.json.jbuilder" for 127.0.0.1 at 2018-09-21 02:22:08 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/project_types/_project_type.json.jbuilder"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/_project_type.json.jbuilder" for 127.0.0.1 at 2018-09-21 02:24:56 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/project_types/_project_type.json.jbuilder"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types.json.jbuilder" for 127.0.0.1 at 2018-09-21 02:31:24 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/project_types.json.jbuilder"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types" for 127.0.0.1 at 2018-09-21 02:39:19 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+  [1m[36mProjectType Load (1.5ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+No serializer found for resource: #<ProjectType id: 44, name: "las condes", user_id: 2, created_at: "2018-09-19 19:06:40", updated_at: "2018-09-19 19:06:40", directory_name: "[\"/home/sergio/public_html/geoworks/public/shape/1...">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ProjectType::ActiveRecord_Relation (1.11ms)
+Completed 200 OK in 44ms (Views: 28.9ms | ActiveRecord: 10.9ms)
+
+
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 02:39:46 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+  [1m[36mProjectType Load (0.8ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+No serializer found for resource: #<ProjectType id: 44, name: "las condes", user_id: 2, created_at: "2018-09-19 19:06:40", updated_at: "2018-09-19 19:06:40", directory_name: "[\"/home/sergio/public_html/geoworks/public/shape/1...">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ProjectType::ActiveRecord_Relation (1.43ms)
+Completed 200 OK in 6ms (Views: 4.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 02:41:35 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+  [1m[36mProjectType Load (0.8ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+No serializer found for resource: #<ProjectType id: 44, name: "las condes", user_id: 2, created_at: "2018-09-19 19:06:40", updated_at: "2018-09-19 19:06:40", directory_name: "[\"/home/sergio/public_html/geoworks/public/shape/1...">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ProjectType::ActiveRecord_Relation (1.88ms)
+Completed 200 OK in 7ms (Views: 6.0ms | ActiveRecord: 0.8ms)
+
+
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 02:49:00 -0300
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::ProjectTypesController#index as HTML
+  [1m[36mProjectType Load (2.4ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+No serializer found for resource: #<ProjectType id: 44, name: "las condes", user_id: 2, created_at: "2018-09-19 19:06:40", updated_at: "2018-09-19 19:06:40", directory_name: "[\"/home/sergio/public_html/geoworks/public/shape/1...">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ProjectType::ActiveRecord_Relation (1.14ms)
+Completed 200 OK in 49ms (Views: 33.2ms | ActiveRecord: 12.0ms)
+
+
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 02:51:33 -0300
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::ProjectTypesController#index as HTML
+  [1m[36mProjectType Load (2.5ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+No serializer found for resource: #<ProjectType id: 44, name: "las condes", user_id: 2, created_at: "2018-09-19 19:06:40", updated_at: "2018-09-19 19:06:40", directory_name: "[\"/home/sergio/public_html/geoworks/public/shape/1...">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ProjectType::ActiveRecord_Relation (1.15ms)
+Completed 200 OK in 48ms (Views: 32.4ms | ActiveRecord: 11.6ms)
+
+
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 02:53:33 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+  [1m[36mProjectType Load (0.7ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::JsonApi (5.23ms)
+Completed 200 OK in 34ms (Views: 29.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/api/v1/project_types/_project_type.json" for 127.0.0.1 at 2018-09-21 02:54:09 -0300
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for Api::V1::ProjectTypesController):
+  
+actionpack (5.1.0.rc2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.0.rc2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.0.rc2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.0.rc2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.5) lib/rack/etag.rb:25:in `call'
+rack (2.0.5) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.5) lib/rack/head.rb:12:in `call'
+activerecord (5.1.0.rc2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/_project_type.json.jbuilder" for 127.0.0.1 at 2018-09-21 02:54:15 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/project_types/_project_type.json.jbuilder"):
+  
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.0.rc2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.0.rc2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.5) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.0.rc2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.0.rc2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.5) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.0.rc2) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 02:54:19 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+  [1m[36mProjectType Load (3.4ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::JsonApi (2.89ms)
+Completed 200 OK in 10ms (Views: 6.6ms | ActiveRecord: 3.4ms)
+
+
+DEPRECATION WARNING: ActiveSupport.halt_callback_chains_on_return_false= is deprecated and will be removed in Rails 5.2. (called from <top (required)> at /home/sergio/public_html/gw_lite_api/config/initializers/callback_terminator.rb:6)
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 02:58:33 -0300
+Processing by Api::V1::ProjectTypesController#index as HTML
+  [1m[36mProjectType Load (1.4ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::JsonApi (5.58ms)
+Completed 200 OK in 447ms (Views: 103.7ms | ActiveRecord: 31.4ms)
+
+
+Started GET "/api/v1/project_types/" for 127.0.0.1 at 2018-09-21 03:04:18 -0300
+Processing by Api::V1::ProjectTypesController#index as */*
+  [1m[36mProjectType Load (1.9ms)[0m  [1m[34mSELECT "project_types".* FROM "project_types" ORDER BY created_at Desc[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::JsonApi (4.25ms)
+Completed 200 OK in 28ms (Views: 16.3ms | ActiveRecord: 11.4ms)
+
+
