@@ -1,0 +1,2 @@
+class ProjectField < ApplicationRecord
+end

@@ -10,7 +10,9 @@ gem 'rgeo-shapefile'
 gem 'rgeo-geojson'
 #gem 'activerecord-postgis-adapter'
 gem 'geocoder'
-
+gem 'pry'
+gem 'devise'
+gem 'simple_token_authentication', '~> 1.0' 
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -30,6 +32,8 @@ gem 'active_model_serializers', '~> 0.10.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'faraday'
+  gem 'oj'
 end
 
 group :development do
