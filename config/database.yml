@@ -49,6 +49,6 @@ staging:
 #
 production:
   <<: *default
-  database: api_demo_production
-  username: api_demo
+  database: geoworks
+  username: postgres
   password: <%= ENV['API_DEMO_DATABASE_PASSWORD'] %>
