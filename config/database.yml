@@ -51,4 +51,4 @@ production:
   <<: *default
   database: geoworks
   username: postgres
-  password: <%= ENV['API_DEMO_DATABASE_PASSWORD'] %>
+  password: postgres
