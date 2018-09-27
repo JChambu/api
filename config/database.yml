@@ -14,7 +14,7 @@ default: &default
   postgis_extension: true
   schema_search_path: public, postgis
   encoding: unicode
-  host: ''
+  host: localhost
   username: postgres
   password: postgres
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
