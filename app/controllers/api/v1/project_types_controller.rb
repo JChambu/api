@@ -26,18 +26,7 @@ module Api
 
 
       private
-      def has_valid_api_key?
-        token =  request.headers['X-User-Token']
-        email =  request.headers['X-User-Email']
-        q= User.where(authentication_token: token, email: email).present?
-      end
-    
-      def validate_api_key!
-     
-        return head :forbidden unless has_valid_api_key?
-      
-      end
-      
+
       def authenticate
         authenticate_or_request_with_http_token do |token, options|
           @user = User.find_by(token: X-User-Token)
