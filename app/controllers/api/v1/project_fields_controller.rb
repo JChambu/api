@@ -2,12 +2,13 @@ module Api
   module V1
 
 class ProjectFieldsController < ApplicationController
+  before_action :validate_api_key!
   before_action :set_project_field, only: [:show, :update, :destroy]
 
   # GET /api/v1/projec_fields
   # GET /api/v1/projec_fields.json
   def index
-    @project_fields = ProjectField.all
+    @project_fields = ProjectField.where(project_type_id: params[:project_type_id])
         render json: @project_fields
   end
 
