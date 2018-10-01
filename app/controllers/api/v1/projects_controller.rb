@@ -25,7 +25,7 @@ module Api
         @project['project_type_id'] = params[:project_type_id]
 
         if @project.save
-          render json:  status: :create
+          render json:   :create_correctamente
         else
           render json: @project.errors, status: :unprocessable_entity
         end
