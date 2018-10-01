@@ -19,10 +19,13 @@ module Api
       # POST /projects
       # POST /projects.json
       def create
-        @project = Project.new(project_params)
+        
+        @project = Project.new()
+        @project['properties'] = params[:properties]
+        @project['project_type_id'] = params[:project_type_id]
 
         if @project.save
-          render :show, status: :created, location: @project
+          render json:  status: :create
         else
           render json: @project.errors, status: :unprocessable_entity
         end
