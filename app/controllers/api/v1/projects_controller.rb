@@ -7,7 +7,7 @@ module Api
       # GET /projects
       # GET /projects.json
       def index
-        @projects = Project.where(project_type_id: params[:project_type_id])
+        @projects = Project.where(project_type_id: params[:project_type_id]).last
         render json: @projects
       end
 
@@ -23,6 +23,8 @@ module Api
         @project = Project.new()
         @project['properties'] = params[:properties]
         @project['project_type_id'] = params[:project_type_id]
+        @the_geom = params[:the_geom]
+        @project['the_geom'] = "POINT(#{params[:latitude]} #{params[:longitude]})" if !params[:the_geom].nil? 
 
         if @project.save
           render json:   :create_correctamente
