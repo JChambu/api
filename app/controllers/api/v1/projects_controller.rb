@@ -36,8 +36,9 @@ module Api
       # PATCH/PUT /projects/1
       # PATCH/PUT /projects/1.json
       def update
+        @project['properties'] = params[:project][:properties]
         if @project.update(project_params)
-          render :show, status: :ok, location: @project
+          render json: {status: :ok}
         else
           render json: @project.errors, status: :unprocessable_entity
         end
