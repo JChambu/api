@@ -24,7 +24,7 @@ module Api
         @project['properties'] = params[:properties]
         @project['project_type_id'] = params[:project_type_id]
         @the_geom = params[:the_geom]
-        @project['the_geom'] = "POINT(#{params[:latitude]} #{params[:longitude]})" if !params[:the_geom].nil? 
+        @project['the_geom'] = "POINT(#{params[:latitude]} #{params[:longitude]})" if !params[:latitude].nil? && !params[:longitude].nil? 
 
         if @project.save
           render json:   :create_correctamente
