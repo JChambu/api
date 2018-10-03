@@ -3,14 +3,14 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def the_geom
     if !object.the_geom.nil?
-      [object.the_geom.x,
-      object.the_geom.y]
+      [object.the_geom.y,
+      object.the_geom.x]
     end
   end
 
   def properties
     object.properties.map do|val, index|
-      {"#{val}": "#{index}"}
+      [val, index]
 
 
     end
