@@ -27,9 +27,9 @@ module Api
         @project['the_geom'] = "POINT(#{params[:latitude]} #{params[:latitude]})" if !params[:longitude].nil? && !params[:longitude].nil? 
 
         if @project.save
-          render json:   :create_correctamente
+          render json:   {status: :create_correctamente}
         else
-          render json: @project.errors, status: :unprocessable_entity
+          render json: { status: :unprocessable_entity}
         end
       end
 
