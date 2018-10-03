@@ -10,7 +10,7 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def properties
     object.properties.map do|val, index|
-      [val, index]
+      {"#{val}": "#{index}"}
 
 
     end
