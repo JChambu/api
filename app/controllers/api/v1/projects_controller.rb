@@ -19,18 +19,16 @@ module Api
       # POST /projects
       # POST /projects.json
       def create
-        
-        @project = Project.new()
-        @project['properties'] = params[:properties]
-        @project['project_type_id'] = params[:project_type_id]
-        @the_geom = params[:the_geom]
-        @project['the_geom'] = "POINT(#{params[:longitude]} #{params[:latitude]})" if !params[:longitude].nil? && !params[:longitude].nil? 
-
-        if @project.save
-          render json:   {status: :create_correctamente}
-        else
-          render json: { status: :unprocessable_entity}
+        @dat = params[:data]
+         @dat.each do |data|
+            @project = Project.new()
+            @project['properties'] = data['properties']
+            @project['project_type_id'] = data['project_type_id']
+            @the_geom = data['the_geom']
+            @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
+            @project.save
         end
+          render json:   {status: :create_correctamente}
       end
 
       # PATCH/PUT /projects/1
