@@ -1,0 +1,2 @@
+class ChoiceList < ApplicationRecord
+end
