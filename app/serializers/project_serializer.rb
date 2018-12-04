@@ -1,5 +1,5 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :properties, :the_geom, :project_type_id
+  attributes :id,  :the_geom, :project_type_id
 
   def the_geom
     if !object.the_geom.nil?

@@ -7,7 +7,8 @@ module Api
       # GET /projects
       # GET /projects.json
       def index
-        @projects = Project.where(project_type_id: params[:project_type_id]).all
+        @projects = Project.where(project_type_id: params[:project_type_id]).select(:id, :the_geom, :project_type_id).all
+        #render json: Oj.dump(@projects.to_json)
         render json: @projects
       end
 
