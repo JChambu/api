@@ -15,6 +15,7 @@ module Api
       # GET /projects/1
       # GET /projects/1.json
       def show
+        render json: @project
       end
 
       # POST /projects
