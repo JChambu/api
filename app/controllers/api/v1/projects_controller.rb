@@ -26,7 +26,7 @@ module Api
 
       end
 
-        render json: project.to_json
+        render json: {data: project}
 
       end
 
