@@ -15,7 +15,19 @@ module Api
       # GET /projects/1
       # GET /projects/1.json
       def show
-        #render json: @project
+        
+       @pp = @project.properties
+       project = []
+       @pp.each do |item|
+       
+        @pf = ProjectField.where(project_type_id: @project.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id, :required)
+        @pf += [value: item[1]]
+        project.push @pf
+
+      end
+
+        render json: project.to_json
+
       end
 
       # POST /projects
