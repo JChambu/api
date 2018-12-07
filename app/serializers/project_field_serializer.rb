@@ -1,5 +1,5 @@
 class ProjectFieldSerializer < ActiveModel::Serializer
-  attributes :id, :name, :field_type_id, :project_type_id, :key, :required, :items
+  attributes :id, :name, :field_type_id, :project_type_id, :key, :required, :items, :regexp
 
   def items
     @m = []
@@ -13,5 +13,12 @@ class ProjectFieldSerializer < ActiveModel::Serializer
     end
     @m
   end
-
+    def regexp
+  @regexp =''
+        if !object.regexp_type_id.nil?
+          @r = RegexpType.find(object.regexp_type_id)
+          @regexp = @r.expresion
+        end
+@regexp
+  end
 end

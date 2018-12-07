@@ -20,18 +20,24 @@ module Api
        project = []
        @pp.each do |item|
        
-         @pf = ProjectField.where(project_type_id: @project.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id, :required, :choice_list_id)
+         @pf = ProjectField.where(project_type_id: @project.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
         @m = []
         if !@pf[0].choice_list_id.nil?
           @c = ChoiceList.find(@pf[0].choice_list_id)
           @d = ChoiceListItem.where(choice_list_id: @c.id)
-
           @d.each do |i|
             @m << {"id": i.id, "name":i.name}
           end
         end
+        @regexp =''
+        if !@pf[0].regexp_type_id.nil?
+          @r = RegexpType.find(@pf[0].regexp_type_id)
+          @regexp = @r.expresion
+        end
         @pf +=[items: @m]
+        @pf +=[regexp: @regexp]
         @pf += [value: item[1]]
+
         project.push @pf
       end
 
