@@ -1,0 +1,2 @@
+class RegexpType < ApplicationRecord
+end
