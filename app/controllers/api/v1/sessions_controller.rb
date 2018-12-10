@@ -3,11 +3,17 @@ module Api
     class SessionsController < ApplicationController
 
       def create
-        user = User.where(email: params[:email]).first
-
+        user_mail = User.where(email: params[:email]).first
         
-        if user&.valid_password?(params[:password])
-          render json: user.as_json(only: [:email, :authentication_token]), status: :created
+        if user_mail&.valid_password?(params[:password])
+          user =[]
+          user << {'email': user_mail.email}
+          user << {'authentication_token': user_mail.authentication_token}
+
+          user_customer = user_mail.customers.all
+          user << {'url': user_customer[0].url}
+          user << {'name_company': user_customer[0].subdomain}
+          render json: {data: user}
         else
           head(:unauthorized)
         end
