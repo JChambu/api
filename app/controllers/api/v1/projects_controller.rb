@@ -15,31 +15,35 @@ module Api
       # GET /projects/1
       # GET /projects/1.json
       def show
-        
-       @pp = @project.properties
-       project = []
-       @pp.each do |item|
-       
-         @pf = ProjectField.where(project_type_id: @project.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
-        @m = []
-        if !@pf[0].choice_list_id.nil?
-          @c = ChoiceList.find(@pf[0].choice_list_id)
-          @d = ChoiceListItem.where(choice_list_id: @c.id)
-          @d.each do |i|
-            @m << {"id": i.id, "name":i.name}
-          end
-        end
-        @regexp =''
-        if !@pf[0].regexp_type_id.nil?
-          @r = RegexpType.find(@pf[0].regexp_type_id)
-          @regexp = @r.expresion
-        end
-        @pf +=[items: @m]
-        @pf +=[regexp: @regexp]
-        @pf += [value: item[1]]
 
-        project.push @pf
-      end
+        @pp = @project.properties
+        project = []
+        @pp.each do |item|
+
+          @pf = ProjectField.where(project_type_id: @project.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
+          @m = []
+          if !@pf[0].choice_list_id.nil?
+            @c = ChoiceList.find(@pf[0].choice_list_id)
+            @d = ChoiceListItem.where(choice_list_id: @c.id)
+            @d.each do |i|
+              @m << {"id": i.id, "name":i.name}
+            end
+          end
+          @regexp =''
+          if !@pf[0].regexp_type_id.nil?
+            @r = RegexpType.find(@pf[0].regexp_type_id)
+            @regexp = @r.expresion
+          end
+          @pf +=[items: @m]
+          @pf +=[regexp: @regexp]
+          @pf += [value: item[1]]
+
+          #@photos_attributes = Photo.find()
+      
+          project.push @pf
+        
+        end
+
 
         render json: {data: project}
 
@@ -49,15 +53,29 @@ module Api
       # POST /projects.json
       def create
         @dat = params[:data]
-         @dat.each do |data|
-            @project = Project.new()
-            @project['properties'] = data['properties']
-            @project['project_type_id'] = data['project_type_id']
-            @the_geom = data['the_geom']
-            @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
-            @project.save
+        @dat.each do |data|
+          @d = data
+          @project = Project.new()
+          @project['properties'] = data['properties']
+          @project['project_type_id'] = data['project_type_id']
+          @the_geom = data['the_geom']
+          @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
+          @project.save
+
+          if !data['photos_attributes'].nil?
+
+            data['photos_attributes'].each do |photo|
+
+              @photo = Photo.new
+              @photo['name'] = photo['name']
+              @photo['image'] = photo['image']
+              @photo['project_id'] = @project.id
+              @photo.save
+            end
+
+          end
         end
-          render json:   {status: :create_correctamente}
+        render json:   {status: :create_correctamente}
       end
 
       # PATCH/PUT /projects/1
@@ -85,7 +103,7 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def project_params
-        params.require(:project).permit(:properties, :project_type_id)
+        params.require(:project).permit(:properties, :project_type_id, photos_attributes:[:id, :name])
       end
     end
   end
