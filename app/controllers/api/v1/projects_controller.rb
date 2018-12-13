@@ -38,14 +38,20 @@ module Api
           @pf +=[regexp: @regexp]
           @pf += [value: item[1]]
 
-          #@photos_attributes = Photo.find()
+
       
+
           project.push @pf
         
         end
 
+          @photos_attributes = Photo.where(project_id: @project.id)
+          @p = []
+          @photos_attributes.each do |photo|
+            @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id} 
+          end
 
-        render json: {data: project}
+        render json: {data: project, photo_attributes: @p}
 
       end
 
