@@ -51,7 +51,7 @@ module Api
             @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id} 
           end
 
-        render json: {data: project, photo_attributes: @p}
+        render json: {data: project, photos_attributes: @p}
 
       end
 
