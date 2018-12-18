@@ -6,7 +6,13 @@ module Api
       before_action :validate_api_key!
       before_action :set_project_type, only: [:show]
       def index
-        @project_types = ProjectType.all
+
+        @has_project_types = HasProjectType.where(user_id: @user.id).select(:project_type_id) 
+        @p =[]
+        @has_project_types.each do |s| @p.push(s.project_type_id) end
+        @project_types = ProjectType.where(id: @p)
+
+        #@project_types = ProjectType.all
         render json: @project_types
       end
 
@@ -17,11 +23,11 @@ module Api
 
       def create
         @project_type = ProjectType.new(project_type_params)
-          if @project_type.save
+        if @project_type.save
           render json: @project_type, status: :created
         else
           render json: @project_type.errors, status: :unprocessable_entity
-      end
+        end
       end
 
 
