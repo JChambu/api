@@ -16,34 +16,8 @@ module Api
       # GET /projects/1.json
       def show
 
-        @pp = @project.properties
-        project = []
-        @pp.each do |item|
+        @pp = Project.show_data( @project)
 
-          @pf = ProjectField.where(project_type_id: @project.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
-          @m = []
-          if !@pf[0].choice_list_id.nil?
-            @c = ChoiceList.find(@pf[0].choice_list_id)
-            @d = ChoiceListItem.where(choice_list_id: @c.id)
-            @d.each do |i|
-              @m << {"id": i.id, "name":i.name}
-            end
-          end
-          @regexp =''
-          if !@pf[0].regexp_type_id.nil?
-            @r = RegexpType.find(@pf[0].regexp_type_id)
-            @regexp = @r.expresion
-          end
-          @pf +=[items: @m]
-          @pf +=[regexp: @regexp]
-          @pf += [value: item[1]]
-
-
-      
-
-          project.push @pf
-        
-        end
 
           @photos_attributes = Photo.where(project_id: @project.id)
           @p = []
@@ -51,7 +25,7 @@ module Api
             @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id} 
           end
 
-        render json: {data: project, photos_attributes: @p}
+        render json: {data: @pp, photos_attributes: @p}
 
       end
 
