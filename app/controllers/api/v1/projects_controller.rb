@@ -15,18 +15,14 @@ module Api
       # GET /projects/1
       # GET /projects/1.json
       def show
-
+        
         @pp = Project.show_data( @project)
-
           @p = []
           @photos_attributes = Photo.where(project_id: @project.id)
-          if !@phots_attributes.nil?
             @photos_attributes.each do |photo|
               @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id} 
-            end
           end
         render json: {data: @pp, photos_attributes: @p}
-
       end
 
       # POST /projects
