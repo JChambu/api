@@ -9,10 +9,8 @@ class Project < ApplicationRecord
   def self.show_data data
 
     project = []
-    data.properties.each do |f|
+    data.properties.each do |item|
 
-      @field = f.to_a
-      @field.each do |item| 
         @pfs = ProjectField.where(project_type_id: data.project_type_id).where(name: item[0])
         @pf = ProjectField.where(project_type_id: data.project_type_id).where(name: item[0]).where(hidden: false).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
 
@@ -58,7 +56,7 @@ class Project < ApplicationRecord
           @pf += [value: @value]
 
           project.push @pf
-        end
+          @pp = project
       end
     end
     project
