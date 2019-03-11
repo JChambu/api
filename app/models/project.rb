@@ -11,9 +11,7 @@ class Project < ApplicationRecord
     project = []
     data.properties.each do |item|
 
-        @pfs = ProjectField.where(project_type_id: data.project_type_id).where(name: item[0])
         @pf = ProjectField.where(project_type_id: data.project_type_id).where(name: item[0]).where(hidden: false).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
-
         if !@pf.empty?
           @choice_list_item = ''
           if !@pf[0].choice_list_id.nil?
@@ -49,7 +47,7 @@ class Project < ApplicationRecord
                 @subvalue += @repetible
               end
             end
-            @value = subvalue
+            @value = @subvalue
           end
           @pf +=[items: @choice_list_item]
           @pf +=[regexp: @regexp]
