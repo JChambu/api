@@ -27,8 +27,11 @@ class Project < ApplicationRecord
             @subvalue = []
             item[1].each do |subitem|
               @su = subitem
-              subitem.each do |element|
-                @e = element
+              subitem.each do |row|
+                @r = row
+                @aa = []
+                row.each do |element|
+                  @e = element
                 @repetible = ProjectSubfield.where(project_field_id: @pf[0].id).where(name: element[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
 
                 @choice_list_subitem = '' 
@@ -43,8 +46,9 @@ class Project < ApplicationRecord
                 @repetible  += [items: @choice_list_subitem]
                 @repetible  += [regexp: @regexp_subitem]
                 @repetible  += [value: element[1]]
-
-                @subvalue += @repetible
+                @aa += @repetible 
+              end
+                @subvalue += [@aa]
               end
             end
             @value = @subvalue
