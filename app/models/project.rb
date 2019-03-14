@@ -24,8 +24,10 @@ class Project < ApplicationRecord
 
           @value = item[1]
           if @pf[0].field_type_id == 7
+            if !@value.empty?
+              @ss = JSON.parse(@value)
             @subvalue = []
-            item[1].each do |subitem|
+            @ss.each do |subitem|
               @su = subitem
               subitem.each do |row|
                 @r = row
@@ -52,6 +54,7 @@ class Project < ApplicationRecord
               end
             end
             @value = @subvalue
+          end
           end
           @pf +=[items: @choice_list_item]
           @pf +=[regexp: @regexp]
