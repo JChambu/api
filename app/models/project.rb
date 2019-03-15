@@ -25,7 +25,13 @@ class Project < ApplicationRecord
           @value = item[1]
           if @pf[0].field_type_id == 7
             if !@value.empty?
-              @ss = JSON.parse(@value)
+              
+              @ss = @value.instance_of? String
+              if @ss
+                @ss = JSON.parse(@value)
+              else
+                @ss = @value
+              end
             @subvalue = []
             @ss.each do |subitem|
               @su = subitem
