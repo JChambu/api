@@ -4,6 +4,13 @@ module Api
       before_action :validate_api_key!
       before_action :set_project, only: [:show, :update, :destroy]
 
+      def synchronization
+
+          @params_date = params[:date]
+          render json: @params_date
+        end
+      
+      
       # GET /projects
       # GET /projects.json
       def index
