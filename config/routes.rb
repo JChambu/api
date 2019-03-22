@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
 
-      get 'projects/synchronization' => 'projects#synchronization', as: :projects_sync
+      post 'projects/synchronization' => 'projects#synchronization', as: :projects_sync
       resources :users
       resources :project_fields
       resources :project_types 
