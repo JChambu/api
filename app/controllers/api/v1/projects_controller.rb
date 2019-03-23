@@ -5,10 +5,10 @@ module Api
       before_action :set_project, only: [:show, :update, :destroy]
 
       def synchronization
-
-          @params_date = params[:date]
-          render json: @params_date
-        end
+        @params_date = params[:date].to_datetime
+        @rows = Project.where("updated_at > ?",  @params_date)
+        render json: {data: @rows}  
+      end
       
       
       # GET /projects

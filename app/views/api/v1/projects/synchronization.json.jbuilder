@@ -1,1 +1,1 @@
-{data: @params_date}
+{date: "hola"}
