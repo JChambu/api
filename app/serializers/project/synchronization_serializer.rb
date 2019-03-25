@@ -1,5 +1,6 @@
-class ProjectSerializer < ActiveModel::Serializer
-  # attributes :id,  :the_geom, :project_type_id
+class Projects::SynchronizationSerializer < ProjectSerializer
+ 
+   attributes :id, :the_geom, :project_type_id, :properties
 
   # def the_geom
   #   if !object.the_geom.nil?
@@ -12,5 +13,5 @@ class ProjectSerializer < ActiveModel::Serializer
   #   object.properties.map do|val, index|
   #     [val, index]
   #   end
-  # end
+ # end
 end
