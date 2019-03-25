@@ -1,4 +1,4 @@
-class Projects::SynchronizationSerializer < ProjectSerializer
+class Project::SynchronizationSerializer < ProjectSerializer
  
    attributes :id, :the_geom, :project_type_id, :properties
 

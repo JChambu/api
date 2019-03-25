@@ -1,4 +1,4 @@
-class Projects::ShowSerializer < ProjectSerializer
+class Project::ShowSerializer < ProjectSerializer
  
    #attributes :id, :the_geom, :project_type_id
 
