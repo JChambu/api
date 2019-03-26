@@ -8,7 +8,7 @@ module Api
         @params_date = params[:date].to_datetime
         @rows = Project.where("updated_at > ?",  @params_date)
         @rows = @rows.where(project_type_id: params[:project_type_id])
-        @rows = @rows.limit(100)
+        @rows = @rows.order(:updated_at)
         render json: {data: @rows}  
       end
       
