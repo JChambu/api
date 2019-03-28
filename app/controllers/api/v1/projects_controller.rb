@@ -13,10 +13,19 @@ module Api
       end
       
       def synchronization_update
-          params[:project].each do |a|
-          @row = Project.where(id: a[:id])
-          @row.update(a[:id], properties: a[:properties])
+          status = []
+          params[:_json].each do |a|
+              @id = a[:id]
+            @row = Project.where(id: a[:id])
+    
+          if (@row.update(a[:id], properties: a[:properties]))
+            status << { "#{@id}": 'ok'}
+          else
+            status << {"#{@id}": 'bad'}
           end
+          end
+        
+          render json:   {status: status}
       end
       
       # GET /projects
