@@ -14,15 +14,13 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
 
-
       get 'projects/synchronization' => 'projects#synchronization', as: :projects_s
+      post 'projects/synchronization_update' => 'projects#synchronization_update'
       resources :users
       resources :project_fields
       resources :project_types 
       resources :sessions, only: [:create, :destroy]
       resources :projects
-      
-
       #devise_for :users
     end
   end

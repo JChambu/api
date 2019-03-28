@@ -12,6 +12,12 @@ module Api
         render json: {data: @rows}  
       end
       
+      def synchronization_update
+          params[:_json].each do |a|
+          @row = Project.where(id: a[:id])
+          @row.update(a[:id], properties: a[:properties])
+          end
+      end
       
       # GET /projects
       # GET /projects.json
@@ -66,12 +72,15 @@ module Api
       # PATCH/PUT /projects/1
       # PATCH/PUT /projects/1.json
       def update
-        @project['properties'] = params[:project][:properties]
-        if @project.update(project_params)
+       
+
+        
+        #@project['properties'] = params[:project][:properties]
+       # if @project.update(project_params)
           render json: {status: :ok}
-        else
-          render json: @project.errors, status: :unprocessable_entity
-        end
+       # else
+        #  render json: @project.errors, status: :unprocessable_entity
+        #end
       end
 
       # DELETE /projects/1
