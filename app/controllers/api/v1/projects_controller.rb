@@ -13,7 +13,7 @@ module Api
       end
       
       def synchronization_update
-          params[:_json].each do |a|
+          params[:project].each do |a|
           @row = Project.where(id: a[:id])
           @row.update(a[:id], properties: a[:properties])
           end
