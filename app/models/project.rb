@@ -35,13 +35,13 @@ class Project < ApplicationRecord
             @subvalue = []
             @ss.each do |subitem|
               @su = subitem
+                @aa = []
               subitem.each do |row|
                 @r = row
-                @aa = []
-                row.each do |element|
-                  @e = element
-                @repetible = ProjectSubfield.where(project_field_id: @pf[0].id).where(name: element[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
 
+              #  row.each do |element|
+                 # @e = element
+                @repetible = ProjectSubfield.where(project_field_id: @pf[0].id).where(name: row[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
                 @choice_list_subitem = '' 
                 if !@pf[0].choice_list_id.nil?
                   @choice_list_subitem = show_choice_list(@pf[0].choice_list_id)
@@ -50,14 +50,15 @@ class Project < ApplicationRecord
                 if !@pf[0].regexp_type_id.nil?
                   @regexp_subitem = show_regexp_type(@pf[0].regexp_type_id)
                 end
+                 if !@repetible.empty?
+                  @repetible = @repetible[0].as_json.merge("items":  @choice_list_subitem, "regexp": @regexp_subitem, "value":row[1])
+                  @aa.push(@repetible)
+                 end
+             
+                # end
 
-                @repetible  += [items: @choice_list_subitem]
-                @repetible  += [regexp: @regexp_subitem]
-                @repetible  += [value: element[1]]
-                @aa += @repetible 
               end
                 @subvalue += [@aa]
-              end
             end
             @value = @subvalue
           end
