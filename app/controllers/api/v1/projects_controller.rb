@@ -14,7 +14,8 @@ module Api
       
       def synchronization_update
           status = []
-          params[:_json].each do |a|
+          if !params[:project.nil?]
+          params[:project].each do |a|
               @id = a[:id]
             @row = Project.where(id: a[:id])
     
@@ -24,8 +25,8 @@ module Api
             status << {"#{@id}": 'bad'}
           end
           end
-        
           render json:   {status: status}
+      end
       end
       
       # GET /projects
