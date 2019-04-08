@@ -83,27 +83,22 @@ module Api
       # PATCH/PUT /projects/1
       # PATCH/PUT /projects/1.json
       def update
-       
-
-                
-          if !data['photos'].nil?
-
-            data['photos'].each do |photo|
-
+        @project['properties'] = params[:project][:properties]
+          if !params[:project]['photos'].nil?
+            params[:project]['photos'].each do |photo|
               @photo = Photo.new
               @photo['name'] = photo['name']
               @photo['image'] = photo['image']
               @photo['project_id'] = @project.id
               @photo.save
             end
-
           end
-        #@project['properties'] = params[:project][:properties]
-       # if @project.update(project_params)
+
+        if @project.update(project_params)
           render json: {status: :ok}
-       # else
-        #  render json: @project.errors, status: :unprocessable_entity
-        #end
+        else
+          render json: @project.errors, status: :unprocessable_entity
+        end
       end
 
       # DELETE /projects/1
