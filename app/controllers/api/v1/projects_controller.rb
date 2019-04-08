@@ -25,6 +25,7 @@ module Api
             status << {"#{@id}": 'bad'}
           end
           end
+        
           render json:   {status: status}
       end
       end
@@ -84,7 +85,19 @@ module Api
       def update
        
 
-        
+                
+          if !data['photos'].nil?
+
+            data['photos'].each do |photo|
+
+              @photo = Photo.new
+              @photo['name'] = photo['name']
+              @photo['image'] = photo['image']
+              @photo['project_id'] = @project.id
+              @photo.save
+            end
+
+          end
         #@project['properties'] = params[:project][:properties]
        # if @project.update(project_params)
           render json: {status: :ok}
