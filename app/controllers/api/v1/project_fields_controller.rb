@@ -8,7 +8,7 @@ class ProjectFieldsController < ApplicationController
   # GET /api/v1/projec_fields
   # GET /api/v1/projec_fields.json
   def index
-    @project_fields = ProjectField.where(project_type_id: params[:project_type_id]).where(hidden: false).order(:id)
+    @project_fields = ProjectField.where(project_type_id: params[:project_type_id]).order(:id)
         render json: @project_fields
   end
 
