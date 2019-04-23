@@ -1,5 +1,5 @@
 class ProjectFieldSerializer < ActiveModel::Serializer
-  attributes :id, :name, :field_type_id, :project_type_id, :key, :required, :items, :regexp, :elements
+  attributes :id, :name, :field_type_id, :project_type_id, :key, :required, :items, :regexp, :elements, :hidden
 
   def items
     @m = []
