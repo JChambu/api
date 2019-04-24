@@ -14,15 +14,26 @@ module Api
       
       def synchronization_update
           status = []
+
           if !params[:project.nil?]
           params[:project].each do |a|
               @id = a[:id]
-            @row = Project.where(id: a[:id])
+              @row = Project.where(id: a[:id])
     
           if (@row.update(a[:id], properties: a[:properties]))
             status << { "#{@id}": 'ok'}
           else
             status << {"#{@id}": 'bad'}
+          end
+         
+          if !a['photos'].nil?
+            a['photos'].each do |photo|
+              @photo = Photo.new
+              @photo['name'] = photo['name']
+              @photo['image'] = photo['image']
+              @photo['project_id'] = @id
+              @photo.save
+            end
           end
           end
         
