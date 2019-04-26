@@ -11,7 +11,7 @@ class Project < ApplicationRecord
     project = []
     data.properties.each do |item|
 
-        @pf = ProjectField.where(project_type_id: data.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden )
+        @pf = ProjectField.where(project_type_id: data.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :sort )
         if !@pf.empty?
           @choice_list_item = ''
           if !@pf[0].choice_list_id.nil?
@@ -23,6 +23,7 @@ class Project < ApplicationRecord
           end
 
         @hidden = @pf[0].hidden
+        @sort = @pf[0].sort
 
           @value = item[1]
           if @pf[0].field_type_id == 7
@@ -69,6 +70,7 @@ class Project < ApplicationRecord
           @pf +=[regexp: @regexp]
           @pf += [value: @value]
           @pf +=[hidden: @hidden]
+          @pf +=[sort: @sort]
 
           project.push @pf
           @pp = project

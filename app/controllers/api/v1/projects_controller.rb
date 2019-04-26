@@ -54,12 +54,13 @@ module Api
       def show
         
         @pp = Project.show_data( @project)
+        @sort_field = @pp.sort { |a,b|  a[5][:sort] <=> b[5][:sort]}
           @p = []
           @photos_attributes = Photo.where(project_id: @project.id)
             @photos_attributes.each do |photo|
               @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id} 
           end
-        render json: {data: @pp, photos_attributes: @p}
+        render json: {data: @sort_field, photos_attributes: @p}
       end
 
       # POST /projects
