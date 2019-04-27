@@ -18,9 +18,16 @@ class ProjectFieldSerializer < ActiveModel::Serializer
 
     if object.field_type_id == 7
       @elements = []
+      @items= []
+
       @arr = ProjectSubfield.where(project_field_id: object.id)
       @arr.each do |e|
-        @elements << {id: e.id, "name": e.name, field_type_id: e.field_type_id, project_field_id: object.id, "required": e.required, "regexp": regexp_name(e.regexp_type_id)  }
+                @choice_list_subitem = ''
+                if !e.choice_list_id.nil?
+                  @choice_list_subitem = Project.show_choice_list(e.choice_list_id)
+                end
+
+        @elements << {id: e.id, "name": e.name, field_type_id: e.field_type_id, project_field_id: object.id, "required": e.required, "regexp": regexp_name(e.regexp_type_id), "items":@choice_list_subitem }
       end
 
     end
