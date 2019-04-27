@@ -24,7 +24,6 @@ class Project < ApplicationRecord
 
         @hidden = @pf[0].hidden
         @sort = @pf[0].sort
-
           @value = item[1]
           if @pf[0].field_type_id == 7
             if !@value.empty?
@@ -45,6 +44,7 @@ class Project < ApplicationRecord
               #  row.each do |element|
                  # @e = element
                 @repetible = ProjectSubfield.where(project_field_id: @pf[0].id).where(name: row[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
+                if !@repetible.empty?
                 @choice_list_subitem = '' 
                 if !@repetible[0].choice_list_id.nil?
                   @choice_list_subitem = show_choice_list(@repetible[0].choice_list_id)
@@ -58,7 +58,7 @@ class Project < ApplicationRecord
                   @aa.push(@repetible)
                  end
              
-                # end
+                 end
 
               end
                 @subvalue += [@aa]
