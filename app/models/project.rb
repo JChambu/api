@@ -46,12 +46,12 @@ class Project < ApplicationRecord
                  # @e = element
                 @repetible = ProjectSubfield.where(project_field_id: @pf[0].id).where(name: row[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
                 @choice_list_subitem = '' 
-                if !@pf[0].choice_list_id.nil?
-                  @choice_list_subitem = show_choice_list(@pf[0].choice_list_id)
+                if !@repetible[0].choice_list_id.nil?
+                  @choice_list_subitem = show_choice_list(@repetible[0].choice_list_id)
                 end
                 @regexp =''
-                if !@pf[0].regexp_type_id.nil?
-                  @regexp_subitem = show_regexp_type(@pf[0].regexp_type_id)
+                if !@repetible[0].regexp_type_id.nil?
+                  @regexp_subitem = show_regexp_type(@repetible[0].regexp_type_id)
                 end
                  if !@repetible.empty?
                   @repetible = @repetible[0].as_json.merge("items":  @choice_list_subitem, "regexp": @regexp_subitem, "value":row[1])
