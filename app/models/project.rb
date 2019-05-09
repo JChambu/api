@@ -9,7 +9,7 @@ class Project < ApplicationRecord
   def self.show_data_new data
 
     project = []
-    project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :sort )
+    project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :sort ).order(:sort)
     project_field.each do |row|
 
       @rr = row
@@ -42,11 +42,11 @@ class Project < ApplicationRecord
                      @regexp_subitem = show_regexp_type(sub_row.regexp_type_id)
                    end
                     if !@repetible.empty?
-                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id))
+                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id, "required": sub_row.required))
                     end
         end
       end
-      @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue}
+      @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "required": row.required, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue}
       project.push @pf
       @pp = project
     end
