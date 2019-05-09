@@ -25,11 +25,12 @@ class Project < ApplicationRecord
 
       @hidden = row.hidden
       @sort = row.sort
-
+  
+        @subvalue = []          
       if row.field_type_id == 7
         #       #  row.each do |element|
         #          # @e = element
-        @subvalue = []          
+
         @repetible = ProjectSubfield.where(project_field_id: row.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id )
         @repetible.each do |sub_row|
                    @choice_list_subitem = '' 
