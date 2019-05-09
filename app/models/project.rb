@@ -42,7 +42,7 @@ class Project < ApplicationRecord
                      @regexp_subitem = show_regexp_type(sub_row.regexp_type_id)
                    end
                     if !@repetible.empty?
-                      @subvalue.push(row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem))
+                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id))
                     end
         end
       end
