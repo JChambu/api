@@ -5,6 +5,25 @@ module Api
       #before_action :authenticate, only: [:index, :create, :destroy]
       before_action :validate_api_key!
       before_action :set_project_type, only: [:show]
+
+      def list_projects
+
+        @has_project_types = HasProjectType.where(user_id: @user.id).select(:project_type_id) 
+        @p =[]
+        @has_project_types.each do |s|
+          project_type = ProjectType.where(id: s.project_type_id).first
+          show_field = Project.show_data_new(project_type)
+          data = {"data":{
+            "id":project_type.id, 
+            "name":project_type.name,
+            "form": show_field
+          }
+          }
+          @p.push(data) 
+        end
+        render json: @p
+      end
+
       def index
 
         @has_project_types = HasProjectType.where(user_id: @user.id).select(:project_type_id) 
