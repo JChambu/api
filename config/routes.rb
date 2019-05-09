@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
       get 'projects/synchronization' => 'projects#synchronization', as: :projects_s
       post 'projects/synchronization_update' => 'projects#synchronization_update'
+      get 'project_types/list_projects' => 'project_types#list_projects'
       resources :users
       resources :project_fields
       resources :project_types 
