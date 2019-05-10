@@ -5,6 +5,10 @@ module Api
       before_action :set_project, only: [:show, :update, :destroy]
 
 
+      def list_data
+        @data = Project.show_data_new(params[:project_type_id])
+        render json: {data: @data}  
+      end
 
       def synchronization
         @params_date = params[:date].to_datetime

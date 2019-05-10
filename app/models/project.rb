@@ -6,7 +6,27 @@ class Project < ApplicationRecord
   has_many :photos
   accepts_nested_attributes_for :photos
 
-  def self.show_data_new data
+
+  def self.show_data_new project_type_id
+
+    value = Project.where(project_type_id: project_type_id).limit(2).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties").limit(2)
+    data = []
+    value.each do |row|
+      form=[]
+      row.properties.each do |k, v| 
+        field = ProjectField.where(key: "#{k}").where(project_type_id: project_type_id).select(:id).first
+        form.push("#{field.id}": v)
+      end
+      data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form)
+    end
+    @data = data
+  end
+
+
+
+
+
+  def self.show_schema_new data
 
     project = []
     project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :sort ).order(:sort)
