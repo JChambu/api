@@ -12,7 +12,7 @@ module Api
         @p =[]
         @has_project_types.each do |s|
           project_type = ProjectType.where(id: s.project_type_id).first
-          show_field = Project.show_data_new(project_type)
+          show_field = Project.show_schema_new(project_type)
           data = {
             "id":project_type.id, 
             "name":project_type.name,
@@ -24,6 +24,7 @@ module Api
         @result = {"data":@p}
         render json: @result
       end
+
 
       def index
 
