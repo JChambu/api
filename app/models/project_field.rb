@@ -52,4 +52,20 @@ class ProjectField < ApplicationRecord
   end
 
 
+  def self.show_choice_list id 
+    items=[]
+    choice_list = ChoiceList.find(id)
+    choice_list_item  = ChoiceListItem.where(choice_list_id: choice_list.id)
+    choice_list_item.each do |i|
+      items << {"id": i.id, "name":i.name}
+    end
+    items
+  end
+
+
+  def self.show_regexp_type id
+    r = RegexpType.find(id)
+    regexp = r.expresion
+    regexp
+  end
 end
