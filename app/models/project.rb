@@ -26,7 +26,7 @@ class Project < ApplicationRecord
         field = ProjectField.where(key: "#{k}").where(project_type_id: project_type_id).select(:id).first
         form.push("#{field.id}": v)
       end
-      data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form)
+      data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at)
     end
     @data = data
   end
