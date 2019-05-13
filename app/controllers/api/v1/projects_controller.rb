@@ -5,6 +5,14 @@ module Api
       before_action :set_project, only: [:show, :update, :destroy]
 
 
+      def check_row_quantity
+          project_type_id = params[:project_type_id]
+          last_date = params[:last_date]
+          last_time = params[:last_time]
+          @count = Project.row_quantity( project_type_id, last_date, last_time)
+          render json: {'row_quantity': @count}
+      end
+
       def list_data
         @data = Project.show_data_new(params[:project_type_id])
         render json: {data: @data}  
