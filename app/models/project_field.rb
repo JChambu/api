@@ -35,7 +35,7 @@ class ProjectField < ApplicationRecord
                    if !sub_row.choice_list_id.nil?
                      @choice_list_subitem = show_choice_list(sub_row.choice_list_id)
                    end
-                   @regexp =''
+                   @regexp_subitem =''
                    if !sub_row.regexp_type_id.nil?
                      @regexp_subitem = show_regexp_type(sub_row.regexp_type_id)
                    end
