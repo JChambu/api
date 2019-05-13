@@ -10,7 +10,7 @@ class Project < ApplicationRecord
   def self.row_quantity project_type_id, date_last_row, time_last_row
 
     updated_date = [date_last_row, time_last_row].join(" ")
-
+    updated_date.to_datetime
     @rows = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).count
 
   end
