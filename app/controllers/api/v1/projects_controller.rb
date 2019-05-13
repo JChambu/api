@@ -15,7 +15,7 @@ module Api
 
       def list_data
         last_date = params[:last_date]
-        last_type = params[:last_time]
+        last_time = params[:last_time]
         project_type_id = params[:project_type_id]
         @data = Project.show_data_new(project_type_id, last_date, last_time)
         render json: {data: @data}  
