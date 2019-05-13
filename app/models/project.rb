@@ -9,15 +9,16 @@ class Project < ApplicationRecord
 
   def self.row_quantity project_type_id, date_last_row, time_last_row
 
-    updated_date = [date_last_row, time_last_row].join(" ")
-    updated_date.to_datetime
+    updated_date = [date_last_row, time_last_row].join(" ").to_datetime
+    
     @rows = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).count
 
   end
 
-  def self.show_data_new project_type_id
+  def self.show_data_new project_type_id, date_last_row, time_last_row
 
-    value = Project.where(project_type_id: project_type_id).limit(2).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties").limit(2)
+    updated_date = [date_last_row, time_last_row].join(" ").to_datetime
+    value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at ").limit(50)
     data = []
     value.each do |row|
       form=[]
