@@ -18,7 +18,7 @@ class Project < ApplicationRecord
   def self.show_data_new project_type_id, date_last_row, time_last_row
 
     updated_date = [date_last_row, time_last_row].join(" ").to_datetime
-    value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at ").limit(50)
+    value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at ").order(:updated_at).limit(50)
     data = []
     value.each do |row|
       form=[]
