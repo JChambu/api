@@ -122,7 +122,7 @@ class Project < ApplicationRecord
   end
 
   def self.save_rows_project_data project_data
-     result_hash = {}
+    result_hash = {}
     project_data[:projects].each do |data|
       @project = Project.new()
       @project['properties'] = data['values']
@@ -137,4 +137,24 @@ class Project < ApplicationRecord
     end
 return [result_hash]
   end
+  
+  def self.save_rows_project_data_childs project_data_child
+    result_hash = {}
+
+    project_data_child['childs'].each do |data|
+      child_data = ProjectDataChild.new()
+      child_data[:project_id] = data['IdFather']
+      child_data[:properties] = data['values']
+      child_data[:project_field_id] = data['field_id']
+      child_data.save
+    end
+
+    project_data_child['photos'].each do |photo|
+        project_photo = Photo.new
+        project_photo['name'] = photo['values']['name']
+        project_photo['image'] = photo['values']['image']
+        project_photo['project_id'] = photo['IdFather']
+        project_photo.save
+  end
+end
 end

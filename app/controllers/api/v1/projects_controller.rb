@@ -28,6 +28,12 @@ module Api
         render json: {data: @a}
       end
 
+      def save_row_children
+        @c = Project.save_rows_project_data_childs params
+        render json: {data: @c}
+      end
+
+
       def synchronization
         @params_date = params[:date].to_datetime
         @rows = Project.where("updated_at > ?",  @params_date)

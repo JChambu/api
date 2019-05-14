@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get 'projects/list_data' => 'projects#list_data'
       get 'projects/check_row_quantity' => 'projects#check_row_quantity'
       post 'projects/save_rows' => 'projects#save_rows'
+      post 'projects/save_row_children' => 'projects#save_row_children'
       resources :users
       resources :project_fields
       resources :project_types 

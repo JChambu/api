@@ -1,0 +1,2 @@
+class ProjectDataChild < ApplicationRecord
+end
