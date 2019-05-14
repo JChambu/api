@@ -123,8 +123,34 @@ class Project < ApplicationRecord
 
   def self.save_rows_project_data project_data
     result_hash = {}
+    if !project_data[:projects].nil?
     project_data[:projects].each do |data|
       @project = Project.new()
+
+      value_name = {}
+      data['values'].each do |v,k|
+        field = ProjectField.where(id: v.to_i).select(:key).first
+        value_name.merge!("#{field.key}": k )
+      end
+      @project['properties'] = value_name
+      @project['project_type_id'] = data['project_type_id']
+      @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
+      
+      if @project.save
+        localID = data[:localID]
+        result_hash.merge!({"#{localID}":@project.id}) 
+      end
+      
+    end
+      return [result_hash]
+    end
+    return
+  end
+  
+  def self.update_rows_project_data project_data
+    result_hash = {}
+    project_data[:projects].each do |data|
+      @project = Project.where(project_type_id: data[:project_type_id] )
 
       value_name = {}
       data['values'].each do |v,k|
@@ -132,8 +158,7 @@ class Project < ApplicationRecord
         value_name.merge!("#{field.key}": k )
       end
       @project['properties'] = value_name
-      @project['project_type_id'] = data['project_type_id']
-      @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
+      #@project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
       
       if @project.save
         localID = data[:localID]
@@ -147,6 +172,7 @@ return [result_hash]
   def self.save_rows_project_data_childs project_data_child
     result_hash = {}
 
+    if !project_data_child['childs'].nil?
     project_data_child['childs'].each do |data|
       child_data = ProjectDataChild.new()
       child_data[:project_id] = data['IdFather']
@@ -162,13 +188,15 @@ return [result_hash]
       child_data[:project_field_id] = data['field_id']
       child_data.save
     end
-
+    end
+    if !project_data_child['photos'].nil?
     project_data_child['photos'].each do |photo|
         project_photo = Photo.new
         project_photo['name'] = photo['values']['name']
         project_photo['image'] = photo['values']['image']
         project_photo['project_id'] = photo['IdFather']
         project_photo.save
+  end
   end
 end
 end
