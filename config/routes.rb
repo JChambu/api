@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get 'project_types/list_projects' => 'project_types#list_projects'
       get 'projects/list_data' => 'projects#list_data'
       get 'projects/check_row_quantity' => 'projects#check_row_quantity'
+      post 'projects/save_rows' => 'projects#save_rows'
       resources :users
       resources :project_fields
       resources :project_types 

@@ -10,7 +10,7 @@ class Project < ApplicationRecord
   def self.row_quantity project_type_id, date_last_row, time_last_row
 
     updated_date = [date_last_row, time_last_row].join(" ").to_datetime
-    
+
     @rows = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).count
 
   end
@@ -104,8 +104,6 @@ class Project < ApplicationRecord
     project
   end
 
-
-
   def self.show_choice_list id 
     items=[]
     choice_list = ChoiceList.find(id)
@@ -123,4 +121,20 @@ class Project < ApplicationRecord
     regexp
   end
 
+  def self.save_rows_project_data project_data
+    result = []
+    project_data[:projects].each do |data|
+      @project = Project.new()
+      @project['properties'] = data['values']
+      @project['project_type_id'] = data['project_type_id']
+      @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
+      
+      if @project.save
+        localID = data[:localID]
+        result.push({"#{localID}":@project.id}) 
+      end
+      
+    end
+return result
+  end
 end

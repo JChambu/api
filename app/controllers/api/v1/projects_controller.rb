@@ -6,11 +6,11 @@ module Api
 
 
       def check_row_quantity
-          project_type_id = params[:project_type_id]
-          last_date = params[:last_date]
-          last_time = params[:last_time]
-          @count = Project.row_quantity( project_type_id, last_date, last_time)
-          render json: {'row_quantity': @count}
+        project_type_id = params[:project_type_id]
+        last_date = params[:last_date]
+        last_time = params[:last_time]
+        @count = Project.row_quantity( project_type_id, last_date, last_time)
+        render json: {'row_quantity': @count}
       end
 
       def list_data
@@ -21,6 +21,13 @@ module Api
         render json: {data: @data}  
       end
 
+
+      def save_rows
+
+        @a = Project.save_rows_project_data params 
+        render json: {data: @a}
+      end
+
       def synchronization
         @params_date = params[:date].to_datetime
         @rows = Project.where("updated_at > ?",  @params_date)
@@ -29,36 +36,36 @@ module Api
         @rows = @rows.limit(50)
         render json: {data: @rows}  
       end
-      
-      def synchronization_update
-          status = []
 
-          if !params[:project.nil?]
+      def synchronization_update
+        status = []
+
+        if !params[:project.nil?]
           params[:project].each do |a|
-              @id = a[:id]
-              @row = Project.where(id: a[:id])
-    
-          if (@row.update(a[:id], properties: a[:properties]))
-            status << { "#{@id}": 'ok'}
-          else
-            status << {"#{@id}": 'bad'}
-          end
-         
-          if !a['photos'].nil?
-            a['photos'].each do |photo|
-              @photo = Photo.new
-              @photo['name'] = photo['name']
-              @photo['image'] = photo['image']
-              @photo['project_id'] = @id
-              @photo.save
+            @id = a[:id]
+            @row = Project.where(id: a[:id])
+
+            if (@row.update(a[:id], properties: a[:properties]))
+              status << { "#{@id}": 'ok'}
+            else
+              status << {"#{@id}": 'bad'}
+            end
+
+            if !a['photos'].nil?
+              a['photos'].each do |photo|
+                @photo = Photo.new
+                @photo['name'] = photo['name']
+                @photo['image'] = photo['image']
+                @photo['project_id'] = @id
+                @photo.save
+              end
             end
           end
-          end
-        
+
           render json:   {status: status}
+        end
       end
-      end
-      
+
       # GET /projects
       # GET /projects.json
       def index
@@ -70,14 +77,14 @@ module Api
       # GET /projects/1
       # GET /projects/1.json
       def show
-        
+
         @pp = Project.show_data( @project)
         @sort_field = @pp.sort { |a,b|  a[5][:sort] <=> b[5][:sort]}
-          @p = []
-          @photos_attributes = Photo.where(project_id: @project.id)
-            @photos_attributes.each do |photo|
-              @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id} 
-          end
+        @p = []
+        @photos_attributes = Photo.where(project_id: @project.id)
+        @photos_attributes.each do |photo|
+          @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id} 
+        end
         render json: {data: @sort_field, photos_attributes: @p}
       end
 
@@ -114,15 +121,15 @@ module Api
       # PATCH/PUT /projects/1.json
       def update
         @project['properties'] = params[:project][:properties]
-          if !params[:project]['photos'].nil?
-            params[:project]['photos'].each do |photo|
-              @photo = Photo.new
-              @photo['name'] = photo['name']
-              @photo['image'] = photo['image']
-              @photo['project_id'] = @project.id
-              @photo.save
-            end
+        if !params[:project]['photos'].nil?
+          params[:project]['photos'].each do |photo|
+            @photo = Photo.new
+            @photo['name'] = photo['name']
+            @photo['image'] = photo['image']
+            @photo['project_id'] = @project.id
+            @photo.save
           end
+        end
 
         if @project.update(project_params)
           render json: {status: :ok}
