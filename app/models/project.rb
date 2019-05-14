@@ -122,7 +122,7 @@ class Project < ApplicationRecord
   end
 
   def self.save_rows_project_data project_data
-    result = []
+     result_hash = {}
     project_data[:projects].each do |data|
       @project = Project.new()
       @project['properties'] = data['values']
@@ -131,10 +131,10 @@ class Project < ApplicationRecord
       
       if @project.save
         localID = data[:localID]
-        result.push({"#{localID}":@project.id}) 
+        result_hash.merge!({"#{localID}":@project.id}) 
       end
       
     end
-return result
+return [result_hash]
   end
 end
