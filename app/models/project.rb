@@ -21,10 +21,10 @@ class Project < ApplicationRecord
     value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at ").order(:updated_at).limit(50)
     data = []
     value.each do |row|
-      form=[]
+      form={}
       row.properties.each do |k, v| 
         field = ProjectField.where(key: "#{k}").where(project_type_id: project_type_id).select(:id).first
-        form.push("#{field.id}": v)
+        form.merge!("#{field.id}": v)
       end
       data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at)
     end
