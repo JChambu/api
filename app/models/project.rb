@@ -172,8 +172,8 @@ return [result_hash]
   def self.save_rows_project_data_childs project_data_child
     result_hash = {}
 
-    if !project_data_child['childs'].nil?
-    project_data_child['childs'].each do |data|
+    if !project_data_child['projects']['childs'].nil?
+    project_data_child['projects']['childs'].each do |data|
       child_data = ProjectDataChild.new()
       child_data[:project_id] = data['IdFather']
 
@@ -189,8 +189,8 @@ return [result_hash]
       child_data.save
     end
     end
-    if !project_data_child['photos'].nil?
-    project_data_child['photos'].each do |photo|
+    if !project_data_child['projects']['photos'].nil?
+    project_data_child['projects']['photos'].each do |photo|
         project_photo = Photo.new
         project_photo['name'] = photo['values']['name']
         project_photo['image'] = photo['values']['image']
