@@ -128,7 +128,7 @@ class Project < ApplicationRecord
 
       value_name = {}
       data['values'].each do |v,k|
-        field = ProjectField.where(id: v.to_i).select(:key).first
+    field = ProjectField.where(id: v.to_i).select(:key).first
         value_name.merge!("#{field.key}": k )
       end
       @project['properties'] = value_name
@@ -150,6 +150,14 @@ return [result_hash]
     project_data_child['childs'].each do |data|
       child_data = ProjectDataChild.new()
       child_data[:project_id] = data['IdFather']
+
+      value_name = {}
+      data['values'].each do |v|
+        v.each do |a,b|
+        field = ProjectField.where(id: a.to_i).select(:key).first
+        value_name.merge!("#{field.key}": b )
+        end
+      end
       child_data[:properties] = data['values']
       child_data[:project_field_id] = data['field_id']
       child_data.save
