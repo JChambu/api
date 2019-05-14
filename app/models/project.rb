@@ -180,7 +180,7 @@ return [result_hash]
       value_name = {}
       data['values'].each do |v|
         v.each do |a,b|
-        field = ProjectField.where(id: a.to_i).select(:key).first
+        field = ProjectSubfield.where(id: a.to_i).select(:key).first
         value_name.merge!("#{field.key}": b )
         end
       end
