@@ -125,7 +125,13 @@ class Project < ApplicationRecord
     result_hash = {}
     project_data[:projects].each do |data|
       @project = Project.new()
-      @project['properties'] = data['values']
+
+      value_name = {}
+      data['values'].each do |v,k|
+        field = ProjectField.where(id: v.to_i).select(:key).first
+        value_name.merge!("#{field.key}": k )
+      end
+      @project['properties'] = value_name
       @project['project_type_id'] = data['project_type_id']
       @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
       
