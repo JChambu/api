@@ -149,18 +149,17 @@ class Project < ApplicationRecord
   
   def self.update_rows_project_data project_data
     result_hash = {}
-    project_data[:projects].each do |data|
-      @project = Project.where(project_type_id: data[:project_type_id] )
 
+    project_data[:projects].each do |data|
+      @project = Project.where(project_type_id: data[:project_type_id] ).where(id: data[:project_id]).first
       value_name = {}
       data['values'].each do |v,k|
       field = ProjectField.where(id: v.to_i).select(:key).first
         value_name.merge!("#{field.key}": k )
       end
-      @project['properties'] = value_name
-      if @project.save
+      if @project.update_attributes( properties: value_name)
         localID = data[:localID]
-        result_hash.merge!({"#{localID}":@project.id}) 
+        result_hash.merge!({"#{@project.id}": "ok"}) 
       end
       
     end
