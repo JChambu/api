@@ -23,7 +23,6 @@ module Api
 
 
       def save_rows
-
         @a = Project.save_rows_project_data params 
         render json: {data: @a}
       end
@@ -31,6 +30,11 @@ module Api
       def save_row_children
         @c = Project.save_rows_project_data_childs params
         render json: {data: @c}
+      end
+
+      def update_rows
+        @u = Project.update_rows_project_data params
+        render json: {data: @u }
       end
 
 

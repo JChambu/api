@@ -154,12 +154,10 @@ class Project < ApplicationRecord
 
       value_name = {}
       data['values'].each do |v,k|
-    field = ProjectField.where(id: v.to_i).select(:key).first
+      field = ProjectField.where(id: v.to_i).select(:key).first
         value_name.merge!("#{field.key}": k )
       end
       @project['properties'] = value_name
-      #@project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
-      
       if @project.save
         localID = data[:localID]
         result_hash.merge!({"#{localID}":@project.id}) 

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get 'projects/check_row_quantity' => 'projects#check_row_quantity'
       post 'projects/save_rows' => 'projects#save_rows'
       post 'projects/save_row_children' => 'projects#save_row_children'
+      post 'projects/update_rows' => 'projects#update_rows'
       resources :users
       resources :project_fields
       resources :project_types 
