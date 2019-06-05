@@ -7,7 +7,7 @@ class ProjectField < ApplicationRecord
   def self.show_schema_new data
 
     project = []
-    project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :readonly, :sort ).order(:sort)
+    project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only, :sort ).order(:sort)
     project_field.each do |row|
 
       @rr = row
@@ -22,7 +22,7 @@ class ProjectField < ApplicationRecord
       end
 
       @hidden = row.hidden
-      @readonly = row.readonly
+      @readonly = row.read_only
       @sort = row.sort
   
         @subvalue = []          
