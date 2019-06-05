@@ -30,7 +30,7 @@ class ProjectField < ApplicationRecord
         #       #  row.each do |element|
         #          # @e = element
 
-        @repetible = ProjectSubfield.where(project_field_id: row.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden )
+        @repetible = ProjectSubfield.where(project_field_id: row.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only )
         @repetible.each do |sub_row|
                    @choice_list_subitem = '' 
                    if !sub_row.choice_list_id.nil?
@@ -41,7 +41,7 @@ class ProjectField < ApplicationRecord
                      @regexp_subitem = show_regexp_type(sub_row.regexp_type_id)
                    end
                     if !@repetible.empty?
-                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id, "required": sub_row.required, "hidden":sub_row.hidden))
+                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id, "required": sub_row.required, "hidden":sub_row.hidden, "read_only":sub_row.read_only))
                     end
         end
       end
