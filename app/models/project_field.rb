@@ -45,7 +45,7 @@ class ProjectField < ApplicationRecord
                     end
         end
       end
-      @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "required": row.required, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue, "readonly":@readonly}
+      @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "required": row.required, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue, "read_only":@readonly}
       project.push @pf
       @pp = project
     end
