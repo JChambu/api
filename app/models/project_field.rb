@@ -7,7 +7,7 @@ class ProjectField < ApplicationRecord
   def self.show_schema_new data
 
     project = []
-    project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :sort ).order(:sort)
+    project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :readonly, :sort ).order(:sort)
     project_field.each do |row|
 
       @rr = row
@@ -22,6 +22,7 @@ class ProjectField < ApplicationRecord
       end
 
       @hidden = row.hidden
+      @readonly = row.readonly
       @sort = row.sort
   
         @subvalue = []          
@@ -44,7 +45,7 @@ class ProjectField < ApplicationRecord
                     end
         end
       end
-      @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "required": row.required, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue}
+      @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "required": row.required, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue, "readonly":@readonly}
       project.push @pf
       @pp = project
     end
