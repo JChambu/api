@@ -9,11 +9,11 @@ module Api
           user = {'email': user_mail.email, 'authentication_token': user_mail.authentication_token}
           
           companies=[]
-          user_customer = user_mail.customers.all
+          user_customer = UserCustomer.where(user_id: user_mail)
 
           user_customer.map do |uc|
 
-            companies << {'url': uc.url, 'name_company': uc.subdomain, 'role':uc.role_id}
+            companies << {'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id}
           end
           
           render json: {data: user,'companies': companies }
