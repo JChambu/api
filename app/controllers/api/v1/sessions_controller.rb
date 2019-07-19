@@ -13,7 +13,7 @@ module Api
 
           user_customer.map do |uc|
 
-            companies << {'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id}
+            companies << {'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id, 'id': uc.customer.id}
           end
           
           render json: {data: user,'companies': companies }
