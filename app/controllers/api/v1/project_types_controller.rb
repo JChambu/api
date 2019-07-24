@@ -16,6 +16,8 @@ module Api
           data = {
             "id":project_type.id, 
             "name":project_type.name,
+            "enabled_as_layer": project_type.enabled_as_layer,
+            "add_rows":project_type.add_rows,
             "form": show_field
           }
           
