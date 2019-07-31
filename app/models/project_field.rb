@@ -45,7 +45,7 @@ class ProjectField < ApplicationRecord
                      @regexp_subitem = show_regexp_type(sub_row.regexp_type_id)
                    end
                     if !@repetible.empty?
-                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id, "required": sub_row.required, "hidden":sub_row.hidden, "read_only":sub_row.read_only, "popup":sub_row.popup, "calculated":sub_row.calculated_field, "role":sub_row.role, "data_script": sub.row.data_script))
+                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id, "required": sub_row.required, "hidden":sub_row.hidden, "read_only":sub_row.read_only, "popup":sub_row.popup, "calculated":sub_row.calculated_field, "role":sub_row.role, "data_script": sub_row.data_script))
                     end
         end
       end
