@@ -34,7 +34,7 @@ class ProjectField < ApplicationRecord
         #       #  row.each do |element|
         #          # @e = element
 
-        @repetible = ProjectSubfield.where(project_field_id: row.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only, :popup, :calculated_field, :role, :data_script )
+        @repetible = ProjectSubfield.where(project_field_id: row.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only, :popup, :calculated_field, :role, :data_script ).order(:sort)
         @repetible.each do |sub_row|
                    @choice_list_subitem = '' 
                    if !sub_row.choice_list_id.nil?
