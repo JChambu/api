@@ -18,7 +18,8 @@ module Api
             "name":project_type.name,
             "enabled_as_layer": project_type.enabled_as_layer,
             "add_rows":project_type.add_rows,
-            "form": show_field
+            "form": show_field,
+            "tracking": project_type.traking
           }
           
           @p.push(data) 
