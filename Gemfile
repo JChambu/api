@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 5.1.4'
 # Use mysql as the database for Active Record
 gem 'pg', '~> 0.18'
-gem 'rgeo', '0.6.0'
+gem 'rgeo'
 gem 'rgeo-activerecord'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo-shapefile'
@@ -14,6 +14,7 @@ gem 'pry'
 gem 'devise'
 gem 'simple_token_authentication' 
 gem 'apartment'
+gem 'oj'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
