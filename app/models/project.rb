@@ -24,7 +24,9 @@ class Project < ApplicationRecord
       form={}
       row.properties.each do |k, v| 
         field = ProjectField.where(key: "#{k}").where(project_type_id: project_type_id).select(:id).first
-        form.merge!("#{field.id}": v)
+        if !field.nil? 
+          form.merge!("#{field.id}": v)
+        end 
       end
       data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at)
     end
