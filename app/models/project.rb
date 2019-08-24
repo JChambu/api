@@ -18,7 +18,7 @@ class Project < ApplicationRecord
   def self.show_data_new project_type_id, date_last_row, time_last_row
 
     updated_date = [date_last_row, time_last_row].join(" ").to_datetime
-    value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at ").order(:updated_at).limit(50)
+    value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id ").order(:updated_at).limit(50)
     data = []
     value.each do |row|
       form={}
@@ -28,7 +28,7 @@ class Project < ApplicationRecord
           form.merge!("#{field.id}": v)
         end 
       end
-      data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at)
+      data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "project_status_id": row.project_status_id)
     end
     @data = data
   end
@@ -38,7 +38,7 @@ class Project < ApplicationRecord
     project = []
     data.properties.each do |item|
 
-      @pf = ProjectField.where(project_type_id: data.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :sort )
+      @pf = ProjectField.where(project_type_id: data.project_type_id).where(name: item[0]).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :sort, :read_only, :popup, :calculated )
       if !@pf.empty?
         @choice_list_item = ''
         if !@pf[0].choice_list_id.nil?

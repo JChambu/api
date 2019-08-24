@@ -13,13 +13,15 @@ module Api
         @has_project_types.each do |s|
           project_type = ProjectType.where(id: s.project_type_id).first
           show_field = ProjectField.show_schema_new(project_type)
+          project_statuses = ProjectField.status_types(s.project_type_id)
           data = {
             "id":project_type.id, 
             "name":project_type.name,
             "enabled_as_layer": project_type.enabled_as_layer,
             "add_rows":project_type.add_rows,
             "form": show_field,
-            "tracking": project_type.tracking
+            "tracking": project_type.tracking,
+            "project_statuses": project_statuses
           }
           
           @p.push(data) 

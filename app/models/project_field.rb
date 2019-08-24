@@ -31,9 +31,6 @@ class ProjectField < ApplicationRecord
   
         @subvalue = []          
       if row.field_type_id == 7
-        #       #  row.each do |element|
-        #          # @e = element
-
         @repetible = ProjectSubfield.where(project_field_id: row.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only, :popup, :calculated_field, :role, :data_script ).order(:sort)
         @repetible.each do |sub_row|
                    @choice_list_subitem = '' 
@@ -49,12 +46,20 @@ class ProjectField < ApplicationRecord
                     end
         end
       end
+
+
       @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "required": row.required, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue, "read_only":@readonly, "popup":@popup, "calculated": @calculated, "role":@role, "data_script": @data_script }
       project.push @pf
       @pp = project
     end
     project
   end
+
+  def self.status_types project_type_id
+
+      @project_statuses = ProjectStatus.where(project_type_id: project_type_id).pluck(:id, :name, :color)
+  end
+
 
 
   def self.show_choice_list id 
