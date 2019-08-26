@@ -153,23 +153,25 @@ class Project < ApplicationRecord
     result_hash = {}
     project_data[:projects].each do |data|
       @project = Project.where(project_type_id: data[:project_type_id] ).where(id: data[:project_id]).first
-      if @project.updated_at < data[:lastUpdate]
-        value_name = {}
-        data['values'].each do |v,k|
-          field = ProjectField.where(id: v.to_i).select(:key).first
-          if !field.nil?
-            value_name.merge!("#{field.key}": k )
+      if !@project.nil?
+        if @project.updated_at < data[:lastUpdate]
+          value_name = {}
+          data['values'].each do |v,k|
+            field = ProjectField.where(id: v.to_i).select(:key).first
+            if !field.nil?
+              value_name.merge!("#{field.key}": k )
+            end
           end
-        end
-          update_row = {properties: value_name}
+          update_row = {properties: value_name, updated_at: data[:lastUpdate]}
           if @project.status_update_at < data[:status_update_at] 
             update_row.merge!(status_update_at: data[:status_update_at], project_status_id: data[:status_id] )
           end
-            if @project.update_attributes(update_row)
-          localID = data[:localID]
-          result_hash.merge!({"#{@project.id}": "ok"}) 
+          if @project.update_attributes(update_row)
+            localID = data[:localID]
+            result_hash.merge!({"#{@project.id}": "ok"}) 
+          end
+          return [result_hash]
         end
-        return [result_hash]
       end
     end
   end
