@@ -13,7 +13,7 @@ module Api
         @has_project_types.each do |s|
           project_type = ProjectType.where(id: s.project_type_id).first
           show_field = ProjectField.show_schema_new(project_type)
-          project_statuses = ProjectField.status_types(s.project_type_id)
+          project_statuses = ProjectField.status_types(s.project_type_id).as_json
           data = {
             "id":project_type.id, 
             "name":project_type.name,

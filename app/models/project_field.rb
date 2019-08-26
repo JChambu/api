@@ -56,8 +56,7 @@ class ProjectField < ApplicationRecord
   end
 
   def self.status_types project_type_id
-
-      @project_statuses = ProjectStatus.where(project_type_id: project_type_id).pluck(:id, :name, :color)
+      @project_statuses = ProjectStatus.where(project_type_id: project_type_id).select(:id, :name, :color)
   end
 
 
