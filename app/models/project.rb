@@ -11,7 +11,7 @@ class Project < ApplicationRecord
 
     updated_date = [date_last_row, time_last_row].join(" ").to_datetime
 
-    @rows = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).count
+    @rows = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).or(Project.where('status_update_at > ?', updated_date)).count
 
   end
 
