@@ -134,7 +134,7 @@ class Project < ApplicationRecord
       @project['properties'] = value_name
       @project['project_type_id'] = data['project_type_id']
       @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
-      @project['status_id'] = data['status_id']
+      @project['project_status_id'] = data['status_id']
       
       if @project.save
         localID = data[:localID]
