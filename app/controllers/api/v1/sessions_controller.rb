@@ -12,8 +12,11 @@ module Api
           user_customer = UserCustomer.where(user_id: user_mail)
 
           user_customer.map do |uc|
-
-            companies << {'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id, 'id': uc.customer.id}
+            if uc.customer.subdomain == 'demo' 
+              companies << {'url': uc.customer.url, 'name_company': 'demo1', 'role_id': uc.role_id, 'id': uc.customer.id}
+            else
+              companies << {'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id, 'id': uc.customer.id}
+          end
           end
           
           render json: {data: user,'companies': companies }
