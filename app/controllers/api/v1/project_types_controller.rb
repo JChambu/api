@@ -22,7 +22,7 @@ module Api
             "form": show_field,
             "tracking": project_type.tracking,
             "project_statuses": project_statuses,
-            "type_geometry": s.type_geometry
+            "type_geometry": project_type.type_geometry
           }
           
           @p.push(data) 
