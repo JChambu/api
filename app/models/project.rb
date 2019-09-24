@@ -15,7 +15,12 @@ class Project < ApplicationRecord
 
   def self.show_data_new project_type_id, date_last_row, time_last_row
     updated_date = [date_last_row, time_last_row].join(" ").to_datetime
-    value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id ").order(:updated_at).limit(50)
+    type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
+    if (type_geometry[0] == 'Polygon')
+      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_astext(the_geom) as geom, id, properties, updated_at, project_status_id ").order(:updated_at).limit(50)
+    else
+      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id ").order(:updated_at).limit(50)
+    end
     data = []
     value.each do |row|
       form={}
@@ -25,7 +30,11 @@ class Project < ApplicationRecord
           form.merge!("#{field.id}": v)
         end 
       end
+    if (type_geometry[0] == 'Polygon')
+      data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id)
+    else  
       data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id)
+    end
     end
     @data = data
   end
@@ -186,7 +195,7 @@ class Project < ApplicationRecord
       data['values'].each do |v|
         v.each do |a,b|
         field = ProjectSubfield.where(id: a.to_i).select(:key).first
-        value_name.merge!("#{field.key}": b )
+        value_name.merge!("#{field.key}": b ) 
         end
       end
       child_data[:properties] = data['values']
