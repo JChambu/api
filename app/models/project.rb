@@ -193,9 +193,12 @@ class Project < ApplicationRecord
 
       value_name = {}
       data['values'].each do |v|
-        v.each do |a,b|
+        v[0].each do |a,b|
+        
         field = ProjectSubfield.where(id: a.to_i).select(:key).first
+        if !field.nil?
         value_name.merge!("#{field.key}": b ) 
+        end
         end
       end
       child_data[:properties] = data['values']
