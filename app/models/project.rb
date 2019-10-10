@@ -132,25 +132,34 @@ class Project < ApplicationRecord
   def self.save_rows_project_data project_data
     result_hash = {}
     if !project_data[:projects].nil?
-    project_data[:projects].each do |data|
-      @project = Project.new()
+      project_data[:projects].each do |data|
+        @project = Project.new()
 
-      value_name = {}
-      data['values'].each do |v,k|
-        field = ProjectField.where(id: v.to_i).select(:key).first
-        value_name.merge!("#{field.key}": k )
+        value_name = {}
+        @project_type = ProjectType.find(data['project_type_id'])
+
+        data['values'].each do |v,k|
+          field = ProjectField.where(id: v.to_i).select(:key).first
+          value_name.merge!("#{field.key}": k )
+        end
+        @project['properties'] = value_name
+        @project['project_type_id'] = data['project_type_id']
+        type_geometry =  @project_type.type_geometry 
+        if type_geometry == 'Polygon'
+          @coord = data['the_geom'].as_json
+          @feature = RGeo::GeoJSON.decode(@coord, :json_parser => :json)
+          @project['the_geom'] = @feature.geometry.as_text  if !data['the_geom'].nil? 
+        else
+          @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
+        end
+        @project['project_status_id'] = data['status_id']
+
+        if @project.save
+          localID = data[:localID]
+          result_hash.merge!({"#{localID}":@project.id}) 
+        end
+
       end
-      @project['properties'] = value_name
-      @project['project_type_id'] = data['project_type_id']
-      @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
-      @project['project_status_id'] = data['status_id']
-      
-      if @project.save
-        localID = data[:localID]
-        result_hash.merge!({"#{localID}":@project.id}) 
-      end
-      
-    end
       return [result_hash]
     end
     return
