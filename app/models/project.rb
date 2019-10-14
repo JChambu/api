@@ -13,13 +13,13 @@ class Project < ApplicationRecord
     @rows = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).count
   end
 
-  def self.show_data_new project_type_id, date_last_row, time_last_row
+  def self.show_data_new project_type_id, date_last_row, time_last_row, page
     updated_date = [date_last_row, time_last_row].join(" ").to_datetime
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
-      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id ").order(:updated_at)
+      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id ").order(:updated_at).page(page).per_page(50)
     else
-      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id ").order(:updated_at)
+      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id ").order(:updated_at).page(page).per_page(50)
     end
     data = []
     value.each do |row|
