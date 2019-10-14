@@ -17,8 +17,10 @@ module Api
         last_date = params[:last_date]
         last_time = params[:last_time]
         project_type_id = params[:project_type_id]
-        @data = Project.show_data_new(project_type_id, last_date, last_time)
-        render json: {data: @data}  
+        @pp = params[:page].to_i
+        @data_p = Project.show_data_new(project_type_id, last_date, last_time)
+        @data = Kaminari.paginate_array(@data_p).page( @pp).per(50)
+        render json: {data: @data}
       end
 
 

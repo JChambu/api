@@ -17,9 +17,9 @@ class Project < ApplicationRecord
     updated_date = [date_last_row, time_last_row].join(" ").to_datetime
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
-      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id ").order(:updated_at).limit(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id ").order(:updated_at)
     else
-      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id ").order(:updated_at).limit(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id ").order(:updated_at)
     end
     data = []
     value.each do |row|
