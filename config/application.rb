@@ -27,5 +27,6 @@ module ApiDemo
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.time_zone = 'America/Argentina/Buenos_Aires'
+    config.active_record.default_timezone = :local
   end
 end
