@@ -17,9 +17,9 @@ class Project < ApplicationRecord
     updated_date = [date_last_row, time_last_row].join(" ").to_datetime
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
-      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id ").order(:updated_at).page(page).per_page(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id ").order(:updated_at,  :id).page(page).per_page(50)
     else
-      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id ").order(:updated_at).page(page).per_page(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id ").order(:updated_at, :id).page(page).per_page(50)
     end
     data = []
     value.each do |row|
@@ -107,9 +107,13 @@ class Project < ApplicationRecord
 
         project.push @pf
         @pp = project
+      if (type_geometry[0] == 'Polygon')
+        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id)
+      else  
+        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id)
       end
     end
-    project
+    @data = data
   end
 
   def self.show_choice_list id 
@@ -144,6 +148,7 @@ class Project < ApplicationRecord
         end
         @project['properties'] = value_name
         @project['project_type_id'] = data['project_type_id']
+        @project['user_id'] = data['user_id']
         type_geometry =  @project_type.type_geometry 
         if type_geometry == 'Polygon'
           @coord = data['the_geom'].as_json
@@ -178,7 +183,7 @@ class Project < ApplicationRecord
               value_name.merge!("#{field.key}": k )
             end
           end
-          update_row = {properties: value_name, updated_at: data[:lastUpdate]}
+          update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id]}
           if @project.status_update_at < data[:status_update_at] 
             update_row.merge!(status_update_at: data[:status_update_at], project_status_id: data[:status_id] )
           end
@@ -196,33 +201,34 @@ class Project < ApplicationRecord
     result_hash = {}
 
     if !project_data_child['projects']['childs'].nil?
-    project_data_child['projects']['childs'].each do |data|
-      child_data = ProjectDataChild.new()
-      child_data[:project_id] = data['IdFather']
+      project_data_child['projects']['childs'].each do |data|
+        child_data = ProjectDataChild.new()
+        child_data[:project_id] = data['IdFather']
 
-      value_name = {}
-      data['values'].each do |v|
-        v[0].each do |a,b|
-        
-        field = ProjectSubfield.where(id: a.to_i).select(:key).first
-        if !field.nil?
-        value_name.merge!("#{field.key}": b ) 
+        value_name = {}
+        data['values'].each do |v|
+          v[0].each do |a,b|
+
+            field = ProjectSubfield.where(id: a.to_i).select(:key).first
+            if !field.nil?
+              value_name.merge!("#{field.key}": b ) 
+            end
+          end
         end
-        end
+        child_data[:properties] = data['values']
+        child_data[:project_field_id] = data['field_id']
+        child_data[:user_id] = data[:user_id]
+        child_data.save
       end
-      child_data[:properties] = data['values']
-      child_data[:project_field_id] = data['field_id']
-      child_data.save
-    end
     end
     if !project_data_child['projects']['photos'].nil?
-    project_data_child['projects']['photos'].each do |photo|
+      project_data_child['projects']['photos'].each do |photo|
         project_photo = Photo.new
         project_photo['name'] = photo['values']['name']
         project_photo['image'] = photo['values']['image']
         project_photo['project_id'] = photo['IdFather']
         project_photo.save
+      end
+    end
   end
-  end
-end
 end
