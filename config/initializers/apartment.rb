@@ -111,6 +111,7 @@ end
 # Rails.application.config.middleware.use Apartment::Elevators::FirstSubdomain
 # Rails.application.config.middleware.use Apartment::Elevators::Host
 #
+Apartment::Elevators::FirstSubdomain.excluded_subdomains = ['www', 'geoworks','st-api']
 Rails.application.config.middleware.insert_before Warden::Manager, Apartment::Elevators::FirstSubdomain 
 Rails.application.config.middleware.use Apartment::Elevators::FirstSubdomain
 #
