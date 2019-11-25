@@ -17,9 +17,9 @@ class Project < ApplicationRecord
     updated_date = [date_last_row, time_last_row].join(" ")
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
-      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id ").order(:updated_at,  :id).page(page).per_page(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom  ").order(:updated_at,  :id).page(page).per_page(50)
     else
-      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id ").order(:updated_at, :id).page(page).per_page(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom ").order(:updated_at, :id).page(page).per_page(50)
     end
     data = []
     value.each do |row|
@@ -31,9 +31,9 @@ class Project < ApplicationRecord
         end 
       end
       if (type_geometry[0] == 'Polygon')
-        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id)
+        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": row.the_geom)
       else  
-        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id)
+        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": row.the_geom)
       end
     end
     @data = data
