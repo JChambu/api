@@ -17,11 +17,12 @@ class Project < ApplicationRecord
     updated_date = [date_last_row, time_last_row].join(" ")
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
-      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, (the_geom)::text as geom_text  ").order(:updated_at,  :id).page(page).per_page(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom").order(:updated_at,  :id).page(page).per_page(50)
     else
-      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, (the_geom)::text as geom_text").order(:updated_at, :id).page(page).per_page(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom").order(:updated_at, :id).page(page).per_page(50)
     end
     data = []
+    geom_text = ''
     value.each do |row|
       form={}
       row.properties.each do |k, v| 
@@ -30,10 +31,12 @@ class Project < ApplicationRecord
           form.merge!("#{field.id}": v)
         end 
       end
+      geom_text = row.the_geom.as_text if !row.the_geom.nil? 
       if (type_geometry[0] == 'Polygon')
-        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": row.geom_text)
+
+        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text)
       else  
-        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": row.geom_text)
+        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text)
       end
     end
     @data = data
