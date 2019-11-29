@@ -76,13 +76,7 @@ class Project < ApplicationRecord
         @project['project_type_id'] = data['project_type_id']
         @project['user_id'] = data['user_id']
         type_geometry =  @project_type.type_geometry 
-        if type_geometry == 'Polygon'
-          @coord = data['the_geom'].as_json
-          @feature = RGeo::GeoJSON.decode(@coord, :json_parser => :json)
-          @project['the_geom'] = @feature.geometry.as_text  if !data['the_geom'].nil? 
-        else
-          @project['the_geom'] = "POINT(#{data['longitude']} #{data['latitude']})" if !data['longitude'].nil? && !data['longitude'].nil?
-        end
+        @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
         @project['project_status_id'] = data['status_id']
 
         if @project.save
