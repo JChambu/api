@@ -12,6 +12,13 @@ module Api
         @count = Project.row_quantity( project_type_id, last_date, last_time)
         render json: {'row_quantity': @count}
       end
+      def check_row_quantity_children
+        project_type_id = params[:project_type_id]
+        last_date = params[:last_date]
+        last_time = params[:last_time]
+        @count = Project.row_quantity_children( project_type_id, last_date, last_time)
+        render json: {'row_quantity': @count}
+      end
 
       def list_data
         last_date = params[:last_date]

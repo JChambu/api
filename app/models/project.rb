@@ -4,13 +4,18 @@ class Project < ApplicationRecord
 
   belongs_to :project_type
   has_many :photos
+  has_many :project_data_child
   accepts_nested_attributes_for :photos
 
 
   def self.row_quantity project_type_id, date_last_row, time_last_row
-
     updated_date = [date_last_row, time_last_row].join(" ")
     @rows = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).count
+  end
+  
+  def self.row_quantity_children project_type_id, date_last_row, time_last_row
+    updated_date = [date_last_row, time_last_row].join(" ")
+    @rows = Project.joins(:project_data_child).where(project_type_id: project_type_id).where('project_data_children.updated_at > ?', updated_date).count
   end
 
   def self.show_data_new project_type_id, date_last_row, time_last_row, page
