@@ -6,6 +6,14 @@ class Project < ApplicationRecord
   has_many :photos
   has_many :project_data_child
   accepts_nested_attributes_for :photos
+  
+  before_update :update_sequence_projects
+
+    def update_sequence_projects
+       sequence_name = 'projects_update_sequence_seq'
+       @a = ActiveRecord::Base.connection.execute("select nextval('#{sequence_name}')")
+        self.update_sequence = @a[0]['nextval']
+    end
 
 
   def self.row_quantity project_type_id, date_last_row, time_last_row
@@ -108,10 +116,11 @@ class Project < ApplicationRecord
               value_name.merge!("#{field.key}": k )
             end
           end
-          update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id]}
-          if @project.status_update_at < data[:status_update_at] 
-            update_row.merge!(status_update_at: data[:status_update_at], project_status_id: data[:status_id] )
-          end
+          update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id], the_geom: data[:geometry], project_status_id: data[:status_id] }
+
+          # if @project.status_update_at < data[:status_update_at] 
+          #   update_row.merge!(status_update_at: data[:status_update_at])
+          # end
           if @project.update_attributes(update_row)
             localID = data[:localID]
             result_hash.merge!({"#{@project.id}": "ok"}) 
