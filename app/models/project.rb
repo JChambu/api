@@ -16,8 +16,7 @@ class Project < ApplicationRecord
     end
 
 
-  def self.row_quantity project_type_id, date_last_row, time_last_row
-    #updated_date = [date_last_row, time_last_row].join(" ")
+  def self.row_quantity project_type_id, updated_sequence
     @rows = Project.where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).count
   end
   
@@ -26,8 +25,7 @@ class Project < ApplicationRecord
     @rows = Project.joins(:project_data_child).where(project_type_id: project_type_id).where('project_data_children.updated_at > ?', updated_date).count
   end
 
-  def self.show_data_new project_type_id, date_last_row, time_last_row, page
-    updated_date = [date_last_row, time_last_row].join(" ")
+  def self.show_data_new project_type_id, updated_sequence, page
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
       value = Project.where(project_type_id: project_type_id).where('update_sequence >= ?', updated_sequence).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom").order(:updated_at,  :id).page(page).per_page(50)

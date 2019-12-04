@@ -7,9 +7,8 @@ module Api
 
       def check_row_quantity
         project_type_id = params[:project_type_id]
-        last_date = params[:last_date]
-        last_time = params[:last_time]
-        @count = Project.row_quantity( project_type_id, last_date, last_time)
+        updated_sequence = params[:updated_sequence]
+        @count = Project.row_quantity( project_type_id, updated_sequence)
         render json: {'row_quantity': @count}
       end
       def check_row_quantity_children
@@ -21,11 +20,10 @@ module Api
       end
 
       def list_data
-        last_date = params[:last_date]
-        last_time = params[:last_time]
+        updated_sequence = params[:updated_sequence]
         project_type_id = params[:project_type_id]
         page = params[:page].to_i
-        @data = Project.show_data_new(project_type_id, last_date, last_time, page)
+        @data = Project.show_data_new(project_type_id, updated_sequence, page)
         render json: {data: @data}
       end
 
