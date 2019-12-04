@@ -29,6 +29,14 @@ module Api
         render json: {data: @data}
       end
 
+      def list_data_children
+        last_date = params[:last_date]
+        last_time = params[:last_time]
+        project_type_id = params[:project_type_id]
+        page = params[:page].to_i
+        @data = ProjectDataChild.show_data_new(project_type_id, last_date, last_time, page)
+        render json: {data: @data}
+      end
 
       def save_rows
         @a = Project.save_rows_project_data params 

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       post 'projects/synchronization_update' => 'projects#synchronization_update'
       get 'project_types/list_projects' => 'project_types#list_projects'
       get 'projects/list_data' => 'projects#list_data'
+      get 'projects/list_data_children' => 'projects#list_data_children'
       get 'projects/check_row_quantity' => 'projects#check_row_quantity'
       get 'projects/check_row_quantity_children' => 'projects#check_row_quantity_children'
       post 'projects/save_rows' => 'projects#save_rows'
