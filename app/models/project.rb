@@ -17,8 +17,8 @@ class Project < ApplicationRecord
 
 
   def self.row_quantity project_type_id, date_last_row, time_last_row
-    updated_date = [date_last_row, time_last_row].join(" ")
-    @rows = Project.where(project_type_id: project_type_id).where('updated_at > ?', updated_date).count
+    #updated_date = [date_last_row, time_last_row].join(" ")
+    @rows = Project.where(project_type_id: project_type_id).where('updated_sequence > ?', updated_sequence).count
   end
   
   def self.row_quantity_children project_type_id, date_last_row, time_last_row
@@ -30,9 +30,9 @@ class Project < ApplicationRecord
     updated_date = [date_last_row, time_last_row].join(" ")
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
-      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom").order(:updated_at,  :id).page(page).per_page(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_sequence >= ?', updated_sequence).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom").order(:updated_at,  :id).page(page).per_page(50)
     else
-      value = Project.where(project_type_id: project_type_id).where('updated_at >= ?', updated_date).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom").order(:updated_at, :id).page(page).per_page(50)
+      value = Project.where(project_type_id: project_type_id).where('updated_sequence >= ?', updated_sequence).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom").order(:updated_at, :id).page(page).per_page(50)
     end
     data = []
     geom_text = ''
