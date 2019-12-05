@@ -20,9 +20,8 @@ class Project < ApplicationRecord
     @rows = Project.where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).count
   end
 
-  def self.row_quantity_children project_type_id, date_last_row, time_last_row
-    updated_date = [date_last_row, time_last_row].join(" ")
-    @rows = Project.joins(:project_data_child).where(project_type_id: project_type_id).where('project_data_children.updated_at > ?', updated_date).count
+  def self.row_quantity_children project_type_id, updated_sequence
+    @rows = Project.joins(:project_data_child).where(project_type_id: project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).select("project_data_children.update_sequence").count
   end
 
   def self.show_data_new project_type_id, updated_sequence, page
