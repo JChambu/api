@@ -7,19 +7,19 @@ module Api
 
       def check_row_quantity
         project_type_id = params[:project_type_id]
-        updated_sequence = params[:updated_sequence]
+        updated_sequence = params[:updated_sequence].to_i
         @count = Project.row_quantity( project_type_id, updated_sequence)
         render json: {'row_quantity': @count}
       end
       def check_row_quantity_children
         project_type_id = params[:project_type_id]
-        updated_sequence = params[:updated_sequence]
+        updated_sequence = params[:updated_sequence].to_i
         @count = Project.row_quantity_children( project_type_id, updated_sequence)
         render json: {'row_quantity': @count}
       end
 
       def list_data
-        updated_sequence = params[:updated_sequence]
+        updated_sequence = params[:updated_sequence].to_i
         project_type_id = params[:project_type_id]
         page = params[:page].to_i
         @data = Project.show_data_new(project_type_id, updated_sequence, page)
@@ -27,7 +27,7 @@ module Api
       end
 
       def list_data_children
-        updated_sequence = params[:updated_sequence]
+        updated_sequence = params[:updated_sequence].to_i
         project_type_id = params[:project_type_id]
         page = params[:page].to_i
         @data = ProjectDataChild.show_data_new(project_type_id, updated_sequence, page)
