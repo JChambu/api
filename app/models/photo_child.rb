@@ -1,0 +1,2 @@
+class PhotoChild < ApplicationRecord
+end
