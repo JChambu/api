@@ -147,10 +147,21 @@ class Project < ApplicationRecord
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id]
         child_data.save
+      
+    if !data['photos_child'].nil?
+        data['photos_child'].each do |photo_child|
+        photo = PhotoChild.new
+        photo['name'] = photo_child['values']['name']
+        photo['image'] = photo_child['values']['image']
+        photo['project_data_child_id'] = child_data.id
+        photo.save
+      end
+    end
+
       end
     end
     if !project_data_child['projects']['photos'].nil?
-      project_data_child['projects']['photos'].each do |photo|
+        project_data_child['projects']['photos'].each do |photo|
         project_photo = Photo.new
         project_photo['name'] = photo['values']['name']
         project_photo['image'] = photo['values']['image']
