@@ -5,7 +5,7 @@ module Api
       def create
         user_mail = User.where(email: params[:email]).where(active: true).first
 
-        if !user_mail.nil? || user_mail&.valid_password?(params[:password]) 
+        if !user_mail.nil? && user_mail&.valid_password?(params[:password]) 
           user = {'email': user_mail.email, 'authentication_token': user_mail.authentication_token, 'user_id': user_mail.id}
           companies=[]
           user_customer = UserCustomer.where(user_id: user_mail)
