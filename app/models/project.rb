@@ -15,21 +15,30 @@ class Project < ApplicationRecord
     self.update_sequence = @a[0]['nextval']
   end
 
+  def self.row_active row_active
 
-  def self.row_quantity project_type_id, updated_sequence
-    @rows = Project.where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).count
+    if row_active == 'true'
+      where(row_active: true)   
+    else
+      where('row_active IS Not NULL ')
+    end
   end
 
-  def self.row_quantity_children project_type_id, updated_sequence
-    @rows = Project.joins(:project_data_child).where(project_type_id: project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).select("project_data_children.update_sequence").count
+  def self.row_quantity project_type_id, updated_sequence, row_active
+    
+    @rows = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).count
   end
 
-  def self.show_data_new project_type_id, updated_sequence, page
+  def self.row_quantity_children project_type_id, updated_sequence, row_active
+    @rows = Project.joins(:project_data_child).row_active(row_active).where(project_type_id: project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).select("project_data_children.update_sequence").count
+  end
+
+  def self.show_data_new project_type_id, updated_sequence, page, row_active
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
-      value = Project.where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence").order(:update_sequence).page(page).per_page(50)
+      value = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active").order(:update_sequence).page(page).per_page(50)
     else
-      value = Project.where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence").order(:update_sequence).page(page).per_page(50)
+      value = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active").order(:update_sequence).page(page).per_page(50)
     end
     data = []
     geom_text = ''
@@ -44,9 +53,9 @@ class Project < ApplicationRecord
       geom_text = row.the_geom.as_text if !row.the_geom.nil? 
       if (type_geometry[0] == 'Polygon')
 
-        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence)
+        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence, "row_active": row.row_active)
       else  
-        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence)
+        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence, "row_active": row.row_active)
       end
     end
     @data = data
@@ -61,7 +70,6 @@ class Project < ApplicationRecord
     end
     items
   end
-
 
   def self.show_regexp_type id
     r = RegexpType.find(id)
@@ -88,6 +96,7 @@ class Project < ApplicationRecord
         type_geometry =  @project_type.type_geometry 
         @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
         @project['project_status_id'] = data['status_id']
+        @project['row_active'] = data['row_active']
 
         if @project.save
           localID = data[:localID]
@@ -113,11 +122,11 @@ class Project < ApplicationRecord
               value_name.merge!("#{field.key}": k )
             end
           end
-          update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id], the_geom: data[:geometry], project_status_id: data[:status_id] }
-
-          # if @project.status_update_at < data[:status_update_at] 
-          #   update_row.merge!(status_update_at: data[:status_update_at])
-          # end
+          update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id], the_geom: data[:geometry], project_status_id: data[:status_id], row_active: data[:row_active] }
+      
+          if data[:row_active] == false
+              update_row_child_inactive(data[:project_id])
+          end
           if @project.update_attributes(update_row)
             localID = data[:localID]
             result_hash.merge!({"#{@project.id}": "ok"}) 
@@ -126,6 +135,13 @@ class Project < ApplicationRecord
         end
       end
     end
+  end
+
+  def self.update_row_child_inactive project_id
+   
+      @project_data_child = ProjectDataChild.where(project_id: project_id)
+      @project_data_child.update_all(row_active: false)
+        
   end
 
   def self.save_rows_project_data_childs project_data_child
