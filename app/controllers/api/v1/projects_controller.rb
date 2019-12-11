@@ -16,7 +16,7 @@ module Api
         project_type_id = params[:project_type_id]
         updated_sequence = params[:updated_sequence].to_i
         row_active = params[:row_active]
-        @count = Project.row_quantity_children( project_type_id, updated_sequence, row_active)
+        @count = ProjectDataChild.row_quantity_children( project_type_id, updated_sequence, row_active)
         render json: {'row_quantity': @count}
       end
 

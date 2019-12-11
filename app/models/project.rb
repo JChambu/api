@@ -29,10 +29,6 @@ class Project < ApplicationRecord
     @rows = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).count
   end
 
-  def self.row_quantity_children project_type_id, updated_sequence, row_active
-    @rows = Project.joins(:project_data_child).row_active(row_active).where(project_type_id: project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).select("project_data_children.update_sequence").count
-  end
-
   def self.show_data_new project_type_id, updated_sequence, page, row_active
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
