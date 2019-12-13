@@ -19,11 +19,11 @@ module Api
             end
             render json: {data: user,'companies': companies }
           else
-            render json: {data: "Usuario Inactivo", code: 401}
+            render json: {data: {'email': user_mail.email, error:"Usuario Inactivo", code: 401}}
           end
         else
           #head(:unauthorized)
-          render json: {data: "Email o Password Incorrecto", code: 401}
+          render json: {data: {'email': params[:email], 'error': "Email o Password Incorrecto", 'code': 401}}
         end
       end
     end
