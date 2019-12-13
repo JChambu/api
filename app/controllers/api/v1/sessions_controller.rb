@@ -6,7 +6,7 @@ module Api
         user_mail = User.where(email: params[:email]).first
         if !user_mail.nil? && user_mail&.valid_password?(params[:password])
           if user_mail.active == true
-            user = {'email': user_mail.email, 'authentication_token': user_mail.authentication_token, 'user_id': user_mail.id, 'error': 'None'}
+            user = {'email': user_mail.email, 'authentication_token': user_mail.authentication_token, 'user_id': user_mail.id, 'error': 'none'}
             companies=[]
             user_customer = UserCustomer.where(user_id: user_mail)
 
