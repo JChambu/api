@@ -120,7 +120,7 @@ class Project < ApplicationRecord
           end
           update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id], the_geom: data[:geometry], project_status_id: data[:status_id], row_active: data[:row_active] }
       
-          if data[:row_active] == false
+          if data[:row_active] == 'false'
               update_row_child_inactive(data[:project_id])
           end
           if @project.update_attributes(update_row)
