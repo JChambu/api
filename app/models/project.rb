@@ -32,9 +32,9 @@ class Project < ApplicationRecord
   def self.show_data_new project_type_id, updated_sequence, page, row_active
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     if (type_geometry[0] == 'Polygon')
-      value = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active").order(:update_sequence).page(page).per_page(50)
+      value = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active").order(:update_sequence).page(page).per_page(50)
     else
-      value = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active").order(:update_sequence).page(page).per_page(50)
+      value = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74')select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active").order(:update_sequence).page(page).per_page(50)
     end
     data = []
     geom_text = ''
