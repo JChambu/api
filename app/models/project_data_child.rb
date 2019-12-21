@@ -31,7 +31,7 @@ class ProjectDataChild < ApplicationRecord
   end
 
   def self.row_quantity_children project_type_id, updated_sequence, row_active
-    @rows = ProjectDataChild.joins(:project).row_active(row_active).where("projects.project_type_id = ?", project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).select("project_data_children.update_sequence").count
+    @rows = ProjectDataChild.joins(:project).row_active(row_active).where("projects.project_type_id = ?", project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).where.not(user_id:'74').select("project_data_children.update_sequence").count
   end
 
 end
