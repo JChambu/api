@@ -16,7 +16,7 @@ class ProjectDataChild < ApplicationRecord
         where(project_type_id: project_type_id).
         where('project_data_children.update_sequence > ?', updated_sequence).
         where('project_data_children.row_active = ?', row_active).
-        where('user_id = 74' ).
+        where('project_data_children.user_id = 74' ).
         select("project_data_children.id, project_data_children.properties, project_data_children.updated_at,  project_data_children.user_id, project_data_children.project_id as project_data_id, project_data_children.project_field_id as project_field_id, project_data_children.update_sequence, project_data_children.row_active ").order('project_data_children.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
@@ -31,7 +31,7 @@ class ProjectDataChild < ApplicationRecord
   end
 
   def self.row_quantity_children project_type_id, updated_sequence, row_active
-    @rows = ProjectDataChild.joins(:project).row_active(row_active).where("projects.project_type_id = ?", project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).where.not(user_id:'74').select("project_data_children.update_sequence").count
+    @rows = ProjectDataChild.joins(:project).row_active(row_active).where("projects.project_type_id = ?", project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).where.not('project_data_children.user_id = 74').select("project_data_children.update_sequence").count
   end
 
 end
