@@ -9,14 +9,14 @@ module Api
         project_type_id = params[:project_type_id]
         updated_sequence = params[:updated_sequence].to_i
         row_active = params[:row_active]
-        @count = Project.row_quantity( project_type_id, updated_sequence, row_active)
+        @count = Project.row_quantity( project_type_id, updated_sequence, row_active, current_user.id)
         render json: {'row_quantity': @count}
       end
       def check_row_quantity_children
         project_type_id = params[:project_type_id]
         updated_sequence = params[:updated_sequence].to_i
         row_active = params[:row_active]
-        @count = ProjectDataChild.row_quantity_children( project_type_id, updated_sequence, row_active)
+        @count = ProjectDataChild.row_quantity_children( project_type_id, updated_sequence, row_active, current_user.id)
         render json: {'row_quantity': @count}
       end
 
@@ -25,7 +25,7 @@ module Api
         project_type_id = params[:project_type_id]
         page = params[:page].to_i
         row_active = params[:row_active]
-        @data = Project.show_data_new(project_type_id, updated_sequence, page, row_active)
+        @data = Project.show_data_new(project_type_id, updated_sequence, page, row_active, current_user.id)
         render json: {data: @data}
       end
 
@@ -34,7 +34,7 @@ module Api
         project_type_id = params[:project_type_id]
         page = params[:page].to_i
         row_active = params[:row_active]
-        @data = ProjectDataChild.show_data_new(project_type_id, updated_sequence, page, row_active)
+        @data = ProjectDataChild.show_data_new(project_type_id, updated_sequence, page, row_active, current_user.id)
         render json: {data: @data}
       end
 

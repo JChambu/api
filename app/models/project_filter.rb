@@ -1,0 +1,2 @@
+class ProjectFilter < ApplicationRecord
+end
