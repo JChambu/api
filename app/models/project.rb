@@ -55,6 +55,7 @@ class Project < ApplicationRecord
           form.merge!("#{field.id}": v)
         end 
       end
+
       geom_text = row.the_geom.as_text if !row.the_geom.nil? 
       if (type_geometry[0] == 'Polygon')
 
@@ -93,21 +94,33 @@ class Project < ApplicationRecord
 
         data['values'].each do |v,k|
           field = ProjectField.where(id: v.to_i).select(:key).first
-          value_name.merge!("#{field.key}": k )
-        end
-        @project['properties'] = value_name
-        @project['project_type_id'] = data['project_type_id']
-        @project['user_id'] = data['user_id']
-        type_geometry =  @project_type.type_geometry 
-        @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
-        @project['project_status_id'] = data['status_id']
-        @project['row_active'] = data['row_active']
 
-        if @project.save
-          localID = data[:localID]
-          result_hash.merge!({"#{localID}":@project.id}) 
-        end
+          if !field.nil?
+            if field.key == 'app_estado'
+              value_name.merge!('app_estado': data[:status_id])
+            end
+            if field.key == 'app_usuario'
+              value_name.merge!('app_usuario': data[:user_id])
+            end
+            if field.key != 'app_estado' && field.key != 'app_usuario'
+              value_name.merge!("#{field.key}": k )
+            end
+          end
 
+          @project['properties'] = value_name
+          @project['project_type_id'] = data['project_type_id']
+          @project['user_id'] = data['user_id']
+          type_geometry =  @project_type.type_geometry 
+          @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
+          @project['project_status_id'] = data['status_id']
+          @project['row_active'] = data['row_active']
+
+          if @project.save
+            localID = data[:localID]
+            result_hash.merge!({"#{localID}":@project.id}) 
+          end
+
+        end
       end
       return [result_hash]
     end
@@ -124,7 +137,15 @@ class Project < ApplicationRecord
           data['values'].each do |v,k|
             field = ProjectField.where(id: v.to_i).select(:key).first
             if !field.nil?
-              value_name.merge!("#{field.key}": k )
+              if field.key == 'app_estado'
+                value_name.merge!('app_estado': data[:status_id])
+              end
+              if field.key == 'app_usuario'
+                value_name.merge!('app_usuario': data[:user_id])
+              end
+              if field.key != 'app_estado' && field.key != 'app_usuario'
+                value_name.merge!("#{field.key}": k )
+              end
             end
           end
           update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id], the_geom: data[:geometry], project_status_id: data[:status_id], row_active: data[:row_active] }
@@ -132,6 +153,7 @@ class Project < ApplicationRecord
           if data[:row_active] == 'false'
               update_row_child_inactive(data[:project_id])
           end
+          
           if @project.update_attributes(update_row)
             localID = data[:localID]
             result_hash.merge!({"#{@project.id}": "ok"}) 
