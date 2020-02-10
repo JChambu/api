@@ -7,7 +7,7 @@ class ProjectField < ApplicationRecord
   def self.show_schema_new data
 
     project = []
-    project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only, :sort, :popup, :calculated_field, :role, :data_script ).order(:sort)
+    project_field = ProjectField.where(project_type_id: data.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only, :sort, :popup, :calculated_field, :role, :data_script, :filter_field ).order(:sort)
     project_field.each do |row|
 
       @rr = row
@@ -28,7 +28,7 @@ class ProjectField < ApplicationRecord
       @calculated = row.calculated_field
       @role = row.role
       @data_script = row.data_script
-  
+      @filter_field = row.filter_field 
         @subvalue = []          
       if row.field_type_id == 7
         @repetible = ProjectSubfield.where(project_field_id: row.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only, :popup, :calculated_field, :role, :data_script ).order(:sort)
@@ -48,7 +48,7 @@ class ProjectField < ApplicationRecord
       end
 
 
-      @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "required": row.required, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue, "read_only":@readonly, "popup":@popup, "calculated": @calculated, "role":@role, "data_script": @data_script }
+      @pf = { "id":row.id, "name": row.name, "field_type_id":row.field_type_id, "items": @choice_list_item, "required": row.required, "regexp": @regexp, "hidden": @hidden, "sort": @sort, "elements":@subvalue, "read_only":@readonly, "popup":@popup, "calculated": @calculated, "role":@role, "data_script": @data_script, filter_field: @filter_field }
       project.push @pf
       @pp = project
     end
