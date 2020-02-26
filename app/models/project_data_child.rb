@@ -15,7 +15,7 @@ class ProjectDataChild < ApplicationRecord
       joins(:project_data_child).
       where(project_type_id: project_type_id).
       where('project_data_children.update_sequence > ?', updated_sequence).
-      where(row_active).
+      where(row_active(row_active)).
       where.not('project_data_children.user_id = 74' ).
       select("project_data_children.id, project_data_children.properties, project_data_children.updated_at,  project_data_children.user_id, project_data_children.project_id as project_data_id, project_data_children.project_field_id as project_field_id, project_data_children.update_sequence, project_data_children.row_active ")
 
