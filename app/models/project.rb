@@ -18,9 +18,9 @@ class Project < ApplicationRecord
   def self.row_active row_active
 
     if row_active == 'true'
-      where(row_active: true)   
+      where('projects.row_active = ? ', true)   
     else
-      where('row_active IS Not NULL ')
+      where('projects.row_active IS Not NULL ')
     end
   end
 
