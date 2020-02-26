@@ -22,7 +22,6 @@ class ProjectDataChild < ApplicationRecord
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     value = value.where(user_id: current_user) if !@owner.nil? && @owner != false 
 
-    value = value.order(:update_sequence).page(page).per_page(50)
     value = value.order('project_data_children.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
