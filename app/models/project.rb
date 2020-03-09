@@ -96,15 +96,12 @@ class Project < ApplicationRecord
           field = ProjectField.where(id: v.to_i).select(:key).first
 
           if !field.nil?
-            if field.key == 'app_estado'
-              value_name.merge!('app_estado': data[:status_id])
-            end
-            if field.key == 'app_usuario'
-              value_name.merge!('app_usuario': data[:user_id])
-            end
-            if field.key != 'app_estado' && field.key != 'app_usuario'
+            if field.key != 'app_estado' || field.key != 'app_usuario' || field.key != 'app_id'
               value_name.merge!("#{field.key}": k )
             end
+            value_name.merge!('app_usuario': data[:user_id])
+            value_name.merge!('app_estado': data[:status_id])
+            value_name.merge!('app_id': @project.id)
           end
 
           @project['properties'] = value_name
@@ -137,15 +134,12 @@ class Project < ApplicationRecord
           data['values'].each do |v,k|
             field = ProjectField.where(id: v.to_i).select(:key).first
             if !field.nil?
-              if field.key == 'app_estado'
-                value_name.merge!('app_estado': data[:status_id])
-              end
-              if field.key == 'app_usuario'
-                value_name.merge!('app_usuario': data[:user_id])
-              end
-              if field.key != 'app_estado' && field.key != 'app_usuario'
+              if field.key != 'app_estado' || field.key != 'app_usuario' || field.key != 'app_id'
                 value_name.merge!("#{field.key}": k )
               end
+            value_name.merge!('app_usuario': data[:user_id])
+            value_name.merge!('app_estado': data[:status_id])
+            value_name.merge!('app_id': @project.id)
             end
           end
           update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id], the_geom: data[:geometry], project_status_id: data[:status_id], row_active: data[:row_active] }
