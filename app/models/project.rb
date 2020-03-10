@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   require 'rgeo/shapefile'
   require 'rgeo/geo_json'
 
+  has_paper_trail
   belongs_to :project_type
   has_many :photos
   has_many :project_data_child
@@ -88,22 +89,20 @@ class Project < ApplicationRecord
     if !project_data[:projects].nil?
       project_data[:projects].each do |data|
         @project = Project.new()
-
         value_name = {}
         @project_type = ProjectType.find(data['project_type_id'])
-
+        
         data['values'].each do |v,k|
           field = ProjectField.where(id: v.to_i).select(:key).first
 
           if !field.nil?
-            if field.key != 'app_estado' || field.key != 'app_usuario' || field.key != 'app_id'
+            if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id'
               value_name.merge!("#{field.key}": k )
             end
-            value_name.merge!('app_usuario': data[:user_id])
-            value_name.merge!('app_estado': data[:status_id])
-            value_name.merge!('app_id': @project.id)
           end
 
+          value_name.merge!('app_usuario': data[:user_id])
+          value_name.merge!('app_estado': data[:status_id])
           @project['properties'] = value_name
           @project['project_type_id'] = data['project_type_id']
           @project['user_id'] = data['user_id']
@@ -111,12 +110,12 @@ class Project < ApplicationRecord
           @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
           @project['project_status_id'] = data['status_id']
           @project['row_active'] = data['row_active']
-
-          if @project.save
-            localID = data[:localID]
-            result_hash.merge!({"#{localID}":@project.id}) 
-          end
-
+        end
+        if @project.save
+          @project['properties'].merge!('app_id':@project.id)
+          @project.save!
+          localID = data[:localID]
+          result_hash.merge!({"#{localID}":@project.id}) 
         end
       end
       return [result_hash]
