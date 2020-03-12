@@ -133,28 +133,28 @@ class Project < ApplicationRecord
           data['values'].each do |v,k|
             field = ProjectField.where(id: v.to_i).select(:key).first
             if !field.nil?
-              if field.key != 'app_estado' || field.key != 'app_usuario' || field.key != 'app_id'
+              if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id'
                 value_name.merge!("#{field.key}": k )
               end
-            value_name.merge!('app_usuario': data[:user_id])
-            value_name.merge!('app_estado': data[:status_id])
-            value_name.merge!('app_id': @project.id)
+              value_name.merge!('app_usuario': data[:user_id])
+              value_name.merge!('app_estado': data[:status_id])
+              value_name.merge!('app_id': @project.id)
             end
           end
           update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id], the_geom: data[:geometry], project_status_id: data[:status_id], row_active: data[:row_active] }
-      
+
           if data[:row_active] == 'false'
-              update_row_child_inactive(data[:project_id])
+            update_row_child_inactive(data[:project_id])
           end
-          
+
           if @project.update_attributes(update_row)
             localID = data[:localID]
             result_hash.merge!({"#{@project.id}": "ok"}) 
           end
-          return [result_hash]
         end
       end
     end
+    return [result_hash]
   end
 
   def self.update_row_child_inactive project_id
