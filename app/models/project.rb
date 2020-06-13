@@ -17,58 +17,74 @@ class Project < ApplicationRecord
   end
 
   def self.row_active row_active
-
     if row_active == 'true'
-      where('projects.row_active = ? ', true)   
+      where('projects.row_active = ? ', true)
     else
       where('projects.row_active IS Not NULL ')
     end
   end
 
-  def self.row_quantity project_type_id, updated_sequence, row_active, current_user
-    
-    @rows = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74')
+  def self.current_season current_season
+    if current_season == 'true'
+      where('projects.current_season = ? ', true)
+    else
+      where('projects.current_season IS Not NULL ')
+    end
+  end
+
+  def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
+
+    @rows = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74')
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
-    @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false 
+    @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false
     @rows = @rows.count
     @rows
   end
 
-  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_user
+  # Consulta los datos de los registros padres
+  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     value = ''
+
+    # Realiza la consulta a la db
     if (type_geometry[0] == 'Polygon')
-      value = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active")
+      value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
     else
-      value = Project.row_active(row_active).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active")
+      value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
     end
+
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
-    value = value.where(user_id: current_user) if !@owner.nil? && @owner != false 
+    value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
 
     value = value.order(:update_sequence).page(page).per_page(50)
     data = []
     geom_text = ''
+
     value.each do |row|
+
+      # Arma el form con los datos del prototipo
       form={}
-      row.properties.each do |k, v| 
+      row.properties.each do |k, v|
         field = ProjectField.where(key: "#{k}").where(project_type_id: project_type_id).select(:id).first
-        if !field.nil? 
+        if !field.nil?
           form.merge!("#{field.id}": v)
-        end 
+        end
       end
 
-      geom_text = row.the_geom.as_text if !row.the_geom.nil? 
+      geom_text = row.the_geom.as_text if !row.the_geom.nil?
+
+      # Arma la colección con los datos a devolver
       if (type_geometry[0] == 'Polygon')
-
-        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence, "row_active": row.row_active)
-      else  
-        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence, "row_active": row.row_active)
+        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence, "row_active": row.row_active, "current_season": row.current_season)
+      else
+        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence, "row_active": row.row_active, "current_season": row.current_season)
       end
+
     end
     @data = data
   end
 
-  def self.show_choice_list id 
+  def self.show_choice_list id
     items=[]
     choice_list = ChoiceList.find(id)
     choice_list_item  = ChoiceListItem.where(choice_list_id: choice_list.id)
@@ -91,7 +107,7 @@ class Project < ApplicationRecord
         @project = Project.new()
         value_name = {}
         @project_type = ProjectType.find(data['project_type_id'])
-        
+
         data['values'].each do |v,k|
           field = ProjectField.where(id: v.to_i).select(:key).first
 
@@ -106,7 +122,7 @@ class Project < ApplicationRecord
           @project['properties'] = value_name
           @project['project_type_id'] = data['project_type_id']
           @project['user_id'] = data['user_id']
-          type_geometry =  @project_type.type_geometry 
+          type_geometry =  @project_type.type_geometry
           @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
           @project['project_status_id'] = data['status_id']
           @project['row_active'] = data['row_active']
@@ -115,7 +131,7 @@ class Project < ApplicationRecord
           @project['properties'].merge!('app_id':@project.id)
           @project.save!
           localID = data[:localID]
-          result_hash.merge!({"#{localID}":@project.id}) 
+          result_hash.merge!({"#{localID}":@project.id})
         end
       end
       return [result_hash]
@@ -149,7 +165,7 @@ class Project < ApplicationRecord
 
           if @project.update_attributes(update_row)
             localID = data[:localID]
-            result_hash.merge!({"#{@project.id}": "ok"}) 
+            result_hash.merge!({"#{@project.id}": "ok"})
           end
         end
       end
@@ -158,10 +174,10 @@ class Project < ApplicationRecord
   end
 
   def self.update_row_child_inactive project_id
-   
+
       @project_data_child = ProjectDataChild.where(project_id: project_id)
       @project_data_child.update_all(row_active: false)
-        
+
   end
 
   def self.save_rows_project_data_childs project_data_child
@@ -175,7 +191,7 @@ class Project < ApplicationRecord
           v.each do |a,b|
             field = ProjectSubfield.where(id: a.to_i).select(:key).first
             if !field.nil?
-              value_name.merge!("#{field.key}": b ) 
+              value_name.merge!("#{field.key}": b )
             end
           end
         end
@@ -183,7 +199,7 @@ class Project < ApplicationRecord
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id]
         child_data.save
-      
+
     if !data['photos_child'].nil?
         data['photos_child'].each do |photo_child|
         photo = PhotoChild.new
