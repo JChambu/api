@@ -4,10 +4,10 @@
 lock "3.11.0"
 
 set :application, "geoworks"
-set :repo_url, "git@bitbucket.org:asergiop21/gw_lite_api.git" 
+set :repo_url, "https://github.com/JChambu/api.git"
 
 # Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/opt/gw_lite"
