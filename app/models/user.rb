@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_many :user_customers
   has_many :customers, through: :user_customers
-  
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   before_create -> {self.token = generate_token}

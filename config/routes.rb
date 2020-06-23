@@ -26,10 +26,11 @@ Rails.application.routes.draw do
       post 'projects/update_rows' => 'projects#update_rows'
       resources :users
       resources :project_fields
-      resources :project_types 
+      resources :project_types
       resources :sessions, only: [:create, :destroy]
       resources :projects
-      #devise_for :users
+      # devise_for :users
+
     end
   end
 end
