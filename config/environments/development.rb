@@ -31,6 +31,9 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Default from for mailer
+  config.action_mailer.default_options = {from: 'no-reply@geoworks.com.ar'}
+
   # Default url options for devise
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
