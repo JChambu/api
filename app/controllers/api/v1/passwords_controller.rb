@@ -7,7 +7,7 @@ module Api
       def forgot
 
         if params[:email].blank?
-          return render json: {error: 'E-mail vacío. Por favor ingresa tu e-mail e intenta de nuevo.'}
+          return render json: {status: 'E-mail vacío. Por favor ingresa tu e-mail e intenta de nuevo.'}
         end
 
         user = User.find_by(email: params[:email])
@@ -43,7 +43,7 @@ module Api
         else
           render json: {error: ['Enlace no válido o caducado. Intenta generar un nuevo enlace.']}, status: :not_found
         end
-        
+
       end
 
     end
