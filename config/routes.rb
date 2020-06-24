@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       post 'projects/update_rows' => 'projects#update_rows'
       post 'passwords/forgot', to: 'passwords#forgot'
       get 'passwords/reset', to: 'passwords#reset'
+      post 'users/update_password', to: 'users#update_password'
       resources :users
       resources :project_fields
       resources :project_types

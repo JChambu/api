@@ -30,6 +30,11 @@ class User < ApplicationRecord
   end
 
 
+  def save_password new_password
+    self.password = new_password
+    save!
+  end
+
   private
 
   def generate_password
