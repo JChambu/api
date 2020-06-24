@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       post 'projects/save_rows' => 'projects#save_rows'
       post 'projects/save_row_children' => 'projects#save_row_children'
       post 'projects/update_rows' => 'projects#update_rows'
+      post 'passwords/forgot', to: 'passwords#forgot'
+      get 'passwords/reset', to: 'passwords#reset'
       resources :users
       resources :project_fields
       resources :project_types
