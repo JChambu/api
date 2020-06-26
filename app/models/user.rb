@@ -23,9 +23,9 @@ class User < ApplicationRecord
   end
 
 
-  def reset_password!
+  def reset_password!(password)
    self.reset_password_token = nil
-   self.password = generate_password
+   self.password = password
    save!
   end
 
@@ -40,6 +40,7 @@ class User < ApplicationRecord
   def generate_password
     self.password = Devise.friendly_token.first(8)
   end
+
 
   def generate_token
    SecureRandom.hex(10)
