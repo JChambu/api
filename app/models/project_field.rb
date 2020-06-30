@@ -28,12 +28,12 @@ class ProjectField < ApplicationRecord
       @calculated = row.calculated_field
       @role = row.role
       @data_script = row.data_script
-      @filter_field = row.filter_field 
-        @subvalue = []          
+      @filter_field = row.filter_field
+        @subvalue = []
       if row.field_type_id == 7
         @repetible = ProjectSubfield.where(project_field_id: row.id).select(:id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden, :read_only, :popup, :calculated_field, :role, :data_script ).order(:sort)
         @repetible.each do |sub_row|
-                   @choice_list_subitem = '' 
+                   @choice_list_subitem = ''
                    if !sub_row.choice_list_id.nil?
                      @choice_list_subitem = show_choice_list(sub_row.choice_list_id)
                    end
@@ -42,7 +42,7 @@ class ProjectField < ApplicationRecord
                      @regexp_subitem = show_regexp_type(sub_row.regexp_type_id)
                    end
                     if !@repetible.empty?
-                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem, "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id, "required": sub_row.required, "hidden":sub_row.hidden, "read_only":sub_row.read_only, "popup":sub_row.popup, "calculated":sub_row.calculated_field, "role":sub_row.role, "data_script": sub_row.data_script))
+                      @subvalue.push(sub_row.as_json.merge("name":sub_row.name, "items":  @choice_list_subitem , "regexp": @regexp_subitem, "field_type_id": sub_row.field_type_id, "required": sub_row.required, "hidden":sub_row.hidden, "read_only":sub_row.read_only, "popup":sub_row.popup, "calculated":sub_row.calculated_field, "role":sub_row.role, "data_script": sub_row.data_script))
                     end
         end
       end
@@ -61,7 +61,7 @@ class ProjectField < ApplicationRecord
 
 
 
-  def self.show_choice_list id 
+  def self.show_choice_list id
     items=[]
     choice_list = ChoiceList.find(id)
     choice_list_item  = ChoiceListItem.where(choice_list_id: choice_list.id)
