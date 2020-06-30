@@ -65,7 +65,8 @@ class ProjectField < ApplicationRecord
     items=[]
     choice_list = ChoiceList.find(id)
     choice_list_item  = ChoiceListItem.where(choice_list_id: choice_list.id)
-    choice_list_item.each do |i|
+    sorted_choice_list_items = choice_list_item.sort { |x, y| x[:name] <=> y[:name] }
+    sorted_choice_list_items.each do |i|
       items << {"id": i.id, "name":i.name}
     end
     items
