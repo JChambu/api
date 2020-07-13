@@ -23,6 +23,8 @@ module Api
             "tracking": project_type.tracking,
             "project_statuses": project_statuses,
             "type_geometry": project_type.type_geometry
+            "geo_restriction": project_type.geo_restriction,
+            "cover": project_type.cover
           }
           
           @p.push(data) 
