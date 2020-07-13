@@ -25,7 +25,7 @@ module Api
               user_customer.map do |uc|
                 # TODO eliminar validación para corporación demo
                 if uc.customer.subdomain == 'demo'
-                  companies << {'url': uc.customer.url, 'name_company': 'demo1', 'role_id': uc.role_id, 'id': uc.customer.id}
+                  companies << {'url': uc.customer.url, 'name_company': 'demo1', 'role_id': uc.role_id, 'id': uc.customer.id, 'logo': uc.customer.logo}
                 else
                   companies << {'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id, 'id': uc.customer.id, 'logo': uc.customer.logo}
                 end
