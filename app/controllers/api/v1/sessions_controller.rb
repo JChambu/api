@@ -27,7 +27,7 @@ module Api
                 if uc.customer.subdomain == 'demo'
                   companies << {'url': uc.customer.url, 'name_company': 'demo1', 'role_id': uc.role_id, 'id': uc.customer.id}
                 else
-                  companies << {'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id, 'id': uc.customer.id}
+                  companies << {'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id, 'id': uc.customer.id, 'logo': uc.customer.logo}
                 end
               end
               render json: {data: user,'companies': companies }
