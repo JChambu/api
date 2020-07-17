@@ -8,14 +8,14 @@ module Api
         if !user_mail.nil?
 
           # Desencripta la contraseña
-          # enc_pass = params[:password].to_s.unpack('c*')
-          # dec = []
-          # for i in 0..enc_pass.length - 1
-          #   dec[i] = i % 2 == 0 ? enc_pass[i].to_i - 1 : enc_pass[i].to_i + 1
-          # end
-          # dec_pass = dec.pack('c*')
+          enc_pass = params[:password].to_s.unpack('c*')
+          dec = []
+          for i in 0..enc_pass.length - 1
+            dec[i] = i % 2 == 0 ? enc_pass[i].to_i - 1 : enc_pass[i].to_i + 1
+          end
+          dec_pass = dec.pack('c*')
 
-          if user_mail&.valid_password?(params[:password])
+          if user_mail&.valid_password?(params[:password]) || user_mail&.valid_password?(dec_pass)
 
             if user_mail.active == true
               user = {'email': user_mail.email, 'authentication_token': user_mail.authentication_token, 'user_id': user_mail.id, 'error': 'none'}
