@@ -48,9 +48,9 @@ class Project < ApplicationRecord
 
     # Realiza la consulta a la db
     if (type_geometry[0] == 'Polygon')
-      value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
+      value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("shared_extensions.t_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
     else
-      value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("st_x(the_geom) as lng, st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
+      value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("shared_extensions.st_x(the_geom) as lng, shared_extensions.st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
     end
 
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
