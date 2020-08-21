@@ -12,12 +12,12 @@ gem 'rgeo-geojson'
 gem 'geocoder'
 gem 'pry'
 gem 'devise'
-gem 'simple_token_authentication' 
+gem 'simple_token_authentication'
 gem 'apartment'
 gem 'oj'
 gem 'pager_api'
-gem 'kaminari' 
-gem 'pagy' 
+gem 'kaminari'
+gem 'pagy'
 gem 'will_paginate'
 gem 'api-pagination'
 # Use Puma as the app server
@@ -42,6 +42,7 @@ gem 'paper_trail'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'letter_opener'
 
 
   gem 'capistrano', '~> 3.6'

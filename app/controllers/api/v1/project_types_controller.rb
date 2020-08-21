@@ -8,24 +8,26 @@ module Api
 
       def list_projects
 
-        @has_project_types = HasProjectType.where(user_id: @user.id).select(:project_type_id) 
+        @has_project_types = HasProjectType.where(user_id: @user.id).select(:project_type_id)
         @p =[]
         @has_project_types.each do |s|
           project_type = ProjectType.where(id: s.project_type_id).first
           show_field = ProjectField.show_schema_new(project_type)
           project_statuses = ProjectField.status_types(s.project_type_id).as_json
           data = {
-            "id":project_type.id, 
+            "id":project_type.id,
             "name":project_type.name,
             "enabled_as_layer": project_type.enabled_as_layer,
             "add_rows":project_type.add_rows,
             "form": show_field,
             "tracking": project_type.tracking,
             "project_statuses": project_statuses,
-            "type_geometry": project_type.type_geometry
+            "type_geometry": project_type.type_geometry,
+            "geo_restriction": project_type.geo_restriction,
+            "cover": project_type.cover
           }
-          
-          @p.push(data) 
+
+          @p.push(data)
         end
         @result = {"data":@p}
         render json: @result
@@ -34,7 +36,7 @@ module Api
 
       def index
 
-        @has_project_types = HasProjectType.where(user_id: @user.id).select(:project_type_id) 
+        @has_project_types = HasProjectType.where(user_id: @user.id).select(:project_type_id)
         @p =[]
         @has_project_types.each do |s| @p.push(s.project_type_id) end
         @project_types = ProjectType.where(id: @p)
@@ -75,4 +77,3 @@ module Api
     end
   end
 end
-

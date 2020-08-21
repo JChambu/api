@@ -9,37 +9,46 @@ module Api
         project_type_id = params[:project_type_id]
         updated_sequence = params[:updated_sequence].to_i
         row_active = params[:row_active]
-        @count = Project.row_quantity( project_type_id, updated_sequence, row_active, current_user.id)
+        current_season = params[:current_season]
+        @count = Project.row_quantity( project_type_id, updated_sequence, row_active, current_season, current_user.id)
         render json: {'row_quantity': @count}
       end
+
+
       def check_row_quantity_children
         project_type_id = params[:project_type_id]
         updated_sequence = params[:updated_sequence].to_i
         row_active = params[:row_active]
-        @count = ProjectDataChild.row_quantity_children( project_type_id, updated_sequence, row_active, current_user.id)
+        current_season = params[:current_season]
+        @count = ProjectDataChild.row_quantity_children( project_type_id, updated_sequence, row_active, current_season, current_user.id)
         render json: {'row_quantity': @count}
       end
+
 
       def list_data
         updated_sequence = params[:updated_sequence].to_i
         project_type_id = params[:project_type_id]
         page = params[:page].to_i
         row_active = params[:row_active]
-        @data = Project.show_data_new(project_type_id, updated_sequence, page, row_active, current_user.id)
+        current_season = params[:current_season]
+        @data = Project.show_data_new(project_type_id, updated_sequence, page, row_active, current_season, current_user.id)
         render json: {data: @data}
       end
+
 
       def list_data_children
         updated_sequence = params[:updated_sequence].to_i
         project_type_id = params[:project_type_id]
         page = params[:page].to_i
         row_active = params[:row_active]
-        @data = ProjectDataChild.show_data_new(project_type_id, updated_sequence, page, row_active, current_user.id)
+        current_season = params[:current_season]
+        @data = ProjectDataChild.show_data_new(project_type_id, updated_sequence, page, row_active, current_season, current_user.id)
         render json: {data: @data}
       end
 
+
       def save_rows
-        @a = Project.save_rows_project_data params 
+        @a = Project.save_rows_project_data params
         render json: {data: @a}
       end
 
@@ -60,7 +69,7 @@ module Api
         @rows = @rows.where(project_type_id: params[:project_type_id])
         @rows = @rows.order(:updated_at)
         @rows = @rows.limit(50)
-        render json: {data: @rows}  
+        render json: {data: @rows}
       end
 
       def synchronization_update
@@ -109,7 +118,7 @@ module Api
         @p = []
         @photos_attributes = Photo.where(project_id: @project.id)
         @photos_attributes.each do |photo|
-          @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id} 
+          @p << {"name": photo.name, "image":photo.image, "project_id": photo.project_id}
         end
         render json: {data: @sort_field, photos_attributes: @p}
       end

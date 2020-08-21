@@ -26,10 +26,20 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # Mailer errors
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
+
+  # Default from for mailer
+  config.action_mailer.default_options = {from: 'no-reply@geoworks.com.ar'}
+
+  # Default url options for devise
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Preview mail in the browser instead of sending
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
