@@ -2,7 +2,6 @@ class ProjectDataChild < ApplicationRecord
   belongs_to :project
 
 
-
   def self.row_active row_active
     if row_active == 'true'
       where('project_data_children.row_active = ?', true)
@@ -10,7 +9,6 @@ class ProjectDataChild < ApplicationRecord
       where('project_data_children.row_active IS Not NULL ')
     end
   end
-
 
 
   def self.current_season current_season
@@ -22,7 +20,7 @@ class ProjectDataChild < ApplicationRecord
   end
 
 
-
+  # Recupera los registros hijos a sincronizar
   def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
     value = Project.
       joins(:project_data_child).
@@ -32,10 +30,9 @@ class ProjectDataChild < ApplicationRecord
       current_season(current_season).
       where.not('project_data_children.user_id = 74' ).
       select("project_data_children.id, project_data_children.properties, project_data_children.updated_at,  project_data_children.user_id, project_data_children.project_id as project_data_id, project_data_children.project_field_id as project_field_id, project_data_children.update_sequence, project_data_children.row_active, project_data_children.current_season ")
-
+    # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
-
     # Aplica filtro por atributo
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
     @project_filters.properties.to_a.each do |prop|
@@ -55,9 +52,10 @@ class ProjectDataChild < ApplicationRecord
   end
 
 
-
+  # Recupera la cantidad de registros hijos a sincronizar
   def self.row_quantity_children project_type_id, updated_sequence, row_active, current_season, current_user
     @rows = ProjectDataChild.joins(:project).row_active(row_active).current_season(current_season).where("projects.project_type_id = ?", project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).where.not('project_data_children.user_id = 74').select("project_data_children.update_sequence")
+    # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false
     # Aplica filtro por atributo
