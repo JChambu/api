@@ -32,9 +32,11 @@ class Project < ApplicationRecord
     end
   end
 
-  def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
 
+  # Recupera la cantidad de registros padres a sincronizar
+  def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
     @rows = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74')
+    # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false
     # Aplica filtro por atributo
@@ -46,18 +48,18 @@ class Project < ApplicationRecord
     @rows
   end
 
-  # Consulta los datos de los registros padres
+  # Recupera los registros padres a sincronizar
   def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     value = ''
 
-    # Realiza la consulta a la db
+    # Recupera los registros dependiendo de su geometría
     if (type_geometry[0] == 'Polygon')
       value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("shared_extensions.st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
     else
       value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("shared_extensions.st_x(the_geom) as lng, shared_extensions.st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
     end
-
+    # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
     # Aplica filtro por atributo
