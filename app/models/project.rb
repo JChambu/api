@@ -41,8 +41,10 @@ class Project < ApplicationRecord
     @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false
     # Aplica filtro por atributo
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
-    @project_filters.properties.to_a.each do |prop|
-      @rows = @rows.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+    if !@project_filters.nil? && @project_filters != false
+      @project_filters.properties.to_a.each do |prop|
+        @rows = @rows.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+      end
     end
     @rows = @rows.count
     @rows
@@ -64,8 +66,10 @@ class Project < ApplicationRecord
     value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
     # Aplica filtro por atributo
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
-    @project_filters.properties.to_a.each do |prop|
-      value = value.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+    if !@project_filters.nil? && @project_filters != false
+      @project_filters.properties.to_a.each do |prop|
+        value = value.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+      end
     end
 
     value = value.order(:update_sequence).page(page).per_page(50)
