@@ -13,9 +13,10 @@ class ProjectField < ApplicationRecord
     ).order(:sort)
 
     project_field.each do |row|
-      
+
       @rr = row
 
+      # Listados
       @choice_list_item = ''
       if !row.choice_list_id.nil?
         @choice_list_item = show_choice_list(row.choice_list_id)
@@ -106,15 +107,32 @@ class ProjectField < ApplicationRecord
 
   def self.show_choice_list id
 
-    items=[]
+    items = []
+
     choice_list = ChoiceList.find(id)
     choice_list_item  = ChoiceListItem.where(choice_list_id: choice_list.id)
-    sorted_choice_list_items = choice_list_item.sort { |x, y| x[:name] <=> y[:name] }
-    sorted_choice_list_items.each do |i|
-      items << {"id": i.id, "name":i.name}
+    sorted_choice_list_items = choice_list_item.sort { |x, y| x[:name] <=> y[:name] } # Ordena los items
+
+    # Arma el objeto
+    sorted_choice_list_items.each do |row|
+
+      # Si tiene listados anidados, los agrega
+      if !row.nested_list_id.nil?
+
+        @nested_items = []
+        nested_choice_list = ChoiceList.find(row.nested_list_id)
+        nested_choice_list_item  = ChoiceListItem.where(choice_list_id: nested_choice_list.id)
+        nested_sorted_choice_list_items = nested_choice_list_item.sort { |x, y| x[:name] <=> y[:name] } # Ordena los items anidados
+        nested_sorted_choice_list_items.each do |f|
+          @nested_items << { "id": f.id, "name": f.name }
+        end
+        items << { "id": row.id, "name": row.name, "nested_items": @nested_items }
+      else
+        items << { "id": row.id, "name": row.name }
+      end
+
     end
     return items
-
   end
 
 
