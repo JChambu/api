@@ -57,9 +57,46 @@ class Project < ApplicationRecord
 
     # Recupera los registros dependiendo de su geometría
     if (type_geometry[0] == 'Polygon')
-      value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("shared_extensions.st_asgeojson(the_geom) as geom, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
+      value = Project
+        .row_active(row_active)
+        .current_season(current_season)
+        .where(project_type_id: project_type_id)
+        .where('update_sequence > ?', updated_sequence)
+        .where.not(user_id: '74')
+        .select("
+          shared_extensions.st_asgeojson(the_geom) as geom,
+          id,
+          properties,
+          gwm_created_at,
+          gwm_updated_at,
+          project_status_id,
+          user_id,
+          the_geom,
+          update_sequence,
+          row_active,
+          current_season
+        ")
     else
-      value = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74').select("shared_extensions.st_x(the_geom) as lng, shared_extensions.st_y(the_geom) as lat, id, properties, updated_at, project_status_id, user_id, the_geom, update_sequence, row_active, current_season")
+      value = Project
+        .row_active(row_active)
+        .current_season(current_season)
+        .where(project_type_id: project_type_id)
+        .where('update_sequence > ?', updated_sequence)
+        .where.not(user_id: '74')
+        .select("
+          shared_extensions.st_x(the_geom) as lng,
+          shared_extensions.st_y(the_geom) as lat,
+          id,
+          properties,
+          gwm_created_at,
+          gwm_updated_at,
+          project_status_id,
+          user_id,
+          the_geom,
+          update_sequence,
+          row_active,
+          current_season
+        ")
     end
     # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
@@ -91,9 +128,33 @@ class Project < ApplicationRecord
 
       # Arma la colección con los datos a devolver
       if (type_geometry[0] == 'Polygon')
-        data.push("id":row.id, "the_geom":[row.geom], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence, "row_active": row.row_active, "current_season": row.current_season)
+        data.push(
+          "id":row.id,
+          "the_geom":[row.geom],
+          "form_values":form,
+          "gwm_created_at":row.gwm_created_at,
+          "gwm_updated_at":row.gwm_updated_at,
+          "status_id": row.project_status_id,
+          "user_id": row.user_id,
+          "geometry": geom_text,
+          "update_sequence": row.update_sequence,
+          "row_active": row.row_active,
+          "current_season": row.current_season
+        )
       else
-        data.push("id":row.id, "the_geom":[row.lng, row.lat], "form_values":form, "updated_at":row.updated_at, "status_id": row.project_status_id, "user_id": row.user_id, "geometry": geom_text, "update_sequence": row.update_sequence, "row_active": row.row_active, "current_season": row.current_season)
+        data.push(
+          "id":row.id,
+          "the_geom":[row.lng, row.lat],
+          "form_values":form,
+          "gwm_created_at":row.gwm_created_at,
+          "gwm_updated_at":row.gwm_updated_at,
+          "status_id": row.project_status_id,
+          "user_id": row.user_id,
+          "geometry": geom_text,
+          "update_sequence": row.update_sequence,
+          "row_active": row.row_active,
+          "current_season": row.current_season
+        )
       end
 
     end
