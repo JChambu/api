@@ -22,14 +22,26 @@ class ProjectDataChild < ApplicationRecord
 
   # Recupera los registros hijos a sincronizar
   def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
-    value = Project.
-      joins(:project_data_child).
-      where(project_type_id: project_type_id).
-      where('project_data_children.update_sequence > ?', updated_sequence).
-      row_active(row_active).
-      current_season(current_season).
-      where.not('project_data_children.user_id = 74' ).
-      select("project_data_children.id, project_data_children.properties, project_data_children.updated_at,  project_data_children.user_id, project_data_children.project_id as project_data_id, project_data_children.project_field_id as project_field_id, project_data_children.update_sequence, project_data_children.row_active, project_data_children.current_season ")
+    value = Project
+      .joins(:project_data_child)
+      .where(project_type_id: project_type_id)
+      .where('project_data_children.update_sequence > ?', updated_sequence)
+      .row_active(row_active)
+      .current_season(current_season)
+      .where.not('project_data_children.user_id = 74')
+      .select("
+        project_data_children.id,
+        project_data_children.properties,
+        project_data_children.gwm_created_at,
+        project_data_children.gwm_updated_at,
+        project_data_children.user_id,
+        project_data_children.project_id as project_data_id,
+        project_data_children.project_field_id as project_field_id,
+        project_data_children.update_sequence,
+        project_data_children.row_active,
+        project_data_children.current_season
+      ")
+
     # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
@@ -49,7 +61,18 @@ class ProjectDataChild < ApplicationRecord
       row.properties.each do |k, v|
         form.merge!("#{k}": v)
       end
-      data.push("id":row.id, "project_data_id": row.project_data_id, "project_field_id": row.project_field_id,  "form_values":form, "updated_at":row.updated_at,  "user_id": row.user_id, "update_sequence": row.update_sequence, "row_active": row.row_active, "current_season": row.current_season )
+      data.push(
+        "id": row.id,
+        "project_data_id": row.project_data_id,
+        "project_field_id": row.project_field_id,
+        "form_values": form,
+        "gwm_created_at": row.gwm_created_at,
+        "gwm_updated_at": row.gwm_updated_at,
+        "user_id": row.user_id,
+        "update_sequence": row.update_sequence,
+        "row_active": row.row_active,
+        "current_season": row.current_season
+      )
       @data = data
     end
   end
