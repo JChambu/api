@@ -287,6 +287,7 @@ class Project < ApplicationRecord
         child_data[:properties] = data['values']
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id]
+        child_data[:gwm_created_at] = data[:gwm_created_at]
         child_data.save
 
     if !data['photos_child'].nil?
