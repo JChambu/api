@@ -45,6 +45,7 @@ class ProjectDataChild < ApplicationRecord
     # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
+
     # Aplica filtro por atributo
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
     if !@project_filters.nil? && @project_filters != false
@@ -80,10 +81,18 @@ class ProjectDataChild < ApplicationRecord
 
   # Recupera la cantidad de registros hijos a sincronizar
   def self.row_quantity_children project_type_id, updated_sequence, row_active, current_season, current_user
-    @rows = ProjectDataChild.joins(:project).row_active(row_active).current_season(current_season).where("projects.project_type_id = ?", project_type_id).where('project_data_children.update_sequence > ?', updated_sequence).where.not('project_data_children.user_id = 74').select("project_data_children.update_sequence")
+    @rows = ProjectDataChild.joins(:project)
+      .row_active(row_active)
+      .current_season(current_season)
+      .where("projects.project_type_id = ?", project_type_id)
+      .where('project_data_children.update_sequence > ?', updated_sequence)
+      .where.not('project_data_children.user_id = 74')
+      .select("project_data_children.update_sequence")
+
     # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false
+
     # Aplica filtro por atributo
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
     if !@project_filters.nil? && @project_filters != false
@@ -91,7 +100,6 @@ class ProjectDataChild < ApplicationRecord
         @rows = @rows.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
       end
     end
-    
     @rows = @rows.count
     @rows
   end

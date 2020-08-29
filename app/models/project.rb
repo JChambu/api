@@ -7,14 +7,15 @@ class Project < ApplicationRecord
   has_many :photos
   has_many :project_data_child
   accepts_nested_attributes_for :photos
-
   before_update :update_sequence_projects
+
 
   def update_sequence_projects
     sequence_name = 'projects_update_sequence_seq'
     @a = ActiveRecord::Base.connection.execute("select nextval('#{sequence_name}')")
     self.update_sequence = @a[0]['nextval']
   end
+
 
   def self.row_active row_active
     if row_active == 'true'
@@ -23,6 +24,7 @@ class Project < ApplicationRecord
       where('projects.row_active IS Not NULL ')
     end
   end
+
 
   def self.current_season current_season
     if current_season == 'true'
@@ -35,7 +37,12 @@ class Project < ApplicationRecord
 
   # Recupera la cantidad de registros padres a sincronizar
   def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
-    @rows = Project.row_active(row_active).current_season(current_season).where(project_type_id: project_type_id).where('update_sequence > ?', updated_sequence).where.not(user_id: '74')
+    @rows = Project
+      .row_active(row_active)
+      .current_season(current_season)
+      .where(project_type_id: project_type_id)
+      .where('update_sequence > ?', updated_sequence)
+      .where.not(user_id: '74')
     # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false
@@ -49,6 +56,7 @@ class Project < ApplicationRecord
     @rows = @rows.count
     @rows
   end
+
 
   # Recupera los registros padres a sincronizar
   def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
@@ -98,9 +106,11 @@ class Project < ApplicationRecord
           current_season
         ")
     end
+
     # Aplica filtro owner
     @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
     value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
+
     # Aplica filtro por atributo
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
     if !@project_filters.nil? && @project_filters != false
@@ -161,6 +171,8 @@ class Project < ApplicationRecord
     @data = data
   end
 
+
+
   def self.show_choice_list id
     items=[]
     choice_list = ChoiceList.find(id)
@@ -171,45 +183,59 @@ class Project < ApplicationRecord
     items
   end
 
+
+
   def self.show_regexp_type id
     r = RegexpType.find(id)
     regexp = r.expresion
     regexp
   end
 
+
+  # Guarda los registros padres nuevos
   def self.save_rows_project_data project_data
+
     result_hash = {}
+
     if !project_data[:projects].nil?
       project_data[:projects].each do |data|
+
         @project = Project.new()
         value_name = {}
         @project_type = ProjectType.find(data['project_type_id'])
 
-        data['values'].each do |v,k|
-          field = ProjectField.where(id: v.to_i).select(:key).first
+        # Cicla los registros
+        data[:values].each do |v,k|
 
+          # Busca el key de cada registro según su id y guarda key y valor en un hash
+          field = ProjectField.where(id: v.to_i).select(:key).first
           if !field.nil?
             if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id'
               value_name.merge!("#{field.key}": k )
             end
           end
 
+          # Actualiza los valores dentro del json
           value_name.merge!('app_usuario': data[:user_id])
           value_name.merge!('app_estado': data[:status_id])
           value_name.merge!('gwm_created_at': data[:gwm_created_at].to_date)
           value_name.merge!('gwm_updated_at': data[:gwm_updated_at].to_date)
+
+          # Carga los valores
           @project['properties'] = value_name
           @project['project_type_id'] = data['project_type_id']
           @project['user_id'] = data['user_id']
-          type_geometry =  @project_type.type_geometry
+          type_geometry = @project_type.type_geometry
           @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
           @project['project_status_id'] = data['status_id']
           @project['row_active'] = data['row_active']
           @project['gwm_created_at'] = data['gwm_created_at']
           @project['gwm_updated_at'] = data['gwm_updated_at']
         end
+
+
         if @project.save
-          @project['properties'].merge!('app_id':@project.id)
+          @project['properties'].merge!('app_id': @project.id)
           @project.save!
           localID = data[:localID]
           result_hash.merge!({"#{localID}":@project.id})
@@ -220,10 +246,14 @@ class Project < ApplicationRecord
     return
   end
 
+
+  # Actualiza los registros padres existentes
   def self.update_rows_project_data project_data
+
     result_hash = {}
     project_data[:projects].each do |data|
-      @project = Project.where(project_type_id: data[:project_type_id] ).where(id: data[:project_id]).first
+      @project = Project.where(project_type_id: data[:project_type_id]).where(id: data[:project_id]).first
+
       if !@project.nil?
 
         # Si la fecha del registro es más nueva que la almacenada, lo actualiza
@@ -273,31 +303,40 @@ class Project < ApplicationRecord
     @project_data_child.update_all(row_active: false, gwm_updated_at: gwm_updated_at)
   end
 
+
+  # Guarda los registros padres nuevos y las fotos de padres e hijos
   def self.save_rows_project_data_childs project_data_child
     if !project_data_child['projects']['childs'].nil?
+
+      # Cicla todos los hijos
       project_data_child['projects']['childs'].each do |data|
+
+        # Guarda los registros hijos
         child_data = ProjectDataChild.new()
         child_data[:project_id] = data['IdFather']
         child_data[:properties] = data['values']
         child_data[:project_field_id] = data['field_id']
-        child_data[:user_id] = data[:user_id]
+        child_data[:user_id] = data[:user_id] # FIXME: Este campo a veces se carga con 0
         child_data[:gwm_created_at] = data[:gwm_created_at]
         child_data.save
 
-    if !data['photos_child'].nil?
-        data['photos_child'].each do |photo_child|
-        photo = PhotoChild.new
-        photo['name'] = photo_child['values']['name']
-        photo['image'] = photo_child['values']['image']
-        photo['project_data_child_id'] = child_data.id
-        photo.save
-      end
-    end
+        # Guarda las fotos de los hijos
+        if !data['photos_child'].nil?
+          data['photos_child'].each do |photo_child|
+            photo = PhotoChild.new
+            photo['name'] = photo_child['values']['name']
+            photo['image'] = photo_child['values']['image']
+            photo['project_data_child_id'] = child_data.id
+            photo.save
+          end
+        end
 
       end
     end
+
+    # Guarda las fotos de los padres
     if !project_data_child['projects']['photos'].nil?
-        project_data_child['projects']['photos'].each do |photo|
+      project_data_child['projects']['photos'].each do |photo|
         project_photo = Photo.new
         project_photo['name'] = photo['values']['name']
         project_photo['image'] = photo['values']['image']
@@ -305,5 +344,6 @@ class Project < ApplicationRecord
         project_photo.save
       end
     end
+
   end
 end
