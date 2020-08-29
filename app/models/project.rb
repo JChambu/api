@@ -196,6 +196,8 @@ class Project < ApplicationRecord
 
           value_name.merge!('app_usuario': data[:user_id])
           value_name.merge!('app_estado': data[:status_id])
+          value_name.merge!('gwm_created_at': data[:gwm_created_at].to_date)
+          value_name.merge!('gwm_updated_at': data[:gwm_updated_at].to_date)
           @project['properties'] = value_name
           @project['project_type_id'] = data['project_type_id']
           @project['user_id'] = data['user_id']
@@ -203,6 +205,8 @@ class Project < ApplicationRecord
           @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
           @project['project_status_id'] = data['status_id']
           @project['row_active'] = data['row_active']
+          @project['gwm_created_at'] = data['gwm_created_at']
+          @project['gwm_updated_at'] = data['gwm_updated_at']
         end
         if @project.save
           @project['properties'].merge!('app_id':@project.id)
