@@ -210,7 +210,7 @@ class Project < ApplicationRecord
           # Busca el key de cada registro según su id y guarda key y valor en un hash
           field = ProjectField.where(id: v.to_i).select(:key).first
           if !field.nil?
-            if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id'
+            if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id' && field.key != 'gwm_created_at' && field.key != 'gwm_updated_at' 
               value_name.merge!("#{field.key}": k )
             end
           end
