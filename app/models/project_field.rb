@@ -9,7 +9,7 @@ class ProjectField < ApplicationRecord
     project = []
     project_field = ProjectField.where(project_type_id: data.id).select(
       :id, :name, :field_type_id, :required, :choice_list_id, :regexp_type_id, :hidden,
-      :read_only, :sort, :popup, :calculated_field, :role, :data_script, :filter_field
+      :read_only, :sort, :popup, :calculated_field, :roles_read, :roles_edit, :data_script, :filter_field
     ).order(:sort)
 
     project_field.each do |row|
@@ -32,7 +32,8 @@ class ProjectField < ApplicationRecord
       @sort = row.sort
       @popup = row.popup
       @calculated = row.calculated_field
-      @role = row.role
+      @roles_read = row.roles_read
+      @roles_edit = row.roles_edit
       @data_script = row.data_script
       @filter_field = row.filter_field
       @subvalue = []
@@ -41,7 +42,7 @@ class ProjectField < ApplicationRecord
 
         @repetible = ProjectSubfield.where(project_field_id: row.id).select(
           :id, :name, :field_type_id , :required, :choice_list_id, :regexp_type_id, :hidden,
-          :read_only, :popup, :calculated_field, :role, :data_script
+          :read_only, :popup, :calculated_field, :roles_read, :roles_edit, :data_script
         ).order(:sort)
 
         @repetible.each do |sub_row|
@@ -67,7 +68,8 @@ class ProjectField < ApplicationRecord
               "read_only":sub_row.read_only,
               "popup":sub_row.popup,
               "calculated":sub_row.calculated_field,
-              "role":sub_row.role,
+              "roles_read":sub_row.roles_read,
+              "roles_edit":sub_row.roles_edit,
               "data_script": sub_row.data_script
             ))
           end
@@ -88,7 +90,8 @@ class ProjectField < ApplicationRecord
         "read_only":@readonly,
         "popup":@popup,
         "calculated": @calculated,
-        "role":@role,
+        "roles_read":@roles_read,
+        "roles_edit":@roles_edit,
         "data_script": @data_script,
         filter_field: @filter_field
       }
