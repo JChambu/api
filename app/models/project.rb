@@ -205,7 +205,7 @@ class Project < ApplicationRecord
         @project_type = ProjectType.find(data['project_type_id'])
 
         # Cicla los registros
-        data[:values].each do |v,k|
+        data['values'].each do |v,k|
 
           # Busca el key de cada registro según su id y guarda key y valor en un hash
           field = ProjectField.where(id: v.to_i).select(:key).first
