@@ -221,23 +221,34 @@ class Project < ApplicationRecord
     project_data[:projects].each do |data|
       @project = Project.where(project_type_id: data[:project_type_id] ).where(id: data[:project_id]).first
       if !@project.nil?
-        if @project.updated_at < data[:lastUpdate]
+
+        # Si la fecha del registro es más nueva que la almacenada, lo actualiza
+        if @project.gwm_updated_at < data[:gwm_updated_at]
           value_name = {}
           data['values'].each do |v,k|
             field = ProjectField.where(id: v.to_i).select(:key).first
             if !field.nil?
-              if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id'
+              if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id' && field.key != 'gwm_updated_at'
                 value_name.merge!("#{field.key}": k )
               end
               value_name.merge!('app_usuario': data[:user_id])
               value_name.merge!('app_estado': data[:status_id])
               value_name.merge!('app_id': @project.id)
+              value_name.merge!('gwm_updated_at': data[:gwm_updated_at].to_date)
             end
           end
-          update_row = {properties: value_name, updated_at: data[:lastUpdate], user_id: data[:user_id], the_geom: data[:geometry], project_status_id: data[:status_id], row_active: data[:row_active] }
+          update_row = {
+            properties: value_name,
+            gwm_updated_at: data[:gwm_updated_at],
+            user_id: data[:user_id],
+            the_geom: data[:geometry],
+            project_status_id: data[:status_id],
+            row_active: data[:row_active]
+          }
 
+          # Si se desactiva un registro padre, desactiva los hijos
           if data[:row_active] == 'false'
-            update_row_child_inactive(data[:project_id])
+            update_row_child_inactive(data[:project_id], data[:gwm_updated_at])
           end
 
           if @project.update_attributes(update_row)
@@ -250,11 +261,12 @@ class Project < ApplicationRecord
     return [result_hash]
   end
 
-  def self.update_row_child_inactive project_id
 
-      @project_data_child = ProjectDataChild.where(project_id: project_id)
-      @project_data_child.update_all(row_active: false)
+  # Desactiva los registros hijos cuando se ha desactivado el padre
+  def self.update_row_child_inactive project_id, gwm_updated_at
 
+    @project_data_child = ProjectDataChild.where(project_id: project_id)
+    @project_data_child.update_all(row_active: false, gwm_updated_at: gwm_updated_at)
   end
 
   def self.save_rows_project_data_childs project_data_child
