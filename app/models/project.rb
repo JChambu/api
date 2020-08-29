@@ -218,8 +218,8 @@ class Project < ApplicationRecord
           # Actualiza los valores dentro del json
           value_name.merge!('app_usuario': data[:user_id])
           value_name.merge!('app_estado': data[:status_id])
-          value_name.merge!('gwm_created_at': data[:gwm_created_at].to_date)
-          value_name.merge!('gwm_updated_at': data[:gwm_updated_at].to_date)
+          value_name.merge!('gwm_created_at': data['gwm_created_at'].to_date)
+          value_name.merge!('gwm_updated_at': data['gwm_updated_at'].to_date)
 
           # Carga los valores
           @project['properties'] = value_name
