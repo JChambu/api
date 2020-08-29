@@ -270,20 +270,10 @@ class Project < ApplicationRecord
   end
 
   def self.save_rows_project_data_childs project_data_child
-    result_hash = {}
     if !project_data_child['projects']['childs'].nil?
       project_data_child['projects']['childs'].each do |data|
         child_data = ProjectDataChild.new()
         child_data[:project_id] = data['IdFather']
-        value_name = {}
-        data['values'].each do |v|
-          v.each do |a,b|
-            field = ProjectSubfield.where(id: a.to_i).select(:key).first
-            if !field.nil?
-              value_name.merge!("#{field.key}": b )
-            end
-          end
-        end
         child_data[:properties] = data['values']
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id]
