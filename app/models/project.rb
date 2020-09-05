@@ -327,6 +327,7 @@ class Project < ApplicationRecord
           result_hash.merge!({"#{localID}":@project.id})
         end
       end
+      update_inheritable_statuses
       return [result_hash]
     end
     return
@@ -378,6 +379,7 @@ class Project < ApplicationRecord
         end
       end
     end
+    update_inheritable_statuses
     return [result_hash]
   end
 
