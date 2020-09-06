@@ -192,6 +192,91 @@ class Project < ApplicationRecord
   end
 
 
+  def self.filter_by_timer timer
+
+    case timer
+    when 'week'
+      where("extract(week from small_geom.gwm_created_at) = ?", Date.today.cweek)
+    when 'month'
+      where("extract(month from small_geom.gwm_created_at) = ?", Date.today.month)
+    when 'year'
+      where("extract(year from small_geom.gwm_created_at) = ?", Date.today.year)
+    when 'no'
+      where.not("small_geom.id": nil) # Omite el where con una clause que siempre se va a cumplir
+    end
+
+  end
+
+
+
+  def self.update_inheritable_statuses
+
+    # Busca los estados heredables ordenados por level y prioridad
+    statuses = ProjectStatus
+      .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
+      .where(status_type: "Heredable")
+      .order("project_types.level ASC")
+      .order(priority: :desc)
+
+    # Cicla los estados heredados
+    statuses.each do |status|
+
+      # Busca los registros de big_geom a los que se les debe modificarles el estado
+      projects_to_update = Project
+        .select("big_geom.*")
+        .from("projects AS big_geom, projects AS small_geom")
+        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+        .where("big_geom.project_type_id = ?", status.project_type_id)
+        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+        .where("small_geom.project_status_id = ?", status.inherit_status_id)
+        .filter_by_timer(status.timer)
+        .uniq
+
+      if !projects_to_update.empty?
+
+        projects_to_update.each do |p|
+
+          if p.project_status_id != status.id
+
+            p.project_status_id = status.id
+            p.save
+
+          end
+
+        end
+
+      else
+
+        projects_to_default = Project
+          .select("big_geom.*")
+          .from("projects AS big_geom, projects AS small_geom")
+          .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+          .where("big_geom.project_type_id = ?", status.project_type_id)
+          .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+          .where("big_geom.project_status_id = ?", status.id)
+          .uniq
+
+        projects_to_default.each do |d|
+
+          # Busca el id del estado default según el proyecto
+          default_status_id = ProjectStatus
+            .where(project_type_id: d.project_type_id)
+            .where(status_type: "Predeterminado")
+            .pluck(:id)
+            .first
+
+          d.project_status_id = default_status_id
+          d.save
+
+        end
+
+      end
+
+    end
+
+  end
+
+
   # Guarda los registros padres nuevos
   def self.save_rows_project_data project_data
 
@@ -241,6 +326,7 @@ class Project < ApplicationRecord
           result_hash.merge!({"#{localID}":@project.id})
         end
       end
+      update_inheritable_statuses
       return [result_hash]
     end
     return
@@ -292,6 +378,7 @@ class Project < ApplicationRecord
         end
       end
     end
+    update_inheritable_statuses
     return [result_hash]
   end
 
