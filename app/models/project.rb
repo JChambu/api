@@ -277,7 +277,6 @@ class Project < ApplicationRecord
   end
 
 
-
   # Guarda los registros padres nuevos
   def self.save_rows_project_data project_data
 
