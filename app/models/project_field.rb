@@ -104,7 +104,7 @@ class ProjectField < ApplicationRecord
 
 
   def self.status_types project_type_id
-    @project_statuses = ProjectStatus.where(project_type_id: project_type_id).select(:id, :name, :color).order(:name)
+    @project_statuses = ProjectStatus.where(project_type_id: project_type_id).select(:id, :name, :status_type, :color).order(:name)
   end
 
 
