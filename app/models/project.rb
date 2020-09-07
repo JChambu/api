@@ -195,13 +195,13 @@ class Project < ApplicationRecord
   def self.filter_by_timer timer
 
     case timer
-    when 'week'
+    when 'Semana'
       where("extract(week from small_geom.gwm_created_at) = ?", Date.today.cweek)
-    when 'month'
+    when 'Mes'
       where("extract(month from small_geom.gwm_created_at) = ?", Date.today.month)
-    when 'year'
+    when 'Año'
       where("extract(year from small_geom.gwm_created_at) = ?", Date.today.year)
-    when 'no'
+    when 'No'
       where.not("small_geom.id": nil) # Omite el where con una clause que siempre se va a cumplir
     end
 
