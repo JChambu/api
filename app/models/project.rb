@@ -229,6 +229,10 @@ class Project < ApplicationRecord
         .where("big_geom.project_type_id = ?", status.project_type_id)
         .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
         .where("small_geom.project_status_id = ?", status.inherit_status_id)
+        .where("small_geom.row_active = true")
+        .where("small_geom.current_season = true")
+        .where("big_geom.row_active = true")
+        .where("big_geom.current_season = true")
         .filter_by_timer(status.timer)
         .uniq
 
@@ -254,6 +258,10 @@ class Project < ApplicationRecord
           .where("big_geom.project_type_id = ?", status.project_type_id)
           .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
           .where("big_geom.project_status_id = ?", status.id)
+          .where("small_geom.row_active = true")
+          .where("small_geom.current_season = true")
+          .where("big_geom.row_active = true")
+          .where("big_geom.current_season = true")
           .uniq
 
         projects_to_default.each do |d|
