@@ -5,7 +5,7 @@ class PasswordsController < ApplicationController
 
     token = params[:token].to_s
     @user = User.find_by(reset_password_token: token)
-    
+
   end
 
 
@@ -15,13 +15,12 @@ class PasswordsController < ApplicationController
     @user = User.find_by(reset_password_token: token)
     if @user.present? && @user.password_token_valid?
       if @user.reset_password!(user_params[:password])
-        # UserMailer.new_password_email(user).deliver_now
-        render json: {status: 'OK'}, status: :ok
+        render html: 'La contraseña se ha actualizado correctamente.'
       else
-        render json: {error: @user.errors.full_messages}, status: :unprocessable_entity
+        render html: @user.errors.full_messages
       end
     else
-      render json: {error: ['Enlace no válido o caducado. Intenta generar un nuevo enlace.']}, status: :not_found
+      render html: 'Enlace no válido o caducado. Intenta generar un nuevo enlace.'
     end
 
   end
