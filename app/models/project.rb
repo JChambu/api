@@ -401,6 +401,9 @@ class Project < ApplicationRecord
 
   # Guarda los registros padres nuevos y las fotos de padres e hijos
   def self.save_rows_project_data_childs project_data_child
+
+    result_hash = {}
+    
     if !project_data_child['projects']['childs'].nil?
 
       # Cicla todos los hijos
@@ -413,7 +416,11 @@ class Project < ApplicationRecord
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id] # FIXME: Este campo a veces se carga con 0
         child_data[:gwm_created_at] = data[:gwm_created_at]
-        child_data.save
+
+        if child_data.save
+          localID = data[:localID]
+          result_hash.merge!({"#{localID}":child_data.id})
+        end
 
         # Guarda las fotos de los hijos
         if !data['photos_child'].nil?
@@ -427,6 +434,7 @@ class Project < ApplicationRecord
         end
 
       end
+      return [result_hash]
     end
 
     # Guarda las fotos de los padres
