@@ -10,17 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181112130254) do
+ActiveRecord::Schema.define(version: 20200925234247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
-
-  create_table "actions", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+  enable_extension "hstore"
+  enable_extension "uuid-ossp"
 
   create_table "analysis_types", id: :serial, force: :cascade do |t|
     t.string "name"
@@ -49,40 +45,24 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.integer "association_id"
     t.boolean "assoc_kpi", default: false
     t.integer "dashboard_id"
+    t.text "sql_sentence"
+    t.integer "order"
+    t.string "order_sql"
+    t.text "group_sql"
+    t.boolean "children", default: false
+    t.string "conditions_sql"
+    t.string "kpi_type"
+    t.string "sql_full"
     t.index ["analysis_type_id"], name: "index_analytics_dashboards_on_analysis_type_id"
     t.index ["chart_id"], name: "index_analytics_dashboards_on_chart_id"
     t.index ["project_type_id"], name: "index_analytics_dashboards_on_project_type_id"
   end
 
-  create_table "app_configurations", id: :serial, force: :cascade do |t|
-    t.integer "gisworking_initial_identifier"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "blocks", id: :serial, force: :cascade do |t|
-    t.integer "manzana"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "categories", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "category_original"
-    t.boolean "prefix", default: false
-  end
-
-  create_table "chains", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "identifier"
-    t.integer "poi_type_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "objetive", default: 0
-    t.integer "country_id"
-    t.string "alias"
+  create_table "arask_jobs", force: :cascade do |t|
+    t.string "job"
+    t.datetime "execute_at"
+    t.string "interval"
+    t.index ["execute_at"], name: "index_arask_jobs_on_execute_at"
   end
 
   create_table "charts", id: :serial, force: :cascade do |t|
@@ -91,6 +71,15 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.datetime "updated_at", null: false
     t.integer "project_type_id"
     t.jsonb "properties"
+  end
+
+  create_table "choice_list_items", force: :cascade do |t|
+    t.string "name"
+    t.bigint "choice_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "nested_list_id"
+    t.index ["choice_list_id"], name: "index_choice_list_items_on_choice_list_id"
   end
 
   create_table "choice_lists", id: :serial, force: :cascade do |t|
@@ -103,28 +92,15 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.string "color"
   end
 
-  create_table "cities", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.integer "department_id"
-    t.string "zip"
-    t.integer "proiority"
-    t.point "the_geom"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "countries", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "customers", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "subdomain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "supplier_map", default: "osm"
+    t.string "url"
+    t.integer "role_id"
+    t.text "logo"
   end
 
   create_table "dashboards", force: :cascade do |t|
@@ -150,104 +126,16 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "departments", id: :serial, force: :cascade do |t|
+  create_table "events", force: :cascade do |t|
     t.string "name"
-    t.integer "province_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "extended_listing_loads", id: :serial, force: :cascade do |t|
+  create_table "field_types", force: :cascade do |t|
     t.string "name"
-    t.string "status"
-    t.integer "success_count"
-    t.integer "fail_count"
-    t.integer "already_loaded_count"
-    t.string "directory_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "extended_listings", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "street"
-    t.integer "city_id"
-    t.integer "user_id"
-    t.integer "category_id"
-    t.point "the_geom"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "phone"
-    t.string "source"
-    t.string "address"
-    t.string "number"
-    t.string "hash_value"
-    t.serial "identifier", null: false
-    t.integer "poi_status_id", default: 2
-    t.integer "category_original_id"
-    t.integer "poi_type_id"
-    t.integer "poi_sub_type_id"
-    t.string "website"
-    t.string "email"
-    t.integer "neighborhood_id"
-    t.string "phone_2"
-    t.string "phone_2_new"
-    t.string "street_2"
-    t.string "street_3"
-    t.string "comments"
-  end
-
-  create_table "food_types", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.integer "poi_type_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "code"
-  end
-
-  create_table "generate_deliveries", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.integer "country_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "geo_editions", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "street"
-    t.string "number"
-    t.string "address"
-    t.string "company"
-    t.integer "city"
-    t.integer "recid"
-    t.string "number_door_start_original"
-    t.string "number_door_start"
-    t.string "number_door_end_original"
-    t.string "number_door_end"
-    t.string "code"
-    t.point "the_geom"
-    t.line "the_geom_segment"
-    t.line "the_geom_segment_original"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "poi_status_id"
-    t.integer "gw_div1"
-    t.integer "gw_div2"
-    t.integer "gw_geomainid"
-    t.integer "gw_qh"
-    t.integer "gw_calleid"
-    t.integer "gw_pta_ini"
-    t.integer "gw_pta_fin"
-    t.string "gw_paridad"
-    t.string "gw_status"
-    t.string "paridad"
-    t.integer "user_id"
-    t.string "gw_street"
-    t.string "gw_code"
-    t.text "observations"
-    t.boolean "delivered", default: false
-    t.boolean "yard"
-    t.boolean "wasteland"
   end
 
   create_table "graphics", force: :cascade do |t|
@@ -261,6 +149,17 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.string "label_x_axis"
     t.string "label_y_axis_left"
     t.string "label_y_axis_right"
+    t.boolean "stack", default: false
+    t.decimal "tick_x_min"
+    t.decimal "tick_x_max"
+    t.decimal "tick_y_min"
+    t.decimal "tick_y_max"
+    t.decimal "step_x"
+    t.decimal "substep_x"
+    t.boolean "data_labelling", default: false
+    t.integer "chart_id"
+    t.decimal "scale", default: "1.0"
+    t.boolean "legend_display", default: false
     t.index ["dashboard_id"], name: "index_graphics_on_dashboard_id"
   end
 
@@ -275,6 +174,8 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.integer "analytics_dashboard_id"
     t.integer "graphic_id"
     t.string "label_datasets"
+    t.boolean "left_y_axis"
+    t.string "point_type"
     t.index ["chart_id"], name: "index_graphics_properties_on_chart_id"
   end
 
@@ -287,238 +188,65 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.index ["user_id"], name: "index_has_project_types_on_user_id"
   end
 
-  create_table "load_locations", id: :serial, force: :cascade do |t|
+  create_table "layers", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "status"
-    t.string "directory_name"
-  end
-
-  create_table "p_actions", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "layer"
+    t.string "url"
+    t.text "description"
+    t.string "type_layer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "parkings", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "street"
-    t.string "brand"
-    t.string "operator"
-    t.integer "facility_type_id"
-    t.integer "levels"
-    t.integer "city_id"
-    t.geometry "the_geom", limit: {:srid=>4326, :type=>"st_point"}
-    t.geometry "the_geom_entrance", limit: {:srid=>4326, :type=>"st_point"}
-    t.geometry "the_geom_exit", limit: {:srid=>4326, :type=>"st_point"}
-    t.string "phone"
-    t.string "website"
-    t.string "detailed_pricing_model"
-    t.decimal "price", precision: 10, scale: 2
-    t.string "currency"
-    t.string "available_payment_methods"
-    t.string "regular_openning_hours"
-    t.string "exceptions_opening"
-    t.geometry "the_geom_area", limit: {:srid=>4326, :type=>"st_polygon"}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "number"
-    t.string "restrinctions"
-    t.string "max_drive_height"
-    t.string "max_drive_width"
-    t.boolean "elevators", default: false
-    t.boolean "escalators", default: false
-    t.boolean "handicapped_accessible", default: false
-    t.boolean "handicapped_parking_spaces", default: false
-    t.boolean "women_parking_spaces", default: false
-    t.boolean "sanitation_facilities", default: false
-    t.boolean "restroom_available", default: false
-    t.boolean "secure_parking", default: false
-    t.boolean "security_manned", default: false
-    t.boolean "electric_vehicle_charging_points", default: false
-    t.boolean "connector_type", default: false
-    t.boolean "number_of_connectors", default: false
-    t.boolean "charge_point_operator", default: false
-    t.boolean "payment_methods", default: false
-    t.boolean "light", default: false
-    t.boolean "motorcycle_parking_spaces", default: false
-    t.boolean "family_friendly", default: false
-    t.boolean "carwash", default: false
-    t.boolean "parking_disc", default: false
-    t.boolean "parking_ticket", default: false
-    t.boolean "gate", default: false
-    t.boolean "monitored", default: false
-    t.boolean "none", default: false
-    t.string "total_space"
-    t.string "space_available"
-    t.string "available"
-    t.string "trend"
-    t.string "total_disabled_space"
-    t.string "available_disabled_space"
-    t.boolean "flag", default: false
-    t.string "the_geom_area_original"
-    t.integer "user_id"
-    t.integer "p_action_id"
-    t.integer "poi_status_id"
-    t.string "payment"
-    t.string "parking_configuration"
-    t.string "parking_capacity"
-    t.string "parking_type"
-    t.boolean "machine_readable"
-    t.string "maximum_duration"
-    t.boolean "tow_away_zone"
-    t.boolean "street_sweeping"
-    t.boolean "street_mall_time_market"
-    t.boolean "pedestrian_zone_time"
-    t.boolean "snow_route"
-    t.boolean "clearway"
-    t.boolean "residential"
-    t.boolean "handicapped"
-    t.boolean "diplomatic"
-    t.boolean "media_press"
-    t.boolean "other"
-    t.boolean "loading_unloading_zone"
-    t.boolean "drop_pick_up_zona"
-    t.boolean "disabled_handicap_only"
-    t.boolean "private_parking"
-    t.boolean "commercial_vehicles_only"
-    t.string "side_street"
-    t.string "max_duration_parking_disc"
-  end
-
-  create_table "pg_search_documents", id: :serial, force: :cascade do |t|
-    t.text "content"
-    t.string "searchable_type"
-    t.integer "searchable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
-  end
-
-  create_table "poi_address_loads", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "status"
-    t.string "directory_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "success_count"
-    t.string "fail_count"
-    t.string "already_loaded_count"
-    t.integer "city_id"
-    t.string "color"
-  end
-
-  create_table "poi_addresses", id: :serial, force: :cascade do |t|
-    t.integer "city_id"
-    t.string "street"
-    t.string "number"
-    t.string "neighborhood"
-    t.string "block"
-    t.string "house"
-    t.point "the_geom"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.string "source"
-    t.string "color"
-    t.string "address_complete"
-    t.string "rol_number"
-    t.string "city_name"
-    t.string "department_name"
-    t.string "province_name"
-    t.string "country_name"
-    t.integer "p_action_id"
-    t.string "note"
-    t.string "phone"
-    t.string "web"
-    t.string "name"
-    t.integer "recid"
-    t.string "name_company"
-    t.string "phone_company"
-    t.date "birthdate"
-  end
-
-  create_table "poi_loads", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "load_date"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "success_count"
-    t.integer "fail_count"
-    t.integer "already_loaded_count"
-    t.string "directory_name"
-  end
-
-  create_table "poi_sources", id: :serial, force: :cascade do |t|
+  create_table "model_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "poi_statuses", id: :serial, force: :cascade do |t|
-    t.string "name"
+  create_table "permissions", force: :cascade do |t|
+    t.bigint "role_id"
+    t.bigint "event_id"
+    t.bigint "model_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_permissions_on_event_id"
+    t.index ["model_type_id"], name: "index_permissions_on_model_type_id"
+    t.index ["role_id"], name: "index_permissions_on_role_id"
   end
 
-  create_table "poi_sub_types", id: :serial, force: :cascade do |t|
+  create_table "photo_children", force: :cascade do |t|
     t.string "name"
-    t.integer "poi_type_id"
+    t.text "image"
+    t.bigint "project_data_child_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "identifier"
+    t.boolean "row_active", default: true
+    t.index ["project_data_child_id"], name: "index_photo_children_on_project_data_child_id"
   end
 
-  create_table "poi_types", id: :serial, force: :cascade do |t|
+  create_table "photos", force: :cascade do |t|
     t.string "name"
+    t.text "image"
+    t.integer "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "code"
+    t.boolean "row_active", default: true
   end
 
-  create_table "pois", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "short_name"
-    t.string "website"
-    t.string "email"
-    t.string "second_email"
-    t.text "note"
-    t.string "cel_number"
-    t.string "phone"
-    t.string "second_phone"
-    t.string "fax"
-    t.string "house_number"
-    t.text "contact"
-    t.integer "priority"
-    t.text "location"
-    t.integer "city_id"
-    t.integer "chain_id"
-    t.integer "food_type_id"
-    t.integer "poi_source_id"
-    t.integer "poi_type_id"
-    t.integer "poi_sub_type_id"
-    t.string "street_name"
-    t.integer "street_type_id"
-    t.integer "user_id"
-    t.integer "poi_status_id"
-    t.boolean "active", default: true
-    t.boolean "deleted", default: false
-    t.integer "duplicated_identifier"
-    t.integer "identifier"
-    t.date "control_date"
-    t.geometry "the_geom", limit: {:srid=>4326, :type=>"st_point"}
+  create_table "project_data_children", force: :cascade do |t|
+    t.jsonb "properties"
+    t.integer "project_id"
+    t.integer "project_field_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "poi_load_id"
-    t.integer "old_identifier"
-    t.string "identifier_hash"
-    t.integer "p_action_id"
-    t.boolean "verification", default: false
-    t.string "internal_observation"
-    t.integer "restaurant_type_id"
-    t.date "last_update"
+    t.bigint "user_id"
+    t.serial "update_sequence", null: false
+    t.boolean "row_active", default: true
+    t.boolean "current_season", default: true
+    t.datetime "gwm_created_at"
+    t.datetime "gwm_updated_at"
+    t.index ["user_id"], name: "index_project_data_children_on_user_id"
   end
 
   create_table "project_fields", id: :serial, force: :cascade do |t|
@@ -532,8 +260,71 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "key"
-    t.string "choice_list_id"
+    t.string "choice_list_key"
+    t.integer "choice_list_id"
+    t.integer "field_type_id"
+    t.boolean "hidden", default: false
+    t.integer "sort"
+    t.boolean "read_only", default: false
+    t.boolean "popup", default: false
+    t.string "calculated_field"
+    t.string "roles_read"
+    t.text "data_script"
+    t.boolean "filter_field", default: false
+    t.boolean "heatmap_field", default: false
+    t.boolean "colored_points_field", default: false
+    t.string "roles_edit"
     t.index ["project_type_id"], name: "index_project_fields_on_project_type_id"
+  end
+
+  create_table "project_filters", force: :cascade do |t|
+    t.jsonb "properties"
+    t.bigint "user_id", null: false
+    t.bigint "project_type_id", null: false
+    t.integer "lock_version", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "owner", default: false
+    t.index ["project_type_id"], name: "index_project_filters_on_project_type_id"
+    t.index ["user_id"], name: "index_project_filters_on_user_id"
+  end
+
+  create_table "project_statuses", force: :cascade do |t|
+    t.string "name"
+    t.bigint "project_type_id"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status_type"
+    t.integer "priority"
+    t.string "timer"
+    t.integer "inherit_project_type_id"
+    t.integer "inherit_status_id"
+    t.index ["project_type_id"], name: "index_project_statuses_on_project_type_id"
+  end
+
+  create_table "project_subfields", force: :cascade do |t|
+    t.string "name"
+    t.bigint "project_field_id"
+    t.bigint "regexp_type_id"
+    t.string "key"
+    t.bigint "choice_list_id"
+    t.bigint "field_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "required"
+    t.boolean "hidden", default: false
+    t.boolean "read_only", default: false
+    t.boolean "popup", default: false
+    t.string "calculated_field"
+    t.string "roles_read"
+    t.integer "sort"
+    t.text "data_script"
+    t.string "roles_edit"
+    t.index ["choice_list_id"], name: "index_project_subfields_on_choice_list_id"
+    t.index ["field_type_id"], name: "index_project_subfields_on_field_type_id"
+    t.index ["project_field_id"], name: "index_project_subfields_on_project_field_id"
+    t.index ["regexp_type_id"], name: "index_project_subfields_on_regexp_type_id"
   end
 
   create_table "project_types", id: :serial, force: :cascade do |t|
@@ -542,6 +333,17 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "directory_name"
+    t.string "name_layer"
+    t.boolean "enabled_as_layer"
+    t.string "layer_color"
+    t.string "add_rows"
+    t.string "type_geometry"
+    t.boolean "syncronization_data", default: true
+    t.boolean "tracking", default: false
+    t.text "cover"
+    t.integer "geo_restriction", default: 0, null: false
+    t.boolean "multiple_edition", default: false
+    t.integer "level"
     t.index ["user_id"], name: "index_project_types_on_user_id"
   end
 
@@ -550,16 +352,19 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.integer "project_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "properties_original"
     t.geometry "the_geom", limit: {:srid=>4326, :type=>"geometry"}
+    t.jsonb "properties_original"
+    t.bigint "project_status_id"
+    t.datetime "status_update_at", default: "2020-06-18 16:04:25"
+    t.bigint "user_id"
+    t.serial "update_sequence", null: false
+    t.boolean "row_active", default: true
+    t.boolean "current_season", default: true
+    t.datetime "gwm_created_at"
+    t.datetime "gwm_updated_at"
+    t.index ["project_status_id"], name: "index_projects_on_project_status_id"
     t.index ["project_type_id"], name: "index_projects_on_project_type_id"
-  end
-
-  create_table "provinces", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.integer "country_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "regexp_types", id: :serial, force: :cascade do |t|
@@ -570,37 +375,20 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "restaurant_types", id: :serial, force: :cascade do |t|
+  create_table "roles", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "street_types", id: :serial, force: :cascade do |t|
-    t.string "name"
+  create_table "user_customers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "customer_id"
+    t.integer "role_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "streets", id: :serial, force: :cascade do |t|
-    t.integer "start_number"
-    t.integer "end_number"
-    t.integer "count_intersections"
-    t.float "meters_long_intersection"
-    t.line "the_geom"
-    t.string "name"
-    t.integer "city_id"
-    t.integer "street_type_id"
-    t.integer "code"
-    t.string "city_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "terms", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_user_customers_on_customer_id"
+    t.index ["user_id"], name: "index_user_customers_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -614,24 +402,24 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.string "authentication_token"
+    t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.string "token"
-    t.string "authentication_token", limit: 30
-    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.boolean "active"
+    t.bigint "role_id"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["token"], name: "index_users_on_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
-  end
-
-  create_table "verification_pois", id: :serial, force: :cascade do |t|
-    t.integer "poi_id"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "versions", id: :serial, force: :cascade do |t|
@@ -644,9 +432,17 @@ ActiveRecord::Schema.define(version: 20181112130254) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "analytics_dashboards", "analysis_types"
   add_foreign_key "analytics_dashboards", "charts"
-  add_foreign_key "has_project_types", "users"
+  add_foreign_key "analytics_dashboards", "project_types"
+  add_foreign_key "has_project_types", "project_types"
+  add_foreign_key "permissions", "roles"
+  add_foreign_key "photo_children", "project_data_children"
   add_foreign_key "project_fields", "project_types"
-  add_foreign_key "project_types", "users"
+  add_foreign_key "project_filters", "project_types"
+  add_foreign_key "project_filters", "users"
+  add_foreign_key "project_statuses", "project_types"
+  add_foreign_key "projects", "project_statuses"
   add_foreign_key "projects", "project_types"
+  add_foreign_key "users", "roles"
 end
