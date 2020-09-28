@@ -192,116 +192,114 @@ class Project < ApplicationRecord
   end
 
 
+  def self.default_filter_by_timer timer
 
+    case timer
+    when 'Semana'
+      where("extract(week from small_geom.gwm_created_at) != ?", Date.today.cweek)
+    when 'Mes'
+      where("extract(month from small_geom.gwm_created_at) != ?", Date.today.month)
+    when 'Año'
+      where("extract(year from small_geom.gwm_created_at) != ?", Date.today.year)
+    when 'No'
+      where.not("small_geom.id": nil) # Omite el where con una clause que siempre se va a cumplir
+    end
+
+  end
 
 
   # Resetea los estados a su valor por default (se ejecuta con arask)
   def self.reset_inheritable_statuses
 
-    project_types = ProjectType.all.order(level: :asc).pluck(:id)
+    # Busca los estados heredables ordenados por level y prioridad
+    statuses = ProjectStatus
+      .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
+      .where(status_type: "Heredable")
+      .order("project_types.level ASC")
+      .order(priority: :desc)
 
-    # TODO: debería traer sólo los proyectos que tienen estados heredables
+    # Cicla los estados heredados
+    statuses.each do |status|
 
-    puts ''
-    puts '----------------'
-    puts 'PROYECTOS QUE TIENE LA CORPO:'
-    p project_types
-    puts '----------------'
-    puts ''
-
-    project_types.each do |p|
 
       puts ''
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> PROYECTO #{p}"
+      puts " ------------------------- #{status.name} ------------------------- "
+      puts 'Pertenece al proyecto:'
+      p status.project_type_id
+      puts 'Timer:'
+      p status.timer
+      puts 'Fecha actual:'
+      p Date.today
+      puts 'Semana actual:'
+      p Date.today.cweek
+      puts ' ------------------------------------------------------------------ '
       puts ''
 
-      # Busca los estados heredables de este proyecto
-      inherit_statuses = ProjectStatus
-        .where(project_type_id: p)
-        .where(status_type: 'Heredable')
+      # Busca los big_geom que contengan small_geom del periodo anterior
+      projects_to_default = Project
+        .select("big_geom.id")
+        .from("projects AS big_geom, projects AS small_geom")
+        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+        .where("big_geom.project_type_id = ?", status.project_type_id)
+        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+        .where("big_geom.project_status_id = ?", status.id)
+        .where("small_geom.row_active = true")
+        .where("small_geom.current_season = true")
+        .where("big_geom.row_active = true")
+        .where("big_geom.current_season = true")
+        .default_filter_by_timer(status.timer)
+
+      # Extrae los ids
+      projects_to_default = projects_to_default.uniq.pluck(:id)
+
+
+      puts ' ---------------- projects_to_default ---------------- '
+      p projects_to_default
+      puts ' ----------------------------------------------------- '
+
+      # Busca los big_geom que contengan small_geom del periodo actual
+      projects_not_to_default = Project
+        .select("big_geom.id")
+        .from("projects AS big_geom, projects AS small_geom")
+        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+        .where("big_geom.project_type_id = ?", status.project_type_id)
+        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+        .where("big_geom.project_status_id = ?", status.id)
+        .where("small_geom.row_active = true")
+        .where("small_geom.current_season = true")
+        .where("big_geom.row_active = true")
+        .where("big_geom.current_season = true")
+        .filter_by_timer(status.timer)
+
+        # Extrae los ids
+        projects_not_to_default = projects_not_to_default.uniq.pluck(:id)
+
+
+      puts ' ---------------- projects_not_to_default ---------------- '
+      p projects_not_to_default
+      puts ' --------------------------------------------------------- '
+
+      projects_final = Project
+        .where(id: projects_to_default)
+        .where.not(id: projects_not_to_default)
+
+      puts ' ---------------- projects_final ---------------- '
+      p projects_final
+      puts ' ------------------------------------------------ '
 
       # Busca el id del estado predeterminado de este proyecto
       default_status_id = ProjectStatus
-        .where(project_type_id: p)
+        .where(project_type_id: status.project_type_id)
         .where(status_type: 'Predeterminado')
         .pluck(:id)
         .first
 
+      projects_final.each do |p|
+        p.project_status_id = default_status_id
+        p.save
+      end
 
-      puts ''
-      puts '----------------'
-      puts ' ---- Estados heredados: ---- '
-      p inherit_statuses
-      puts ''
-      puts ' ---- ID de estados predeterminado: ---- '
-      p default_status_id
-      puts '----------------'
-      puts ''
-
-
-      inherit_statuses.each do |status|
-
-        puts ''
-        puts " ------------------------- #{status.name} ------------------------- "
-        puts 'Pertenece al proyecto:'
-        p status.project_type_id
-        puts 'Hereda estado ' + status.inherit_status_id.to_s + ' del proyecto ' + status.inherit_status_id.to_s
-        puts 'Timer:'
-        p status.timer
-        puts 'Semana actual:'
-        p Date.today.cweek
-        puts ' ------------------------------------------------------------------ '
-        puts ''
-
-
-        projects_to_default = Project
-          .select("big_geom.*")
-          .from("projects AS big_geom, projects AS small_geom")
-          .where.not("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
-          .where("big_geom.project_type_id = ?", status.project_type_id)
-          .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
-          .where("big_geom.project_status_id = ?", status.id)
-          .where("small_geom.row_active = true")
-          .where("small_geom.current_season = true")
-          .where("big_geom.row_active = true")
-          .where("big_geom.current_season = true")
-          .filter_by_timer(status.timer)
-          .uniq
-
-
-
-        puts ''
-        puts '----------------'
-        puts 'REGISTROS:'
-        p projects_to_default
-        puts '----------------'
-        puts ''
-
-        projects_to_default.each do |registro|
-
-          puts ''
-          puts ">>>>>>>>>>>>>>>> REGISTRO #{registro.id}"
-          puts ''
-
-          puts ''
-          puts '----------------'
-          puts 'Estado que tiene:'
-          p registro.project_status_id
-          puts ''
-          puts 'Estado al que vuelve:'
-          p default_status_id
-          puts '----------------'
-          puts ''
-
-
-          registro.project_status_id = default_status_id
-          registro.save
-
-        end # projects.each
-
-      end # inherit_statuses.each
-
-    end # project_types.each
+    end # statuses.each
 
   end # reset_inheritable_statuses
 
