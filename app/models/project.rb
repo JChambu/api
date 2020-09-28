@@ -337,11 +337,10 @@ class Project < ApplicationRecord
     puts ' ---------------------------------------------------------- '
     puts ''
 
+    @projects_to_update_hash = {}
 
     # Cicla los estados heredados
     statuses.each do |status|
-
-      @projects_to_update_hash = {}
 
       puts ''
       puts " ------------------------- #{status.name} ------------------------- "
@@ -381,7 +380,7 @@ class Project < ApplicationRecord
 
         projects_to_update.each do |p|
 
-          if p.project_status_id != status.id
+          # if p.project_status_id != status.id
 
             puts ' --------- ACTUALIZA ----------- '
             puts 'ID:'
@@ -396,7 +395,7 @@ class Project < ApplicationRecord
             puts ' ------------------------------- '
             puts ''
 
-          end
+          # end
 
         end
 
@@ -413,8 +412,13 @@ class Project < ApplicationRecord
       project = Project.find_by(id: project_id)
       puts 'project:'
       p project
-      project.project_status_id = status_id
-      project.save
+
+      if project.project_status_id != status_id
+
+        project.project_status_id = status_id
+        project.save
+
+      end
 
     end
 
