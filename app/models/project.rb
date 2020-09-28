@@ -343,7 +343,7 @@ class Project < ApplicationRecord
     # Cicla los estados heredados
     statuses.each do |status|
 
-      projects_final = {}
+      @projects_to_update_hash = {}
 
       puts ''
       puts " ------------------------- #{status.name} ------------------------- "
@@ -392,9 +392,9 @@ class Project < ApplicationRecord
             p p.project_status_id
             puts 'Estado al que cambia:'
             p status.id
-            puts '@projects_final:'
-            projects_final[p.id] = status.id
-            p projects_final
+            puts '@projects_to_update_hash:'
+            @projects_to_update_hash[p.id] = status.id
+            p @projects_to_update_hash
             puts ' ------------------------------- '
             puts ''
 
@@ -405,20 +405,20 @@ class Project < ApplicationRecord
       end
 
       puts ' ---------------------- Que llega al final? ---------------------- '
-      p projects_final
+      p @projects_to_update_hash
       puts ' ----------------------------------------------------------------- '
 
-      projects_final.each do |project_id, status_id|
-
-        project = Project.find_by(id: project_id)
-        puts 'project:'
-        p project
-        project.project_status_id = status_id
-        project.save
-
-      end
-
     end # cierra each status
+
+    @projects_to_update_hash.each do |project_id, status_id|
+
+      project = Project.find_by(id: project_id)
+      puts 'project:'
+      p project
+      project.project_status_id = status_id
+      project.save
+
+    end
 
   end # cierra inherit fc
 
