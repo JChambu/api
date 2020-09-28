@@ -192,6 +192,9 @@ class Project < ApplicationRecord
   end
 
 
+
+
+
   # Resetea los estados a su valor por default (se ejecuta con arask)
   def self.reset_inheritable_statuses
 
@@ -251,11 +254,10 @@ class Project < ApplicationRecord
         puts ''
 
 
-
         projects_to_default = Project
           .select("big_geom.*")
           .from("projects AS big_geom, projects AS small_geom")
-          .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+          .where.not("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
           .where("big_geom.project_type_id = ?", status.project_type_id)
           .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
           .where("big_geom.project_status_id = ?", status.id)
@@ -263,11 +265,10 @@ class Project < ApplicationRecord
           .where("small_geom.current_season = true")
           .where("big_geom.row_active = true")
           .where("big_geom.current_season = true")
-          .default_filter_by_timer(status.timer)
+          .filter_by_timer(status.timer)
           .uniq
 
 
-        # projects = Project.where(project_status_id: status.id)
 
         puts ''
         puts '----------------'
@@ -314,22 +315,6 @@ class Project < ApplicationRecord
       where("extract(month from small_geom.gwm_created_at) = ?", Date.today.month)
     when 'Año'
       where("extract(year from small_geom.gwm_created_at) = ?", Date.today.year)
-    when 'No'
-      where.not("small_geom.id": nil) # Omite el where con una clause que siempre se va a cumplir
-    end
-
-  end
-
-
-  def self.default_filter_by_timer timer
-
-    case timer
-    when 'Semana'
-      where("extract(week from small_geom.gwm_created_at) != ?", Date.today.cweek)
-    when 'Mes'
-      where("extract(month from small_geom.gwm_created_at) != ?", Date.today.month)
-    when 'Año'
-      where("extract(year from small_geom.gwm_created_at) != ?", Date.today.year)
     when 'No'
       where.not("small_geom.id": nil) # Omite el where con una clause que siempre se va a cumplir
     end
