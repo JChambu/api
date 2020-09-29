@@ -20,7 +20,7 @@ Arask.setup do |arask|
   #arask.create script: 'Attachment.process_new', interval: 5.hours, run_first_time: true
 
   # On exceptions, send email with details
-  #arask.on_exception email: 'errors@example.com'
+  arask.on_exception email: 'villegas.jonathan88@gmail.com'
 
   # Run code on exceptions
   #arask.on_exception do |exception, arask_job|
