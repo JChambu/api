@@ -211,6 +211,8 @@ class Project < ApplicationRecord
   # Resetea los estados a su valor por default (se ejecuta con arask)
   def self.reset_inheritable_statuses
 
+    Rails.logger.debug "------------------------------- reset_inheritable_statuses -------------------------------"
+
     # Busca los estados heredables ordenados por level y prioridad
     statuses = ProjectStatus
       .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
