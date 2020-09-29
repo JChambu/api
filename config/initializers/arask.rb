@@ -1,4 +1,4 @@
-Arask.setup do |arask|
+Arask.setup(true) do |arask|
   ## Examples
 
   # Rake tasks with cron syntax
