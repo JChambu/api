@@ -1,4 +1,5 @@
 Arask.setup(true) do |arask|
+  Rails.logger.ap "------------------------------- Arask.setup -------------------------------"
   ## Examples
 
   # Rake tasks with cron syntax
