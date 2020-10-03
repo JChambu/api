@@ -1,4 +1,4 @@
-Arask.setup(true) do |arask|
+Arask.setup do |arask|
   Rails.logger.debug "------------------------------- Arask.setup -------------------------------"
   ## Examples
 
