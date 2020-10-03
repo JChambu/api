@@ -211,8 +211,6 @@ class Project < ApplicationRecord
   # Resetea los estados a su valor por default (se ejecuta con arask)
   def self.reset_inheritable_statuses
 
-    Rails.logger.debug "------------------------------- reset_inheritable_statuses -------------------------------"
-
     # Busca los estados heredables ordenados por level y prioridad
     statuses = ProjectStatus
       .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
@@ -222,20 +220,6 @@ class Project < ApplicationRecord
 
     # Cicla los estados heredados
     statuses.each do |status|
-
-
-      puts ''
-      puts " ------------------------- #{status.name} ------------------------- "
-      puts 'Pertenece al proyecto:'
-      p status.project_type_id
-      puts 'Timer:'
-      p status.timer
-      puts 'Fecha actual:'
-      p Date.today
-      puts 'Semana actual:'
-      p Date.today.cweek
-      puts ' ------------------------------------------------------------------ '
-      puts ''
 
       # Busca los big_geom que contengan small_geom del periodo anterior
       projects_to_default = Project
@@ -254,11 +238,6 @@ class Project < ApplicationRecord
       # Extrae los ids
       projects_to_default = projects_to_default.uniq.pluck(:id)
 
-
-      puts ' ---------------- projects_to_default ---------------- '
-      p projects_to_default
-      puts ' ----------------------------------------------------- '
-
       # Busca los big_geom que contengan small_geom del periodo actual
       projects_not_to_default = Project
         .select("big_geom.id")
@@ -273,21 +252,12 @@ class Project < ApplicationRecord
         .where("big_geom.current_season = true")
         .filter_by_timer(status.timer)
 
-        # Extrae los ids
-        projects_not_to_default = projects_not_to_default.uniq.pluck(:id)
-
-
-      puts ' ---------------- projects_not_to_default ---------------- '
-      p projects_not_to_default
-      puts ' --------------------------------------------------------- '
+      # Extrae los ids
+      projects_not_to_default = projects_not_to_default.uniq.pluck(:id)
 
       projects_final = Project
         .where(id: projects_to_default)
         .where.not(id: projects_not_to_default)
-
-      puts ' ---------------- projects_final ---------------- '
-      p projects_final
-      puts ' ------------------------------------------------ '
 
       # Busca el id del estado predeterminado de este proyecto
       default_status_id = ProjectStatus
@@ -325,9 +295,6 @@ class Project < ApplicationRecord
 
   def self.update_inheritable_statuses
 
-    puts ''
-    puts ' ------------------- ESTADOS HEREDABLES ------------------- '
-
     # Busca los estados heredables ordenados por level y prioridad
     statuses = ProjectStatus
       .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
@@ -335,28 +302,10 @@ class Project < ApplicationRecord
       .order("project_types.level ASC")
       .order(priority: :desc)
 
-    p statuses
-    puts ' ---------------------------------------------------------- '
-    puts ''
-
     @projects_to_update_hash = {}
 
     # Cicla los estados heredados
     statuses.each do |status|
-
-      puts ''
-      puts " ------------------------- #{status.name} ------------------------- "
-      puts 'Pertenece al proyecto:'
-      p status.project_type_id
-      puts 'Hereda estado ' + status.inherit_status_id.to_s + ' del proyecto ' + status.inherit_status_id.to_s
-      puts 'Timer:'
-      p status.timer
-      puts 'Fecha actual:'
-      p Date.today
-      puts 'Semana actual:'
-      p Date.today.cweek
-      puts ' ------------------------------------------------------------------ '
-      puts ''
 
       # Busca los registros de big_geom a los que se les debe modificarles el estado
       projects_to_update = Project
@@ -373,53 +322,21 @@ class Project < ApplicationRecord
         .filter_by_timer(status.timer)
         .uniq
 
-
-      puts ' ---------------- Cantidad de registros a ACTUALIZAR ---------------- '
-      p projects_to_update.count
-      puts ' -------------------------------------------------------------------- '
-
       if !projects_to_update.empty?
-
         projects_to_update.each do |p|
-
-          # if p.project_status_id != status.id
-
-            puts ' --------- ACTUALIZA ----------- '
-            puts 'ID:'
-            p p.id
-            puts 'Estado que tiene:'
-            p p.project_status_id
-            puts 'Estado al que cambia:'
-            p status.id
-            puts '@projects_to_update_hash:'
-            @projects_to_update_hash[p.id] = status.id
-            p @projects_to_update_hash
-            puts ' ------------------------------- '
-            puts ''
-
-          # end
-
+          @projects_to_update_hash[p.id] = status.id
         end
-
       end
-
-      puts ' ---------------------- Que llega al final? ---------------------- '
-      p @projects_to_update_hash
-      puts ' ----------------------------------------------------------------- '
 
     end # cierra each status
 
     @projects_to_update_hash.each do |project_id, status_id|
 
       project = Project.find_by(id: project_id)
-      puts 'project:'
-      p project
 
       if project.project_status_id != status_id
-
         project.project_status_id = status_id
         project.save
-
       end
 
     end
