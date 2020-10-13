@@ -29,6 +29,6 @@ Arask.setup do |arask|
   #end
 
   # Resetea los estados todos los días a las 00hs
-  # arask.create task: 'statuses:reset', cron: '0 0 * * *' if Rails.env.production?
+  arask.create task: 'statuses:reset', cron: '0 0 * * *' if Rails.env.production?
 
 end
