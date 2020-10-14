@@ -506,7 +506,7 @@ class Project < ApplicationRecord
         end
 
       end
-      return [result_hash]
+
     end
 
     # Guarda las fotos de los padres
@@ -521,5 +521,6 @@ class Project < ApplicationRecord
       end
     end
 
+    return [result_hash]
   end
 end
