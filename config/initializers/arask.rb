@@ -1,5 +1,4 @@
 Arask.setup do |arask|
-  Rails.logger.debug "------------------------------- Arask.setup -------------------------------"
   ## Examples
 
   # Rake tasks with cron syntax
@@ -24,10 +23,9 @@ Arask.setup do |arask|
   arask.on_exception email: 'villegas.jonathan88@gmail.com'
 
   # Run code on exceptions
-  arask.on_exception do |exception, arask_job|
-   # MyExceptionHandler.new(exception)
-   Rails.logger.debug exception
-  end
+  # arask.on_exception do |exception, arask_job|
+  #  MyExceptionHandler.new(exception)
+  # end
 
   # Resetea los estados todos los días a las 00hs
   arask.create task: 'statuses:reset', cron: '0 0 * * *', run_first_time: true

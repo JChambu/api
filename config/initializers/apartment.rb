@@ -12,8 +12,6 @@
 # Apartment Configuration
 #
 Apartment.configure do |config|
-  Rails.logger.debug "------------------------------- Apartment.configure -------------------------------"
-
   # Add any models that you do not want to be multi-tenanted, but remain in the global (public) namespace.
   # A typical example would be a Customer or Tenant model that stores each Tenant's information.
   #
