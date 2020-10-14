@@ -111,7 +111,6 @@ class ProjectField < ApplicationRecord
   def self.show_choice_list id
 
     items = []
-
     choice_list = ChoiceList.find(id)
     choice_list_item  = ChoiceListItem.where(choice_list_id: choice_list.id)
     sorted_choice_list_items = choice_list_item.sort { |x, y| x[:name] <=> y[:name] } # Ordena los items
