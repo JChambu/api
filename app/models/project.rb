@@ -192,7 +192,7 @@ class Project < ApplicationRecord
   end
 
 
-  def self.default_filter_by_timer timer
+  def self.filter_not_equal_records_with_timer timer
 
     case timer
     when 'Semana'
@@ -233,7 +233,7 @@ class Project < ApplicationRecord
         .where("small_geom.current_season = true")
         .where("big_geom.row_active = true")
         .where("big_geom.current_season = true")
-        .default_filter_by_timer(status.timer)
+        .filter_not_equal_records_with_timer(status.timer)
 
       # Extrae los ids
       projects_to_default = projects_to_default.uniq.pluck(:id)
@@ -250,7 +250,7 @@ class Project < ApplicationRecord
         .where("small_geom.current_season = true")
         .where("big_geom.row_active = true")
         .where("big_geom.current_season = true")
-        .filter_by_timer(status.timer)
+        .filter_equal_records_with_timer(status.timer)
 
       # Extrae los ids
       projects_not_to_default = projects_not_to_default.uniq.pluck(:id)
@@ -276,7 +276,7 @@ class Project < ApplicationRecord
   end # reset_inheritable_statuses
 
 
-  def self.filter_by_timer timer
+  def self.filter_equal_records_with_timer timer
 
     case timer
     when 'Semana'
@@ -326,7 +326,7 @@ class Project < ApplicationRecord
             .where("small_geom.current_season = true")
             .where("big_geom.row_active = true")
             .where("big_geom.current_season = true")
-            .filter_by_timer(status.timer)
+            .filter_equal_records_with_timer(status.timer)
             .uniq
 
           if !projects_to_update.empty?
