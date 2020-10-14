@@ -486,6 +486,7 @@ class Project < ApplicationRecord
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id] # FIXME: Este campo a veces se carga con 0
         child_data[:gwm_created_at] = data[:gwm_created_at]
+        child_data[:gwm_updated_at] = data[:gwm_updated_at]
 
         if child_data.save
           localID = data[:localID]
