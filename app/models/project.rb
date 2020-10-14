@@ -192,7 +192,91 @@ class Project < ApplicationRecord
   end
 
 
-  def self.filter_by_timer timer
+  def self.filter_not_equal_records_with_timer timer
+
+    case timer
+    when 'Semana'
+      where("extract(week from small_geom.gwm_created_at) != ?", Date.today.cweek)
+    when 'Mes'
+      where("extract(month from small_geom.gwm_created_at) != ?", Date.today.month)
+    when 'Año'
+      where("extract(year from small_geom.gwm_created_at) != ?", Date.today.year)
+    when 'No'
+      where.not("small_geom.id": nil) # Omite el where con una clause que siempre se va a cumplir
+    end
+
+  end
+
+
+  # Resetea los estados a su valor por default (se ejecuta con arask)
+  def self.reset_inheritable_statuses
+
+    # Busca los estados heredables ordenados por level y prioridad
+    statuses = ProjectStatus
+      .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
+      .where(status_type: "Heredable")
+      .order("project_types.level ASC")
+      .order(priority: :desc)
+
+    # Cicla los estados heredados
+    statuses.each do |status|
+
+      # Busca los big_geom que contengan small_geom del periodo anterior
+      projects_to_default = Project
+        .select("big_geom.id")
+        .from("projects AS big_geom, projects AS small_geom")
+        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+        .where("big_geom.project_type_id = ?", status.project_type_id)
+        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+        .where("big_geom.project_status_id = ?", status.id)
+        .where("small_geom.row_active = true")
+        .where("small_geom.current_season = true")
+        .where("big_geom.row_active = true")
+        .where("big_geom.current_season = true")
+        .filter_not_equal_records_with_timer(status.timer)
+
+      # Extrae los ids
+      projects_to_default = projects_to_default.uniq.pluck(:id)
+
+      # Busca los big_geom que contengan small_geom del periodo actual
+      projects_not_to_default = Project
+        .select("big_geom.id")
+        .from("projects AS big_geom, projects AS small_geom")
+        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+        .where("big_geom.project_type_id = ?", status.project_type_id)
+        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+        .where("big_geom.project_status_id = ?", status.id)
+        .where("small_geom.row_active = true")
+        .where("small_geom.current_season = true")
+        .where("big_geom.row_active = true")
+        .where("big_geom.current_season = true")
+        .filter_equal_records_with_timer(status.timer)
+
+      # Extrae los ids
+      projects_not_to_default = projects_not_to_default.uniq.pluck(:id)
+
+      projects_final = Project
+        .where(id: projects_to_default)
+        .where.not(id: projects_not_to_default)
+
+      # Busca el id del estado predeterminado de este proyecto
+      default_status_id = ProjectStatus
+        .where(project_type_id: status.project_type_id)
+        .where(status_type: 'Predeterminado')
+        .pluck(:id)
+        .first
+
+      projects_final.each do |p|
+        p.project_status_id = default_status_id
+        p.save
+      end
+
+    end # statuses.each
+
+  end # reset_inheritable_statuses
+
+
+  def self.filter_equal_records_with_timer timer
 
     case timer
     when 'Semana'
@@ -211,78 +295,64 @@ class Project < ApplicationRecord
 
   def self.update_inheritable_statuses
 
-    # Busca los estados heredables ordenados por level y prioridad
-    statuses = ProjectStatus
-      .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
-      .where(status_type: "Heredable")
-      .order("project_types.level ASC")
-      .order(priority: :desc)
+    # Busca todas las corporaciones
+    tentants = Customer.all.pluck(:subdomain)
 
-    # Cicla los estados heredados
-    statuses.each do |status|
+    tentants.each do |tenant|
 
-      # Busca los registros de big_geom a los que se les debe modificarles el estado
-      projects_to_update = Project
-        .select("big_geom.*")
-        .from("projects AS big_geom, projects AS small_geom")
-        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
-        .where("big_geom.project_type_id = ?", status.project_type_id)
-        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
-        .where("small_geom.project_status_id = ?", status.inherit_status_id)
-        .where("small_geom.row_active = true")
-        .where("small_geom.current_season = true")
-        .where("big_geom.row_active = true")
-        .where("big_geom.current_season = true")
-        .filter_by_timer(status.timer)
-        .uniq
+      Apartment::Tenant.switch(tenant) do
 
-      if !projects_to_update.empty?
+        # Busca los estados heredables ordenados por level y prioridad
+        statuses = ProjectStatus
+          .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
+          .where(status_type: "Heredable")
+          .order("project_types.level ASC")
+          .order(priority: :desc)
 
-        projects_to_update.each do |p|
+        @projects_to_update_hash = {}
 
-          if p.project_status_id != status.id
+        # Cicla los estados heredados
+        statuses.each do |status|
 
-            p.project_status_id = status.id
-            p.save
+          # Busca los registros de big_geom a los que se les debe modificarles el estado
+          projects_to_update = Project
+            .select("big_geom.*")
+            .from("projects AS big_geom, projects AS small_geom")
+            .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+            .where("big_geom.project_type_id = ?", status.project_type_id)
+            .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+            .where("small_geom.project_status_id = ?", status.inherit_status_id)
+            .where("small_geom.row_active = true")
+            .where("small_geom.current_season = true")
+            .where("big_geom.row_active = true")
+            .where("big_geom.current_season = true")
+            .filter_equal_records_with_timer(status.timer)
+            .uniq
 
+          if !projects_to_update.empty?
+            projects_to_update.each do |p|
+              @projects_to_update_hash[p.id] = status.id
+            end
+          end
+
+        end # cierra each status
+
+        @projects_to_update_hash.each do |project_id, status_id|
+
+          project = Project.find_by(id: project_id)
+
+          if project.project_status_id != status_id
+            project.project_status_id = status_id
+            project.save
           end
 
         end
 
-      else
+      end # Cierra Tenant.switch
 
-        projects_to_default = Project
-          .select("big_geom.*")
-          .from("projects AS big_geom, projects AS small_geom")
-          .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
-          .where("big_geom.project_type_id = ?", status.project_type_id)
-          .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
-          .where("big_geom.project_status_id = ?", status.id)
-          .where("small_geom.row_active = true")
-          .where("small_geom.current_season = true")
-          .where("big_geom.row_active = true")
-          .where("big_geom.current_season = true")
-          .uniq
+    end # Cierra tentants.each
 
-        projects_to_default.each do |d|
-
-          # Busca el id del estado default según el proyecto
-          default_status_id = ProjectStatus
-            .where(project_type_id: d.project_type_id)
-            .where(status_type: "Predeterminado")
-            .pluck(:id)
-            .first
-
-          d.project_status_id = default_status_id
-          d.save
-
-        end
-
-      end
-
-    end
-
-  end
+  end # cierra update_inheritable_statuses
 
 
   # Guarda los registros padres nuevos
@@ -303,7 +373,7 @@ class Project < ApplicationRecord
           # Busca el key de cada registro según su id y guarda key y valor en un hash
           field = ProjectField.where(id: v.to_i).select(:key).first
           if !field.nil?
-            if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id' && field.key != 'gwm_created_at' && field.key != 'gwm_updated_at' 
+            if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id' && field.key != 'gwm_created_at' && field.key != 'gwm_updated_at'
               value_name.merge!("#{field.key}": k )
             end
           end
@@ -403,7 +473,7 @@ class Project < ApplicationRecord
   def self.save_rows_project_data_childs project_data_child
 
     result_hash = {}
-    
+
     if !project_data_child['projects']['childs'].nil?
 
       # Cicla todos los hijos
