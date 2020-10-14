@@ -500,6 +500,7 @@ class Project < ApplicationRecord
             photo['name'] = photo_child['values']['name']
             photo['image'] = photo_child['values']['image']
             photo['project_data_child_id'] = child_data.id
+            photo['gwm_created_at'] = photo_child['gwm_created_at']
             photo.save
           end
         end
@@ -515,6 +516,7 @@ class Project < ApplicationRecord
         project_photo['name'] = photo['values']['name']
         project_photo['image'] = photo['values']['image']
         project_photo['project_id'] = photo['IdFather']
+        project_photo['gwm_created_at'] = photo['gwm_created_at']
         project_photo.save
       end
     end
