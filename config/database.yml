@@ -11,8 +11,8 @@
 
 default: &default
   adapter: postgis
-  postgis_extension: true
-  schema_search_path: public, postgis
+  postgis_schema: shared_extensions
+  schema_search_path: public, shared_extensions
   encoding: unicode
   host: localhost
   username: postgres

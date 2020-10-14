@@ -24,7 +24,8 @@ module Api
             "project_statuses": project_statuses,
             "type_geometry": project_type.type_geometry,
             "geo_restriction": project_type.geo_restriction,
-            "cover": project_type.cover
+            "cover": project_type.cover,
+            "multiple_edition": project_type.multiple_edition,
           }
 
           @p.push(data)
