@@ -172,7 +172,6 @@ class Project < ApplicationRecord
   end
 
 
-
   def self.show_choice_list id
     items=[]
     choice_list = ChoiceList.find(id)
