@@ -63,6 +63,32 @@ class ProjectDataChild < ApplicationRecord
         end
       end
 
+      # Aplica filtro intercapa
+      if !@project_filters.cross_layer_filter_id.nil?
+
+        cross_layer_filter = ProjectFilter.where(user_id: current_user).where(id: @project_filters.cross_layer_filter_id).first
+
+        # Cruza la capa del principal que contiene los hijos con la capa secunadaria
+        value = value
+          .joins('INNER JOIN projects sec ON shared_extensions.ST_Intersects(main.the_geom, sec.the_geom)')
+          .where('sec.project_type_id = ?', cross_layer_filter.project_type_id)
+          .where('sec.row_active = ?', true)
+          .where('sec.current_season = ?', true)
+
+        # Aplica filtro por owner a capa secundaria
+        if cross_layer_filter.owner == true
+          value = value.where('sec.user_id = ?', current_user)
+        end
+
+        # Aplica filtro por atributo a capa secundaria
+        if !cross_layer_filter.properties.nil?
+          cross_layer_filter.properties.to_a.each do |prop|
+            value = value.where("sec.properties->>'#{prop[0]}' = '#{prop[1]}'")
+          end
+        end
+
+      end
+
     end
 
     value = value.order('project_data_children.update_sequence').page(page).per_page(50)
@@ -122,6 +148,31 @@ class ProjectDataChild < ApplicationRecord
         end
       end
 
+      # Aplica filtro intercapa
+      if !@project_filters.cross_layer_filter_id.nil?
+
+        cross_layer_filter = ProjectFilter.where(user_id: current_user).where(id: @project_filters.cross_layer_filter_id).first
+
+        # Cruza la capa del principal que contiene los hijos con la capa secunadaria
+        @rows = @rows
+          .joins('INNER JOIN projects sec ON shared_extensions.ST_Intersects(main.the_geom, sec.the_geom)')
+          .where('sec.project_type_id = ?', cross_layer_filter.project_type_id)
+          .where('sec.row_active = ?', true)
+          .where('sec.current_season = ?', true)
+
+        # Aplica filtro por owner a capa secundaria
+        if cross_layer_filter.owner == true
+          @rows = @rows.where('sec.user_id = ?', current_user)
+        end
+
+        # Aplica filtro por atributo a capa secundaria
+        if !cross_layer_filter.properties.nil?
+          cross_layer_filter.properties.to_a.each do |prop|
+            @rows = @rows.where("sec.properties->>'#{prop[0]}' = '#{prop[1]}'")
+          end
+        end
+
+      end
 
     end
 
