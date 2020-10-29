@@ -70,7 +70,6 @@ class Project < ApplicationRecord
         .current_season(current_season)
         .where(project_type_id: project_type_id)
         .where('update_sequence > ?', updated_sequence)
-        .where.not(user_id: '74')
         .select("
           shared_extensions.st_asgeojson(the_geom) as geom,
           id,
@@ -90,7 +89,6 @@ class Project < ApplicationRecord
         .current_season(current_season)
         .where(project_type_id: project_type_id)
         .where('update_sequence > ?', updated_sequence)
-        .where.not(user_id: '74')
         .select("
           shared_extensions.st_x(the_geom) as lng,
           shared_extensions.st_y(the_geom) as lat,

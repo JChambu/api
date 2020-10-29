@@ -28,7 +28,6 @@ class ProjectDataChild < ApplicationRecord
       .where('project_data_children.update_sequence > ?', updated_sequence)
       .row_active(row_active)
       .current_season(current_season)
-      .where.not('project_data_children.user_id = 74')
       .select("
         project_data_children.id,
         project_data_children.properties,
@@ -86,7 +85,6 @@ class ProjectDataChild < ApplicationRecord
       .current_season(current_season)
       .where("projects.project_type_id = ?", project_type_id)
       .where('project_data_children.update_sequence > ?', updated_sequence)
-      .where.not('project_data_children.user_id = 74')
       .select("project_data_children.update_sequence")
 
     # Aplica filtro owner
