@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200925234247) do
+ActiveRecord::Schema.define(version: 20201022022614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,6 +222,7 @@ ActiveRecord::Schema.define(version: 20200925234247) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "row_active", default: true
+    t.datetime "gwm_created_at"
     t.index ["project_data_child_id"], name: "index_photo_children_on_project_data_child_id"
   end
 
@@ -232,6 +233,7 @@ ActiveRecord::Schema.define(version: 20200925234247) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "row_active", default: true
+    t.datetime "gwm_created_at"
   end
 
   create_table "project_data_children", force: :cascade do |t|
@@ -285,6 +287,7 @@ ActiveRecord::Schema.define(version: 20200925234247) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "owner", default: false
+    t.integer "cross_layer_filter_id"
     t.index ["project_type_id"], name: "index_project_filters_on_project_type_id"
     t.index ["user_id"], name: "index_project_filters_on_user_id"
   end
