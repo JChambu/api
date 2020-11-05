@@ -41,7 +41,7 @@ class Project < ApplicationRecord
   def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
 
     @rows = Project
-      .select('main.*')
+      .select('DISTINCT main.*')
       .from('projects main')
       .check_row_active(row_active)
       .check_current_season(current_season)
@@ -191,7 +191,7 @@ class Project < ApplicationRecord
 
     end
 
-    # TODO: Pensar si la utilización del update_sequence sólo en el main puede traer alguna complicacion al sync
+    value = value.distinct
     value = value.order('main.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
