@@ -91,6 +91,7 @@ class ProjectDataChild < ApplicationRecord
 
     end
 
+    value = value.distinct
     value = value.order('project_data_children.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
@@ -118,10 +119,6 @@ class ProjectDataChild < ApplicationRecord
 
   # Recupera la cantidad de registros hijos a sincronizar
   def self.row_quantity_children project_type_id, updated_sequence, row_active, current_season, current_user
-
-    # NOTE: El parámetro row_active sólo se cruza con los registros hijos,
-    # los registros padre se buscan con row_active y current_season true para corregir alguna eliminación incompleta en la db
-    # y registros que cruzan los padres también se buscan con row_active y current_season true para no cruzar con no activos
 
     @rows = ProjectDataChild
       .joins('INNER JOIN projects main ON main.id = project_data_children.project_id')
@@ -176,6 +173,7 @@ class ProjectDataChild < ApplicationRecord
 
     end
 
+    @rows = @rows.distinct
     @rows = @rows.count
     @rows
   end
