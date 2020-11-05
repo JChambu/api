@@ -17,41 +17,80 @@ class Project < ApplicationRecord
   end
 
 
-  def self.row_active row_active
+  # Devuelve where clause para todos los hijos o sólo los row_active = true
+  def self.check_row_active row_active
     if row_active == 'true'
-      where('projects.row_active = ? ', true)
+      where('main.row_active = ?', true)
     else
-      where('projects.row_active IS Not NULL ')
+      where('main.row_active IS NOT NULL')
     end
   end
 
 
-  def self.current_season current_season
+  # Devuelve where clause para todos los hijos o sólo los current_season = true
+  def self.check_current_season current_season
     if current_season == 'true'
-      where('projects.current_season = ? ', true)
+      where('main.current_season = ?', true)
     else
-      where('projects.current_season IS Not NULL ')
+      where('main.current_season IS NOT NULL')
     end
   end
 
 
   # Recupera la cantidad de registros padres a sincronizar
   def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
+
     @rows = Project
-      .row_active(row_active)
-      .current_season(current_season)
-      .where(project_type_id: project_type_id)
-      .where('update_sequence > ?', updated_sequence)
-      .where.not(user_id: '74')
-    # Aplica filtro owner
-    @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
-    @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false
-    # Aplica filtro por atributo
+      .select('DISTINCT main.*')
+      .from('projects main')
+      .check_row_active(row_active)
+      .check_current_season(current_season)
+      .where('main.project_type_id = ?', project_type_id.to_i)
+      .where('main.update_sequence > ?', updated_sequence)
+
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
-    if !@project_filters.nil? && @project_filters != false
-      @project_filters.properties.to_a.each do |prop|
-        @rows = @rows.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+
+    if !@project_filters.nil?
+
+      # Aplica filtro owner
+      if @project_filters.owner == true
+        @rows = @rows.where('main.user_id = ?', current_user)
       end
+
+      # Aplica filtro por atributo
+      if !@project_filters.properties.nil?
+        @project_filters.properties.to_a.each do |prop|
+          @rows = @rows.where("main.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+        end
+      end
+
+      # Aplica filtro intercapa
+      if !@project_filters.cross_layer_filter_id.nil?
+
+        cross_layer_filter = ProjectFilter.where(user_id: current_user).where(id: @project_filters.cross_layer_filter_id).first
+
+        # Cruza la capa del principal que contiene los hijos con la capa secunadaria
+        @rows = @rows
+          .except(:from).from('projects main CROSS JOIN projects sec')
+          .where('shared_extensions.ST_Intersects(main.the_geom, sec.the_geom)')
+          .where('sec.project_type_id = ?', cross_layer_filter.project_type_id)
+          .where('sec.row_active = ?', true)
+          .where('sec.current_season = ?', true)
+
+        # Aplica filtro por owner a capa secundaria
+        if cross_layer_filter.owner == true
+          @rows = @rows.where('sec.user_id = ?', current_user)
+        end
+
+        # Aplica filtro por atributo a capa secundaria
+        if !cross_layer_filter.properties.nil?
+          cross_layer_filter.properties.to_a.each do |prop|
+            @rows = @rows.where("sec.properties->>'#{prop[0]}' = '#{prop[1]}'")
+          end
+        end
+
+      end
+
     end
     @rows = @rows.count
     @rows
@@ -66,67 +105,101 @@ class Project < ApplicationRecord
     # Recupera los registros dependiendo de su geometría
     if (type_geometry[0] == 'Polygon')
       value = Project
-        .row_active(row_active)
-        .current_season(current_season)
-        .where(project_type_id: project_type_id)
-        .where('update_sequence > ?', updated_sequence)
-        .where.not(user_id: '74')
-        .select("
-          shared_extensions.st_asgeojson(the_geom) as geom,
-          id,
-          properties,
-          gwm_created_at,
-          gwm_updated_at,
-          project_status_id,
-          user_id,
-          the_geom,
-          update_sequence,
-          row_active,
-          current_season
-        ")
+        .select('
+          shared_extensions.ST_AsGeoJSON(main.the_geom) AS geom,
+          main.id,
+          main.properties,
+          main.gwm_created_at,
+          main.gwm_updated_at,
+          main.project_status_id,
+          main.user_id,
+          main.the_geom,
+          main.update_sequence,
+          main.row_active,
+          main.current_season
+        ')
+        .from('projects main')
+        .check_row_active(row_active)
+        .check_current_season(current_season)
+        .where('main.project_type_id = ?', project_type_id.to_i)
+        .where('main.update_sequence > ?', updated_sequence)
     else
       value = Project
-        .row_active(row_active)
-        .current_season(current_season)
-        .where(project_type_id: project_type_id)
-        .where('update_sequence > ?', updated_sequence)
-        .where.not(user_id: '74')
         .select("
-          shared_extensions.st_x(the_geom) as lng,
-          shared_extensions.st_y(the_geom) as lat,
-          id,
-          properties,
-          gwm_created_at,
-          gwm_updated_at,
-          project_status_id,
-          user_id,
-          the_geom,
-          update_sequence,
-          row_active,
-          current_season
+          shared_extensions.ST_X(main.the_geom) as lng,
+          shared_extensions.ST_Y(main.the_geom) as lat,
+          main.id,
+          main.properties,
+          main.gwm_created_at,
+          main.gwm_updated_at,
+          main.project_status_id,
+          main.user_id,
+          main.the_geom,
+          main.update_sequence,
+          main.row_active,
+          main.current_season
         ")
+        .from('projects main')
+        .check_row_active(row_active)
+        .check_current_season(current_season)
+        .where('main.project_type_id = ?', project_type_id.to_i)
+        .where('main.update_sequence > ?', updated_sequence)
     end
 
-    # Aplica filtro owner
-    @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
-    value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
-
-    # Aplica filtro por atributo
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
-    if !@project_filters.nil? && @project_filters != false
-      @project_filters.properties.to_a.each do |prop|
-        value = value.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+
+    if !@project_filters.nil?
+
+      # Aplica filtro owner
+      if @project_filters.owner == true
+        value = value.where('main.user_id = ?', current_user)
       end
+
+      # Aplica filtro por atributo
+      if !@project_filters.properties.nil?
+        @project_filters.properties.to_a.each do |prop|
+          value = value.where("main.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+        end
+      end
+
+      # Aplica filtro intercapa
+      if !@project_filters.cross_layer_filter_id.nil?
+
+        cross_layer_filter = ProjectFilter.where(user_id: current_user).where(id: @project_filters.cross_layer_filter_id).first
+
+        # Cruza la capa del principal que contiene los hijos con la capa secunadaria
+        value = value
+          .except(:from).from('projects main CROSS JOIN projects sec')
+          .where('shared_extensions.ST_Intersects(main.the_geom, sec.the_geom)')
+          .where('sec.project_type_id = ?', cross_layer_filter.project_type_id)
+          .where('sec.row_active = ?', true)
+          .where('sec.current_season = ?', true)
+
+        # Aplica filtro por owner a capa secundaria
+        if cross_layer_filter.owner == true
+          value = value.where('sec.user_id = ?', current_user)
+        end
+
+        # Aplica filtro por atributo a capa secundaria
+        if !cross_layer_filter.properties.nil?
+          cross_layer_filter.properties.to_a.each do |prop|
+            value = value.where("sec.properties->>'#{prop[0]}' = '#{prop[1]}'")
+          end
+        end
+
+      end
+
     end
 
-    value = value.order(:update_sequence).page(page).per_page(50)
+    value = value.distinct
+    value = value.order('main.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
 
     value.each do |row|
 
       # Arma el form con los datos del prototipo
-      form={}
+      form = {}
       row.properties.each do |k, v|
         field = ProjectField.where(key: "#{k}").where(project_type_id: project_type_id).select(:id).first
         if !field.nil?
@@ -170,6 +243,7 @@ class Project < ApplicationRecord
     end
     @data = data
   end
+
 
 
   def self.show_choice_list id
