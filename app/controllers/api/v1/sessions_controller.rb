@@ -24,6 +24,17 @@ module Api
 
               user_customer.map do |uc|
 
+                # Levantamos los usuarios de la corporación
+                tenant_users = User
+                  .joins(:user_customers)
+                  .where(user_customers: {customer_id: uc.customer_id})
+                  .order(:name)
+
+                @users = []
+                tenant_users.map do |u|
+                  @users << {'id': u.id, 'name': u.name}
+                end
+
                 # Levantamos las capas de cada corporación
                 tenant_name = uc.customer.subdomain
                 Apartment::Tenant.switch tenant_name do
@@ -36,9 +47,9 @@ module Api
 
                 # TODO eliminar validación para corporación demo
                 if uc.customer.subdomain == 'demo'
-                  companies << { 'url': uc.customer.url, 'name_company': 'demo1', 'role_id': uc.role_id, 'id': uc.customer.id, 'logo': uc.customer.logo, 'layers': @layers }
+                  companies << { 'url': uc.customer.url, 'name_company': 'demo1', 'role_id': uc.role_id, 'id': uc.customer.id, 'logo': uc.customer.logo, 'layers': @layers, 'users': @users}
                 else
-                  companies << { 'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id, 'id': uc.customer.id, 'logo': uc.customer.logo, 'layers': @layers }
+                  companies << { 'url': uc.customer.url, 'name_company': uc.customer.subdomain, 'role_id': uc.role_id, 'id': uc.customer.id, 'logo': uc.customer.logo, 'layers': @layers, 'users': @users }
                 end
               end
               render json: {data: user,'companies': companies }
