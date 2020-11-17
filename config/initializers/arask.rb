@@ -28,6 +28,6 @@ Arask.setup do |arask|
   # end
 
   # Resetea los estados todos los días a las 00hs
-  arask.create task: 'statuses:reset', cron: '0 0 * * *', run_first_time: true
+  # arask.create task: 'statuses:reset', cron: '0 0 * * *', run_first_time: true
 
 end
