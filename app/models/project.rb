@@ -439,9 +439,19 @@ class Project < ApplicationRecord
         @project = Project.new()
         value_name = {}
         @project_type = ProjectType.find(data['project_type_id'])
+        values = data['values']
+
+        # Si llega un registro vacío, se cargan los valores por defecto
+        if values.blank?
+          values['app_id'] = ''
+          values['app_estado'] = ''
+          values['app_usuario'] = ''
+          values['gwm_created_at'] = ''
+          values['gwm_updated_at'] = ''
+        end
 
         # Cicla los registros
-        data['values'].each do |v,k|
+        values.each do |v,k|
 
           # Busca el key de cada registro según su id y guarda key y valor en un hash
           field = ProjectField.where(id: v.to_i).select(:key).first
