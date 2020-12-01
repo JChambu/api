@@ -5,9 +5,14 @@ class ProjectDataChild < ApplicationRecord
   # Devuelve where clause para todos los hijos o sólo los row_active = true
   def self.check_row_active row_active
     if row_active == 'true'
-      where('project_data_children.row_active = ?', true)
+      where('main.row_active = ?', true)
+      .where('main.current_season = ?', true)
+      .where('main.row_enabled = ?', true)
+      .where('project_data_children.row_active = ?', true)
+      .where('project_data_children.current_season = ?', true)
+      .where('project_data_children.row_enabled = ?', true)
     else
-      where('project_data_children.row_active IS NOT NULL')
+      where('1 = 1')
     end
   end
 
@@ -42,8 +47,6 @@ class ProjectDataChild < ApplicationRecord
       .joins('INNER JOIN projects main ON main.id = project_data_children.project_id')
       .check_row_active(row_active)
       .where('main.project_type_id = ?', project_type_id.to_i)
-      .where('main.row_active = ?', true)
-      .where('main.current_season = ?', true)
       .where('project_data_children.update_sequence > ?', updated_sequence)
 
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
@@ -99,6 +102,14 @@ class ProjectDataChild < ApplicationRecord
       row.properties.each do |k, v|
         form.merge!("#{k}": v)
       end
+
+      # Si esta eliminado, pertenece a la temporada anterior o está desabilitado envía row_active como false para eliminar en GWMobile
+      if row.row_active == false || row.current_season == false || row.row_enabled == false
+        row_active = false
+      else
+        row_active = true
+      end
+
       data.push(
         "id": row.id,
         "project_data_id": row.project_data_id,
@@ -108,8 +119,7 @@ class ProjectDataChild < ApplicationRecord
         "gwm_updated_at": row.gwm_updated_at,
         "user_id": row.user_id,
         "update_sequence": row.update_sequence,
-        "row_active": row.row_active,
-        "current_season": row.current_season
+        "row_active": row_active
       )
       @data = data
     end
@@ -123,8 +133,6 @@ class ProjectDataChild < ApplicationRecord
       .joins('INNER JOIN projects main ON main.id = project_data_children.project_id')
       .check_row_active(row_active)
       .where('main.project_type_id = ?', project_type_id.to_i)
-      .where('main.row_active = ?', true)
-      .where('main.current_season = ?', true)
       .where('project_data_children.update_sequence > ?', updated_sequence)
 
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first

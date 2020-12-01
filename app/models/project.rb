@@ -21,8 +21,10 @@ class Project < ApplicationRecord
   def self.check_row_active row_active
     if row_active == 'true'
       where('main.row_active = ?', true)
+      .where('main.current_season = ?', true)
+      .where('main.row_enabled = ?', true)
     else
-      where('main.row_active IS NOT NULL')
+      where('1 = 1')
     end
   end
 
@@ -207,6 +209,13 @@ class Project < ApplicationRecord
 
       geom_text = row.the_geom.as_text if !row.the_geom.nil?
 
+      # Si esta eliminado, pertenece a la temporada anterior o está desabilitado envía row_active como false para eliminar en GWMobile
+      if row.row_active == false || row.current_season == false || row.row_enabled == false
+        row_active = false
+      else
+        row_active = true
+      end
+
       # Arma la colección con los datos a devolver
       if (type_geometry[0] == 'Polygon')
         data.push(
@@ -219,8 +228,7 @@ class Project < ApplicationRecord
           "user_id": row.user_id,
           "geometry": geom_text,
           "update_sequence": row.update_sequence,
-          "row_active": row.row_active,
-          "current_season": row.current_season
+          "row_active": row_active,
         )
       else
         data.push(
@@ -233,8 +241,7 @@ class Project < ApplicationRecord
           "user_id": row.user_id,
           "geometry": geom_text,
           "update_sequence": row.update_sequence,
-          "row_active": row.row_active,
-          "current_season": row.current_season
+          "row_active": row_active,
         )
       end
 
