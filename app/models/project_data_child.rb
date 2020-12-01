@@ -96,10 +96,11 @@ class ProjectDataChild < ApplicationRecord
 
     value = value.distinct.order('project_data_children.update_sequence').page(page).per_page(50)
     data = []
-    geom_text = ''
+
     value.each do |row|
+
       form = {}
-      row.properties.each do |k, v|
+      row.properties[0].each do |k, v|
         form.merge!("#{k}": v)
       end
 
@@ -121,8 +122,8 @@ class ProjectDataChild < ApplicationRecord
         "update_sequence": row.update_sequence,
         "row_active": row_active
       )
-      @data = data
     end
+    @data = data
   end
 
 
