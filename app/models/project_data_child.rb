@@ -94,6 +94,11 @@ class ProjectDataChild < ApplicationRecord
         form.merge!("#{k}": v)
       end
 
+      # REVIEW: Envuelve el hash en un array para compatibilidad con el formato,
+      # el array no debería existir y se debería enviar sólo el hash
+      form_array = []
+      form_array.push(form)
+
       # Si esta eliminado, pertenece a la temporada anterior o está desabilitado envía row_active como false para eliminar en GWMobile
       if row.row_active == false || row.current_season == false || row.row_enabled == false
         row_active = false
@@ -107,7 +112,7 @@ class ProjectDataChild < ApplicationRecord
         "id": row.id,
         "project_data_id": row.project_data_id,
         "project_field_id": row.project_field_id,
-        "form_values": form,
+        "properties": form_array,
         "gwm_created_at": row.gwm_created_at,
         "gwm_updated_at": row.gwm_updated_at,
         "user_id": row.user_id,
