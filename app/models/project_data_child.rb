@@ -36,7 +36,8 @@ class ProjectDataChild < ApplicationRecord
         project_data_children.project_field_id,
         project_data_children.update_sequence,
         project_data_children.row_active,
-        project_data_children.current_season
+        project_data_children.current_season,
+        project_data_children.row_enabled
       ')
       .joins('INNER JOIN projects main ON main.id = project_data_children.project_id')
       .check_row_active(row_active)

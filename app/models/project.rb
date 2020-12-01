@@ -115,7 +115,8 @@ class Project < ApplicationRecord
           main.the_geom,
           main.update_sequence,
           main.row_active,
-          main.current_season
+          main.current_season,
+          main.row_enabled
         ')
         .from('projects main')
         .check_row_active(row_active)
@@ -135,7 +136,8 @@ class Project < ApplicationRecord
           main.the_geom,
           main.update_sequence,
           main.row_active,
-          main.current_season
+          main.current_season,
+          main.row_enabled
         ")
         .from('projects main')
         .check_row_active(row_active)
