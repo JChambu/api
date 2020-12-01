@@ -41,7 +41,7 @@ class Project < ApplicationRecord
   def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
 
     @rows = Project
-      .select('DISTINCT main.*')
+      .select('main.*')
       .from('projects main')
       .check_row_active(row_active)
       .check_current_season(current_season)
@@ -92,7 +92,7 @@ class Project < ApplicationRecord
       end
 
     end
-    @rows = @rows.count
+    @rows = @rows.distinct.count
     @rows
   end
 
@@ -191,8 +191,7 @@ class Project < ApplicationRecord
 
     end
 
-    value = value.distinct
-    value = value.order('main.update_sequence').page(page).per_page(50)
+    value = value.distinct.order('main.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
 

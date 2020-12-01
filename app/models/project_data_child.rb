@@ -91,8 +91,7 @@ class ProjectDataChild < ApplicationRecord
 
     end
 
-    value = value.distinct
-    value = value.order('project_data_children.update_sequence').page(page).per_page(50)
+    value = value.distinct.order('project_data_children.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
     value.each do |row|
@@ -173,8 +172,7 @@ class ProjectDataChild < ApplicationRecord
 
     end
 
-    @rows = @rows.distinct
-    @rows = @rows.count
+    @rows = @rows.distinct.count
     @rows
   end
 
