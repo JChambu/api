@@ -38,13 +38,12 @@ class Project < ApplicationRecord
 
 
   # Recupera la cantidad de registros padres a sincronizar
-  def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
+  def self.row_quantity project_type_id, updated_sequence, row_active, current_user
 
     @rows = Project
       .select('main.*')
       .from('projects main')
       .check_row_active(row_active)
-      .check_current_season(current_season)
       .where('main.project_type_id = ?', project_type_id.to_i)
       .where('main.update_sequence > ?', updated_sequence)
 
@@ -98,7 +97,7 @@ class Project < ApplicationRecord
 
 
   # Recupera los registros padres a sincronizar
-  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
+  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_user
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     value = ''
 
@@ -120,7 +119,6 @@ class Project < ApplicationRecord
         ')
         .from('projects main')
         .check_row_active(row_active)
-        .check_current_season(current_season)
         .where('main.project_type_id = ?', project_type_id.to_i)
         .where('main.update_sequence > ?', updated_sequence)
     else
@@ -141,7 +139,6 @@ class Project < ApplicationRecord
         ")
         .from('projects main')
         .check_row_active(row_active)
-        .check_current_season(current_season)
         .where('main.project_type_id = ?', project_type_id.to_i)
         .where('main.update_sequence > ?', updated_sequence)
     end

@@ -23,7 +23,7 @@ class ProjectDataChild < ApplicationRecord
 
 
   # Recupera los registros hijos a sincronizar
-  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
+  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_user
 
     value = ProjectDataChild
       .select('
@@ -40,7 +40,6 @@ class ProjectDataChild < ApplicationRecord
       ')
       .joins('INNER JOIN projects main ON main.id = project_data_children.project_id')
       .check_row_active(row_active)
-      .check_current_season(current_season)
       .where('main.project_type_id = ?', project_type_id.to_i)
       .where('main.row_active = ?', true)
       .where('main.current_season = ?', true)
@@ -117,12 +116,11 @@ class ProjectDataChild < ApplicationRecord
 
 
   # Recupera la cantidad de registros hijos a sincronizar
-  def self.row_quantity_children project_type_id, updated_sequence, row_active, current_season, current_user
+  def self.row_quantity_children project_type_id, updated_sequence, row_active, current_user
 
     @rows = ProjectDataChild
       .joins('INNER JOIN projects main ON main.id = project_data_children.project_id')
       .check_row_active(row_active)
-      .check_current_season(current_season)
       .where('main.project_type_id = ?', project_type_id.to_i)
       .where('main.row_active = ?', true)
       .where('main.current_season = ?', true)
