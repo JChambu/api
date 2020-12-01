@@ -17,16 +17,6 @@ class ProjectDataChild < ApplicationRecord
   end
 
 
-  # Devuelve where clause para todos los hijos o sólo los current_season = true
-  def self.check_current_season current_season
-    if current_season == 'true'
-      where('project_data_children.current_season = ?', true)
-    else
-      where('project_data_children.current_season IS NOT NULL')
-    end
-  end
-
-
   # Recupera los registros hijos a sincronizar
   def self.show_data_new project_type_id, updated_sequence, page, row_active, current_user
 
