@@ -97,8 +97,10 @@ class ProjectDataChild < ApplicationRecord
       # Si esta eliminado, pertenece a la temporada anterior o está desabilitado envía row_active como false para eliminar en GWMobile
       if row.row_active == false || row.current_season == false || row.row_enabled == false
         row_active = false
+        current_season = false # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
       else
         row_active = true
+        current_season = true # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
       end
 
       data.push(
@@ -110,7 +112,8 @@ class ProjectDataChild < ApplicationRecord
         "gwm_updated_at": row.gwm_updated_at,
         "user_id": row.user_id,
         "update_sequence": row.update_sequence,
-        "row_active": row_active
+        "row_active": row_active,
+        "current_season": current_season # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
       )
     end
     @data = data
