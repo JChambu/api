@@ -5,25 +5,20 @@ class ProjectDataChild < ApplicationRecord
   # Devuelve where clause para todos los hijos o sólo los row_active = true
   def self.check_row_active row_active
     if row_active == 'true'
-      where('project_data_children.row_active = ?', true)
+      where('main.row_active = ?', true)
+      .where('main.current_season = ?', true)
+      .where('main.row_enabled = ?', true)
+      .where('project_data_children.row_active = ?', true)
+      .where('project_data_children.current_season = ?', true)
+      .where('project_data_children.row_enabled = ?', true)
     else
-      where('project_data_children.row_active IS NOT NULL')
-    end
-  end
-
-
-  # Devuelve where clause para todos los hijos o sólo los current_season = true
-  def self.check_current_season current_season
-    if current_season == 'true'
-      where('project_data_children.current_season = ?', true)
-    else
-      where('project_data_children.current_season IS NOT NULL')
+      where('1 = 1')
     end
   end
 
 
   # Recupera los registros hijos a sincronizar
-  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
+  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_user
 
     value = ProjectDataChild
       .select('
@@ -36,14 +31,12 @@ class ProjectDataChild < ApplicationRecord
         project_data_children.project_field_id,
         project_data_children.update_sequence,
         project_data_children.row_active,
-        project_data_children.current_season
+        project_data_children.current_season,
+        project_data_children.row_enabled
       ')
       .joins('INNER JOIN projects main ON main.id = project_data_children.project_id')
       .check_row_active(row_active)
-      .check_current_season(current_season)
       .where('main.project_type_id = ?', project_type_id.to_i)
-      .where('main.row_active = ?', true)
-      .where('main.current_season = ?', true)
       .where('project_data_children.update_sequence > ?', updated_sequence)
 
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
@@ -91,42 +84,54 @@ class ProjectDataChild < ApplicationRecord
 
     end
 
-    value = value.distinct
-    value = value.order('project_data_children.update_sequence').page(page).per_page(50)
+    value = value.distinct.order('project_data_children.update_sequence').page(page).per_page(50)
     data = []
-    geom_text = ''
+
     value.each do |row|
+
       form = {}
-      row.properties.each do |k, v|
+      row.properties[0].each do |k, v|
         form.merge!("#{k}": v)
       end
+
+      # REVIEW: Envuelve el hash en un array para compatibilidad con el formato,
+      # el array no debería existir y se debería enviar sólo el hash
+      form_array = []
+      form_array.push(form)
+
+      # Si esta eliminado, pertenece a la temporada anterior o está desabilitado envía row_active como false para eliminar en GWMobile
+      if row.row_active == false || row.current_season == false || row.row_enabled == false
+        row_active = false
+        current_season = false # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
+      else
+        row_active = true
+        current_season = true # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
+      end
+
       data.push(
         "id": row.id,
         "project_data_id": row.project_data_id,
         "project_field_id": row.project_field_id,
-        "form_values": form,
+        "properties": form_array,
         "gwm_created_at": row.gwm_created_at,
         "gwm_updated_at": row.gwm_updated_at,
         "user_id": row.user_id,
         "update_sequence": row.update_sequence,
-        "row_active": row.row_active,
-        "current_season": row.current_season
+        "row_active": row_active,
+        "current_season": current_season # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
       )
-      @data = data
     end
+    @data = data
   end
 
 
   # Recupera la cantidad de registros hijos a sincronizar
-  def self.row_quantity_children project_type_id, updated_sequence, row_active, current_season, current_user
+  def self.row_quantity_children project_type_id, updated_sequence, row_active, current_user
 
     @rows = ProjectDataChild
       .joins('INNER JOIN projects main ON main.id = project_data_children.project_id')
       .check_row_active(row_active)
-      .check_current_season(current_season)
       .where('main.project_type_id = ?', project_type_id.to_i)
-      .where('main.row_active = ?', true)
-      .where('main.current_season = ?', true)
       .where('project_data_children.update_sequence > ?', updated_sequence)
 
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
@@ -173,8 +178,7 @@ class ProjectDataChild < ApplicationRecord
 
     end
 
-    @rows = @rows.distinct
-    @rows = @rows.count
+    @rows = @rows.distinct.count
     @rows
   end
 

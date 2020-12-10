@@ -21,30 +21,21 @@ class Project < ApplicationRecord
   def self.check_row_active row_active
     if row_active == 'true'
       where('main.row_active = ?', true)
+      .where('main.current_season = ?', true)
+      .where('main.row_enabled = ?', true)
     else
-      where('main.row_active IS NOT NULL')
-    end
-  end
-
-
-  # Devuelve where clause para todos los hijos o sólo los current_season = true
-  def self.check_current_season current_season
-    if current_season == 'true'
-      where('main.current_season = ?', true)
-    else
-      where('main.current_season IS NOT NULL')
+      where('1 = 1')
     end
   end
 
 
   # Recupera la cantidad de registros padres a sincronizar
-  def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
+  def self.row_quantity project_type_id, updated_sequence, row_active, current_user
 
     @rows = Project
-      .select('DISTINCT main.*')
+      .select('main.*')
       .from('projects main')
       .check_row_active(row_active)
-      .check_current_season(current_season)
       .where('main.project_type_id = ?', project_type_id.to_i)
       .where('main.update_sequence > ?', updated_sequence)
 
@@ -92,13 +83,13 @@ class Project < ApplicationRecord
       end
 
     end
-    @rows = @rows.count
+    @rows = @rows.distinct.count
     @rows
   end
 
 
   # Recupera los registros padres a sincronizar
-  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
+  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_user
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     value = ''
 
@@ -116,11 +107,11 @@ class Project < ApplicationRecord
           main.the_geom,
           main.update_sequence,
           main.row_active,
-          main.current_season
+          main.current_season,
+          main.row_enabled
         ')
         .from('projects main')
         .check_row_active(row_active)
-        .check_current_season(current_season)
         .where('main.project_type_id = ?', project_type_id.to_i)
         .where('main.update_sequence > ?', updated_sequence)
     else
@@ -137,11 +128,11 @@ class Project < ApplicationRecord
           main.the_geom,
           main.update_sequence,
           main.row_active,
-          main.current_season
+          main.current_season,
+          main.row_enabled
         ")
         .from('projects main')
         .check_row_active(row_active)
-        .check_current_season(current_season)
         .where('main.project_type_id = ?', project_type_id.to_i)
         .where('main.update_sequence > ?', updated_sequence)
     end
@@ -191,8 +182,7 @@ class Project < ApplicationRecord
 
     end
 
-    value = value.distinct
-    value = value.order('main.update_sequence').page(page).per_page(50)
+    value = value.distinct.order('main.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
 
@@ -209,6 +199,15 @@ class Project < ApplicationRecord
 
       geom_text = row.the_geom.as_text if !row.the_geom.nil?
 
+      # Si esta eliminado, pertenece a la temporada anterior o está desabilitado envía row_active como false para eliminar en GWMobile
+      if row.row_active == false || row.current_season == false || row.row_enabled == false
+        row_active = false
+        current_season = false # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
+      else
+        row_active = true
+        current_season = true # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
+      end
+
       # Arma la colección con los datos a devolver
       if (type_geometry[0] == 'Polygon')
         data.push(
@@ -221,8 +220,8 @@ class Project < ApplicationRecord
           "user_id": row.user_id,
           "geometry": geom_text,
           "update_sequence": row.update_sequence,
-          "row_active": row.row_active,
-          "current_season": row.current_season
+          "row_active": row_active,
+          "current_season": current_season # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
         )
       else
         data.push(
@@ -235,8 +234,8 @@ class Project < ApplicationRecord
           "user_id": row.user_id,
           "geometry": geom_text,
           "update_sequence": row.update_sequence,
-          "row_active": row.row_active,
-          "current_season": row.current_season
+          "row_active": row_active,
+          "current_season": current_season # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
         )
       end
 
@@ -565,7 +564,7 @@ class Project < ApplicationRecord
         # Guarda los registros hijos
         child_data = ProjectDataChild.new()
         child_data[:project_id] = data['IdFather']
-        child_data[:properties] = data['values']
+        child_data[:properties] = data['values'] # REVIEW: El properties está llegando como array de hashes y debería llegar como hash
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id] # FIXME: Este campo a veces se carga con 0
         child_data[:gwm_created_at] = data[:gwm_created_at]
