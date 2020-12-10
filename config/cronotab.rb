@@ -5,3 +5,10 @@
 # You can use any class. The only requirement is that
 # class should have a method `perform` without arguments.
 #
+class TestJob
+  def perform
+    Rails.logger.debug " --------------------- Test --------------------- "
+  end
+end
+
+Crono.perform(TestJob).every 1.minute
