@@ -5,10 +5,25 @@
 # You can use any class. The only requirement is that
 # class should have a method `perform` without arguments.
 #
-class TestJob
+# class TestJob
+#   def perform
+#     puts 'Test!'
+#   end
+# end
+#
+# Crono.perform(TestJob).every 2.days, at: '15:30'
+
+class ResetInheritableStatuses
   def perform
-    Rails.logger.debug " --------------------- Test --------------------- "
+    Project.reset_inheritable_statuses
   end
 end
 
-Crono.perform(TestJob).every 1.minute
+class DisableRecords
+  def perform
+    Project.disable_records
+  end
+end
+
+Crono.perform(ResetInheritableStatuses).every 1.day, at: {hour: 0, min: 0}
+Crono.perform(DisableRecords).every 1.day, at: {hour: 0, min: 0}
