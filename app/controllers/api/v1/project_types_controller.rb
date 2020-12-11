@@ -26,6 +26,7 @@ module Api
             "geo_restriction": project_type.geo_restriction,
             "cover": project_type.cover,
             "multiple_edition": project_type.multiple_edition,
+            "level": project_type.level,
           }
 
           @p.push(data)
