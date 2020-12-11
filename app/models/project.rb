@@ -294,7 +294,7 @@ class Project < ApplicationRecord
 
   end
 
-  # Deshabilita los registros periódicamente (se ejecuta con arask)
+  # Deshabilita los registros periódicamente (se ejecuta con crono)
   def self.disable_records
 
     # Busca los proyectos que tienen seteado un periodo para deshabilitar sus registros
@@ -339,7 +339,7 @@ class Project < ApplicationRecord
   end # disable_records
 
 
-  # Resetea los estados a su valor por default (se ejecuta con arask)
+  # Resetea los estados a su valor por default (se ejecuta con crono)
   def self.reset_inheritable_statuses
 
     # Busca todas las corporaciones
