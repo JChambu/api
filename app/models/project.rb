@@ -280,7 +280,78 @@ class Project < ApplicationRecord
   end
 
 
-  # Resetea los estados a su valor por default (se ejecuta con arask)
+  # Devuelve where clause dependiendo del periodo
+  def self.apply_where_clause_according_to_period enable_period
+
+    case enable_period
+    when 'Semana'
+      where('extract(week from gwm_created_at) != ?', Date.today.cweek)
+    when 'Mes'
+      where("extract(month from gwm_created_at) != ?", Date.today.month)
+    when 'Año'
+      where("extract(year from gwm_created_at) != ?", Date.today.year)
+    end
+
+  end
+
+  # Deshabilita los registros periódicamente (se ejecuta con crono)
+  def self.disable_records
+
+    # Busca todas las corporaciones
+    tentants = Customer.all.pluck(:subdomain)
+
+    tentants.each do |tenant|
+
+      Apartment::Tenant.switch(tenant) do
+
+        # Busca los proyectos que tienen seteado un periodo para deshabilitar sus registros
+        projects_types_with_enable_period = ProjectType.where.not(enable_period: 'Nunca')
+
+        if !projects_types_with_enable_period.nil?
+
+          projects_types_with_enable_period.each do |pt|
+
+            projects_to_disable = Project
+              .where(project_type_id: pt.id)
+              .apply_where_clause_according_to_period(pt.enable_period)
+              .where(row_enabled: true)
+              .where(row_active: true)
+              .where(current_season: true)
+
+            if !projects_to_disable.nil?
+
+              projects_to_disable.each do |p|
+
+                project_data_children_to_disable = ProjectDataChild.where(project_id: p.id)
+
+                if !project_data_children_to_disable.nil?
+
+                  project_data_children_to_disable.each do |pdt|
+
+                    pdt.row_enabled = false
+                    pdt.disabled_at = Time.now
+                    pdt.save
+
+                  end
+                end
+
+                p.row_enabled = false
+                p.disabled_at = Time.now
+                p.save
+
+              end
+            end
+          end
+        end
+
+      end # Cierra Tenant.switch
+
+    end # Cierra tentants.each
+
+  end # disable_records
+
+
+  # Resetea los estados a su valor por default (se ejecuta con crono)
   def self.reset_inheritable_statuses
 
     # Busca todas las corporaciones
