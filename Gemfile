@@ -20,8 +20,9 @@ gem 'kaminari'
 gem 'pagy'
 gem 'will_paginate'
 gem 'api-pagination'
-# Automatic RAils taSKs (with minimal setup)
-gem 'arask'
+# Job scheduler for Rails
+gem 'crono'
+gem 'capistrano-crono', group: :development
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

@@ -17,116 +17,179 @@ class Project < ApplicationRecord
   end
 
 
-  def self.row_active row_active
+  # Devuelve where clause para todos los hijos o sólo los row_active = true
+  def self.check_row_active row_active
     if row_active == 'true'
-      where('projects.row_active = ? ', true)
+      where('main.row_active = ?', true)
+      .where('main.current_season = ?', true)
+      .where('main.row_enabled = ?', true)
     else
-      where('projects.row_active IS Not NULL ')
-    end
-  end
-
-
-  def self.current_season current_season
-    if current_season == 'true'
-      where('projects.current_season = ? ', true)
-    else
-      where('projects.current_season IS Not NULL ')
+      where('1 = 1')
     end
   end
 
 
   # Recupera la cantidad de registros padres a sincronizar
-  def self.row_quantity project_type_id, updated_sequence, row_active, current_season, current_user
+  def self.row_quantity project_type_id, updated_sequence, row_active, current_user
+
     @rows = Project
-      .row_active(row_active)
-      .current_season(current_season)
-      .where(project_type_id: project_type_id)
-      .where('update_sequence > ?', updated_sequence)
-      .where.not(user_id: '74')
-    # Aplica filtro owner
-    @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
-    @rows = @rows.where(user_id: current_user) if !@owner.nil? && @owner != false
-    # Aplica filtro por atributo
+      .select('main.*')
+      .from('projects main')
+      .check_row_active(row_active)
+      .where('main.project_type_id = ?', project_type_id.to_i)
+      .where('main.update_sequence > ?', updated_sequence)
+
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
-    if !@project_filters.nil? && @project_filters != false
-      @project_filters.properties.to_a.each do |prop|
-        @rows = @rows.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+
+    if !@project_filters.nil?
+
+      # Aplica filtro owner
+      if @project_filters.owner == true
+        @rows = @rows.where('main.user_id = ?', current_user)
       end
+
+      # Aplica filtro por atributo
+      if !@project_filters.properties.nil?
+        @project_filters.properties.to_a.each do |prop|
+          @rows = @rows.where("main.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+        end
+      end
+
+      # Aplica filtro intercapa
+      if !@project_filters.cross_layer_filter_id.nil?
+
+        cross_layer_filter = ProjectFilter.where(user_id: current_user).where(id: @project_filters.cross_layer_filter_id).first
+
+        # Cruza la capa del principal que contiene los hijos con la capa secunadaria
+        @rows = @rows
+          .except(:from).from('projects main CROSS JOIN projects sec')
+          .where('shared_extensions.ST_Intersects(main.the_geom, sec.the_geom)')
+          .where('sec.project_type_id = ?', cross_layer_filter.project_type_id)
+          .where('sec.row_active = ?', true)
+          .where('sec.current_season = ?', true)
+
+        # Aplica filtro por owner a capa secundaria
+        if cross_layer_filter.owner == true
+          @rows = @rows.where('sec.user_id = ?', current_user)
+        end
+
+        # Aplica filtro por atributo a capa secundaria
+        if !cross_layer_filter.properties.nil?
+          cross_layer_filter.properties.to_a.each do |prop|
+            @rows = @rows.where("sec.properties->>'#{prop[0]}' = '#{prop[1]}'")
+          end
+        end
+
+      end
+
     end
-    @rows = @rows.count
+    @rows = @rows.distinct.count
     @rows
   end
 
 
   # Recupera los registros padres a sincronizar
-  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_season, current_user
+  def self.show_data_new project_type_id, updated_sequence, page, row_active, current_user
     type_geometry = ProjectType.where(id: project_type_id).pluck(:type_geometry)
     value = ''
 
     # Recupera los registros dependiendo de su geometría
     if (type_geometry[0] == 'Polygon')
       value = Project
-        .row_active(row_active)
-        .current_season(current_season)
-        .where(project_type_id: project_type_id)
-        .where('update_sequence > ?', updated_sequence)
-        .where.not(user_id: '74')
-        .select("
-          shared_extensions.st_asgeojson(the_geom) as geom,
-          id,
-          properties,
-          gwm_created_at,
-          gwm_updated_at,
-          project_status_id,
-          user_id,
-          the_geom,
-          update_sequence,
-          row_active,
-          current_season
-        ")
+        .select('
+          shared_extensions.ST_AsGeoJSON(main.the_geom) AS geom,
+          main.id,
+          main.properties,
+          main.gwm_created_at,
+          main.gwm_updated_at,
+          main.project_status_id,
+          main.user_id,
+          main.the_geom,
+          main.update_sequence,
+          main.row_active,
+          main.current_season,
+          main.row_enabled
+        ')
+        .from('projects main')
+        .check_row_active(row_active)
+        .where('main.project_type_id = ?', project_type_id.to_i)
+        .where('main.update_sequence > ?', updated_sequence)
     else
       value = Project
-        .row_active(row_active)
-        .current_season(current_season)
-        .where(project_type_id: project_type_id)
-        .where('update_sequence > ?', updated_sequence)
-        .where.not(user_id: '74')
         .select("
-          shared_extensions.st_x(the_geom) as lng,
-          shared_extensions.st_y(the_geom) as lat,
-          id,
-          properties,
-          gwm_created_at,
-          gwm_updated_at,
-          project_status_id,
-          user_id,
-          the_geom,
-          update_sequence,
-          row_active,
-          current_season
+          shared_extensions.ST_X(main.the_geom) as lng,
+          shared_extensions.ST_Y(main.the_geom) as lat,
+          main.id,
+          main.properties,
+          main.gwm_created_at,
+          main.gwm_updated_at,
+          main.project_status_id,
+          main.user_id,
+          main.the_geom,
+          main.update_sequence,
+          main.row_active,
+          main.current_season,
+          main.row_enabled
         ")
+        .from('projects main')
+        .check_row_active(row_active)
+        .where('main.project_type_id = ?', project_type_id.to_i)
+        .where('main.update_sequence > ?', updated_sequence)
     end
 
-    # Aplica filtro owner
-    @owner = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).pluck(:owner).first
-    value = value.where(user_id: current_user) if !@owner.nil? && @owner != false
-
-    # Aplica filtro por atributo
     @project_filters = ProjectFilter.where(user_id: current_user).where(project_type_id: project_type_id).first
-    if !@project_filters.nil? && @project_filters != false
-      @project_filters.properties.to_a.each do |prop|
-        value = value.where(" projects.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+
+    if !@project_filters.nil?
+
+      # Aplica filtro owner
+      if @project_filters.owner == true
+        value = value.where('main.user_id = ?', current_user)
       end
+
+      # Aplica filtro por atributo
+      if !@project_filters.properties.nil?
+        @project_filters.properties.to_a.each do |prop|
+          value = value.where("main.properties->>'" + prop[0] + "' = '#{prop[1]}'")
+        end
+      end
+
+      # Aplica filtro intercapa
+      if !@project_filters.cross_layer_filter_id.nil?
+
+        cross_layer_filter = ProjectFilter.where(user_id: current_user).where(id: @project_filters.cross_layer_filter_id).first
+
+        # Cruza la capa del principal que contiene los hijos con la capa secunadaria
+        value = value
+          .except(:from).from('projects main CROSS JOIN projects sec')
+          .where('shared_extensions.ST_Intersects(main.the_geom, sec.the_geom)')
+          .where('sec.project_type_id = ?', cross_layer_filter.project_type_id)
+          .where('sec.row_active = ?', true)
+          .where('sec.current_season = ?', true)
+
+        # Aplica filtro por owner a capa secundaria
+        if cross_layer_filter.owner == true
+          value = value.where('sec.user_id = ?', current_user)
+        end
+
+        # Aplica filtro por atributo a capa secundaria
+        if !cross_layer_filter.properties.nil?
+          cross_layer_filter.properties.to_a.each do |prop|
+            value = value.where("sec.properties->>'#{prop[0]}' = '#{prop[1]}'")
+          end
+        end
+
+      end
+
     end
 
-    value = value.order(:update_sequence).page(page).per_page(50)
+    value = value.distinct.order('main.update_sequence').page(page).per_page(50)
     data = []
     geom_text = ''
 
     value.each do |row|
 
       # Arma el form con los datos del prototipo
-      form={}
+      form = {}
       row.properties.each do |k, v|
         field = ProjectField.where(key: "#{k}").where(project_type_id: project_type_id).select(:id).first
         if !field.nil?
@@ -135,6 +198,15 @@ class Project < ApplicationRecord
       end
 
       geom_text = row.the_geom.as_text if !row.the_geom.nil?
+
+      # Si esta eliminado, pertenece a la temporada anterior o está desabilitado envía row_active como false para eliminar en GWMobile
+      if row.row_active == false || row.current_season == false || row.row_enabled == false
+        row_active = false
+        current_season = false # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
+      else
+        row_active = true
+        current_season = true # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
+      end
 
       # Arma la colección con los datos a devolver
       if (type_geometry[0] == 'Polygon')
@@ -148,8 +220,8 @@ class Project < ApplicationRecord
           "user_id": row.user_id,
           "geometry": geom_text,
           "update_sequence": row.update_sequence,
-          "row_active": row.row_active,
-          "current_season": row.current_season
+          "row_active": row_active,
+          "current_season": current_season # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
         )
       else
         data.push(
@@ -162,14 +234,15 @@ class Project < ApplicationRecord
           "user_id": row.user_id,
           "geometry": geom_text,
           "update_sequence": row.update_sequence,
-          "row_active": row.row_active,
-          "current_season": row.current_season
+          "row_active": row_active,
+          "current_season": current_season # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
         )
       end
 
     end
     @data = data
   end
+
 
 
   def self.show_choice_list id
@@ -207,72 +280,154 @@ class Project < ApplicationRecord
   end
 
 
-  # Resetea los estados a su valor por default (se ejecuta con arask)
+  # Devuelve where clause dependiendo del periodo
+  def self.apply_where_clause_according_to_period enable_period
+
+    case enable_period
+    when 'Semana'
+      where('extract(week from gwm_created_at) != ?', Date.today.cweek)
+    when 'Mes'
+      where("extract(month from gwm_created_at) != ?", Date.today.month)
+    when 'Año'
+      where("extract(year from gwm_created_at) != ?", Date.today.year)
+    end
+
+  end
+
+  # Deshabilita los registros periódicamente (se ejecuta con crono)
+  def self.disable_records
+
+    # Busca todas las corporaciones
+    tentants = Customer.all.pluck(:subdomain)
+
+    tentants.each do |tenant|
+
+      Apartment::Tenant.switch(tenant) do
+
+        # Busca los proyectos que tienen seteado un periodo para deshabilitar sus registros
+        projects_types_with_enable_period = ProjectType.where.not(enable_period: 'Nunca')
+
+        if !projects_types_with_enable_period.nil?
+
+          projects_types_with_enable_period.each do |pt|
+
+            projects_to_disable = Project
+              .where(project_type_id: pt.id)
+              .apply_where_clause_according_to_period(pt.enable_period)
+              .where(row_enabled: true)
+              .where(row_active: true)
+              .where(current_season: true)
+
+            if !projects_to_disable.nil?
+
+              projects_to_disable.each do |p|
+
+                project_data_children_to_disable = ProjectDataChild.where(project_id: p.id)
+
+                if !project_data_children_to_disable.nil?
+
+                  project_data_children_to_disable.each do |pdt|
+
+                    pdt.row_enabled = false
+                    pdt.disabled_at = Time.now
+                    pdt.save
+
+                  end
+                end
+
+                p.row_enabled = false
+                p.disabled_at = Time.now
+                p.save
+
+              end
+            end
+          end
+        end
+
+      end # Cierra Tenant.switch
+
+    end # Cierra tentants.each
+
+  end # disable_records
+
+
+  # Resetea los estados a su valor por default (se ejecuta con crono)
   def self.reset_inheritable_statuses
 
-    # Busca los estados heredables ordenados por level y prioridad
-    statuses = ProjectStatus
-      .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
-      .where(status_type: "Heredable")
-      .order("project_types.level ASC")
-      .order(priority: :desc)
+    # Busca todas las corporaciones
+    tentants = Customer.all.pluck(:subdomain)
 
-    # Cicla los estados heredados
-    statuses.each do |status|
+    tentants.each do |tenant|
 
-      # Busca los big_geom que contengan small_geom del periodo anterior
-      projects_to_default = Project
-        .select("big_geom.id")
-        .from("projects AS big_geom, projects AS small_geom")
-        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
-        .where("big_geom.project_type_id = ?", status.project_type_id)
-        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
-        .where("big_geom.project_status_id = ?", status.id)
-        .where("small_geom.row_active = true")
-        .where("small_geom.current_season = true")
-        .where("big_geom.row_active = true")
-        .where("big_geom.current_season = true")
-        .filter_not_equal_records_with_timer(status.timer)
+      Apartment::Tenant.switch(tenant) do
 
-      # Extrae los ids
-      projects_to_default = projects_to_default.uniq.pluck(:id)
+        # Busca los estados heredables ordenados por level y prioridad
+        statuses = ProjectStatus
+          .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
+          .where(status_type: "Heredable")
+          .order("project_types.level ASC")
+          .order(priority: :desc)
 
-      # Busca los big_geom que contengan small_geom del periodo actual
-      projects_not_to_default = Project
-        .select("big_geom.id")
-        .from("projects AS big_geom, projects AS small_geom")
-        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
-        .where("big_geom.project_type_id = ?", status.project_type_id)
-        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
-        .where("big_geom.project_status_id = ?", status.id)
-        .where("small_geom.row_active = true")
-        .where("small_geom.current_season = true")
-        .where("big_geom.row_active = true")
-        .where("big_geom.current_season = true")
-        .filter_equal_records_with_timer(status.timer)
+        # Cicla los estados heredados
+        statuses.each do |status|
 
-      # Extrae los ids
-      projects_not_to_default = projects_not_to_default.uniq.pluck(:id)
+          # Busca los big_geom que contengan small_geom del periodo anterior
+          projects_to_default = Project
+            .select("big_geom.id")
+            .from("projects AS big_geom, projects AS small_geom")
+            .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+            .where("big_geom.project_type_id = ?", status.project_type_id)
+            .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+            .where("big_geom.project_status_id = ?", status.id)
+            .where("small_geom.row_active = true")
+            .where("small_geom.current_season = true")
+            .where("big_geom.row_active = true")
+            .where("big_geom.current_season = true")
+            .filter_not_equal_records_with_timer(status.timer)
 
-      projects_final = Project
-        .where(id: projects_to_default)
-        .where.not(id: projects_not_to_default)
+          # Extrae los ids
+          projects_to_default = projects_to_default.uniq.pluck(:id)
 
-      # Busca el id del estado predeterminado de este proyecto
-      default_status_id = ProjectStatus
-        .where(project_type_id: status.project_type_id)
-        .where(status_type: 'Predeterminado')
-        .pluck(:id)
-        .first
+          # Busca los big_geom que contengan small_geom del periodo actual
+          projects_not_to_default = Project
+            .select("big_geom.id")
+            .from("projects AS big_geom, projects AS small_geom")
+            .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+            .where("big_geom.project_type_id = ?", status.project_type_id)
+            .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+            .where("big_geom.project_status_id = ?", status.id)
+            .where("small_geom.row_active = true")
+            .where("small_geom.current_season = true")
+            .where("big_geom.row_active = true")
+            .where("big_geom.current_season = true")
+            .filter_equal_records_with_timer(status.timer)
 
-      projects_final.each do |p|
-        p.project_status_id = default_status_id
-        p.save
-      end
+          # Extrae los ids
+          projects_not_to_default = projects_not_to_default.uniq.pluck(:id)
 
-    end # statuses.each
+          projects_final = Project
+            .where(id: projects_to_default)
+            .where.not(id: projects_not_to_default)
 
-  end # reset_inheritable_statuses
+          # Busca el id del estado predeterminado de este proyecto
+          default_status_id = ProjectStatus
+            .where(project_type_id: status.project_type_id)
+            .where(status_type: 'Predeterminado')
+            .pluck(:id)
+            .first
+
+          projects_final.each do |p|
+            p.project_status_id = default_status_id
+            p.save
+          end
+
+        end # Cierra statuses.each
+
+      end # Cierra Tenant.switch
+
+    end # Cierra tentants.each
+
+  end # Cierra reset_inheritable_statuses
 
 
   def self.filter_equal_records_with_timer timer
@@ -294,64 +449,53 @@ class Project < ApplicationRecord
 
   def self.update_inheritable_statuses
 
-    # Busca todas las corporaciones
-    tentants = Customer.all.pluck(:subdomain)
+    # Busca los estados heredables ordenados por level y prioridad
+    statuses = ProjectStatus
+      .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
+      .where(status_type: "Heredable")
+      .order("project_types.level ASC")
+      .order(priority: :desc)
 
-    tentants.each do |tenant|
+    @projects_to_update_hash = {}
 
-      Apartment::Tenant.switch(tenant) do
+    # Cicla los estados heredados
+    statuses.each do |status|
 
-        # Busca los estados heredables ordenados por level y prioridad
-        statuses = ProjectStatus
-          .joins("INNER JOIN project_types ON project_types.id = project_statuses.project_type_id")
-          .where(status_type: "Heredable")
-          .order("project_types.level ASC")
-          .order(priority: :desc)
+      # Busca los registros de big_geom a los que se les debe modificarles el estado
+      projects_to_update = Project
+        .select("big_geom.*")
+        .from("projects AS big_geom, projects AS small_geom")
+        .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
+        .where("big_geom.project_type_id = ?", status.project_type_id)
+        .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
+        .where("small_geom.project_status_id = ?", status.inherit_status_id)
+        .where("small_geom.row_active = true")
+        .where("small_geom.current_season = true")
+        .where("big_geom.row_active = true")
+        .where("big_geom.current_season = true")
+        .filter_equal_records_with_timer(status.timer)
+        .uniq
 
-        @projects_to_update_hash = {}
-
-        # Cicla los estados heredados
-        statuses.each do |status|
-
-          # Busca los registros de big_geom a los que se les debe modificarles el estado
-          projects_to_update = Project
-            .select("big_geom.*")
-            .from("projects AS big_geom, projects AS small_geom")
-            .where("shared_extensions.ST_Contains(big_geom.the_geom, small_geom.the_geom)")
-            .where("big_geom.project_type_id = ?", status.project_type_id)
-            .where("small_geom.project_type_id = ?", status.inherit_project_type_id)
-            .where("small_geom.project_status_id = ?", status.inherit_status_id)
-            .where("small_geom.row_active = true")
-            .where("small_geom.current_season = true")
-            .where("big_geom.row_active = true")
-            .where("big_geom.current_season = true")
-            .filter_equal_records_with_timer(status.timer)
-            .uniq
-
-          if !projects_to_update.empty?
-            projects_to_update.each do |p|
-              @projects_to_update_hash[p.id] = status.id
-            end
-          end
-
-        end # cierra each status
-
-        @projects_to_update_hash.each do |project_id, status_id|
-
-          project = Project.find_by(id: project_id)
-
-          if project.project_status_id != status_id
-            project.project_status_id = status_id
-            project.save
-          end
-
+      if !projects_to_update.empty?
+        projects_to_update.each do |p|
+          @projects_to_update_hash[p.id] = status.id
         end
+      end
 
-      end # Cierra Tenant.switch
+    end # cierra each status
 
-    end # Cierra tentants.each
+    @projects_to_update_hash.each do |project_id, status_id|
 
-  end # cierra update_inheritable_statuses
+      project = Project.find_by(id: project_id)
+
+      if project.project_status_id != status_id
+        project.project_status_id = status_id
+        project.save
+      end
+
+    end
+
+  end # Cierra update_inheritable_statuses
 
 
   # Guarda los registros padres nuevos
@@ -365,9 +509,19 @@ class Project < ApplicationRecord
         @project = Project.new()
         value_name = {}
         @project_type = ProjectType.find(data['project_type_id'])
+        values = data['values']
+
+        # Si llega un registro vacío, se cargan los valores por defecto
+        if values.blank?
+          values['app_id'] = ''
+          values['app_estado'] = ''
+          values['app_usuario'] = ''
+          values['gwm_created_at'] = ''
+          values['gwm_updated_at'] = ''
+        end
 
         # Cicla los registros
-        data['values'].each do |v,k|
+        values.each do |v,k|
 
           # Busca el key de cada registro según su id y guarda key y valor en un hash
           field = ProjectField.where(id: v.to_i).select(:key).first
@@ -481,7 +635,7 @@ class Project < ApplicationRecord
         # Guarda los registros hijos
         child_data = ProjectDataChild.new()
         child_data[:project_id] = data['IdFather']
-        child_data[:properties] = data['values']
+        child_data[:properties] = data['values'] # REVIEW: El properties está llegando como array de hashes y debería llegar como hash
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id] # FIXME: Este campo a veces se carga con 0
         child_data[:gwm_created_at] = data[:gwm_created_at]
