@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201211133138) do
+ActiveRecord::Schema.define(version: 20210118132100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -281,6 +281,7 @@ ActiveRecord::Schema.define(version: 20201211133138) do
     t.boolean "heatmap_field", default: false
     t.boolean "colored_points_field", default: false
     t.string "roles_edit"
+    t.boolean "data_table", default: false
     t.index ["project_type_id"], name: "index_project_fields_on_project_type_id"
   end
 
@@ -352,7 +353,7 @@ ActiveRecord::Schema.define(version: 20201211133138) do
     t.integer "geo_restriction", default: 0, null: false
     t.boolean "multiple_edition", default: false
     t.integer "level", default: 1
-    t.string "enable_period"
+    t.string "enable_period", default: "Nunca"
     t.index ["user_id"], name: "index_project_types_on_user_id"
   end
 
@@ -451,7 +452,6 @@ ActiveRecord::Schema.define(version: 20201211133138) do
   add_foreign_key "photo_children", "project_data_children"
   add_foreign_key "project_fields", "project_types"
   add_foreign_key "project_filters", "project_types"
-  add_foreign_key "project_filters", "users"
   add_foreign_key "project_statuses", "project_types"
   add_foreign_key "projects", "project_statuses"
   add_foreign_key "projects", "project_types"
