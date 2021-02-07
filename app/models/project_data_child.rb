@@ -90,7 +90,7 @@ class ProjectDataChild < ApplicationRecord
     value.each do |row|
 
       form = {}
-      row.properties[0].each do |k, v|
+      row.properties.each do |k, v|
         form.merge!("#{k}": v)
       end
 
