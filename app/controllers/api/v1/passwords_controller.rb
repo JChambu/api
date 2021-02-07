@@ -13,7 +13,7 @@ module Api
 
         if user.present?
           user.generate_password_token!
-          if ENV['MAILER_DOMAIN'].present?
+          if ENV['MAILER_DOMAIN'].present? || ENV['MAILER_USERNAME'].present? || ENV['MAILER_PASSWORD'].present?
             UserMailer.reset_password_email(user).deliver_now
             render json: {status: 'Se ha enviado un e-mail con las instrucciones para restablecer su contraseña.'}
           else
