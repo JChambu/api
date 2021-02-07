@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201214211055) do
+ActiveRecord::Schema.define(version: 20210121212156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -444,7 +444,6 @@ ActiveRecord::Schema.define(version: 20201214211055) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key "analytics_dashboards", "analysis_types"
   add_foreign_key "analytics_dashboards", "charts"
   add_foreign_key "analytics_dashboards", "project_types"
   add_foreign_key "has_project_types", "project_types"
