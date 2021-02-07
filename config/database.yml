@@ -14,9 +14,9 @@ default: &default
   postgis_schema: shared_extensions
   schema_search_path: public, shared_extensions
   encoding: unicode
-  host: localhost
-  username: postgres
-  password: postgres
+  host: <%= ENV.fetch("POSTGRES_HOST") { "localhost" } %>
+  username: <%= ENV.fetch("POSTGRES_USER") { "postgres" } %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") { "postgres" } %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -49,5 +49,3 @@ staging:
 production:
   <<: *default
   database: geoworks
-  username: postgres
-  password: postgres
