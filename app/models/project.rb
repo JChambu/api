@@ -202,10 +202,8 @@ class Project < ApplicationRecord
       # Si esta eliminado, pertenece a la temporada anterior o está desabilitado envía row_active como false para eliminar en GWMobile
       if row.row_active == false || row.current_season == false || row.row_enabled == false
         row_active = false
-        current_season = false # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
       else
         row_active = true
-        current_season = true # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
       end
 
       # Arma la colección con los datos a devolver
@@ -220,8 +218,7 @@ class Project < ApplicationRecord
           "user_id": row.user_id,
           "geometry": geom_text,
           "update_sequence": row.update_sequence,
-          "row_active": row_active,
-          "current_season": current_season # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
+          "row_active": row_active
         )
       else
         data.push(
@@ -234,8 +231,7 @@ class Project < ApplicationRecord
           "user_id": row.user_id,
           "geometry": geom_text,
           "update_sequence": row.update_sequence,
-          "row_active": row_active,
-          "current_season": current_season # TODO: Se agrega para compatibilidad con GWM v8.4, luego eliminar.
+          "row_active": row_active
         )
       end
 
