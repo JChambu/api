@@ -13,10 +13,15 @@ module Api
 
         if user.present?
           user.generate_password_token!
+
+          Rails.logger.debug(ENV['MAILER_DOMAIN'])
+
           if ENV['MAILER_DOMAIN'].present? || ENV['MAILER_USERNAME'].present? || ENV['MAILER_PASSWORD'].present?
+            Rails.logger.debug('entra')
             UserMailer.reset_password_email(user).deliver_now
             render json: {status: 'Se ha enviado un e-mail con las instrucciones para restablecer su contraseña.'}
           else
+            Rails.logger.debug('NO entra')
             render json: {status: 'Mailer domain error. Por favor, comuníquese con el adminsitrador de la aplicación.'}
           end
         else
