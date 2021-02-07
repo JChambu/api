@@ -1,25 +1,52 @@
-# Swagger for Rails 5
+# Deploy con Docker
 
-This is a project to provide Swagger support inside the [Ruby on Rails](http://rubyonrails.org/) framework.
+### Creamos las variables de entorno
 
-## Prerequisites
-You need to install ruby >= 2.2.2 and run:
-
-```
-bundle install
-```
-
-## Getting started
-
-This sample was generated with the [swagger-codegen](https://github.com/swagger-api/swagger-codegen) project.
+*api/.env*
 
 ```
-bin/rake db:create db:migrate
-bin/rails s
+# Postgres
+POSTGRES_HOST=gw-db
+POSTGRES_DATABASE=<database name, eg. geoworks_development>
+POSTGRES_USER=<postgres-user>
+POSTGRES_PASSWORD=<postgres-password>
+
+# App
+APP_PORT=3001
 ```
 
-To list all your routes, use:
+### Obtenemos privilegios de root:
 
+``` sh
+sudo su
 ```
-bin/rake routes
+
+### Creamos las imágenes:
+
+``` sh
+docker-compose build
 ```
+
+### Creamos y levantamos los contenedores:
+
+``` sh
+docker-compose up -d
+```
+
+Ahora deberíamos poder conectarnos a la api apuntando a `http://<subdomain>.st.geoworks.com.ar:<APP_PORT>/api/v1`
+
+
+
+# Comandos útiles de Docker:
+
+- Listar los contenedores: `sudo docker ps -a` ([+info](https://docs.docker.com/engine/reference/commandline/ps/))
+
+- Arrancar un contenedor: `sudo docker start <nombre-contenedor>` ([+info](https://docs.docker.com/engine/reference/commandline/start/))
+
+- Detener un contenedor: `sudo docker stop <nombre-contenedor>` ([+info](https://docs.docker.com/engine/reference/commandline/stop/))
+
+- Capturar los logs de un contenedor: `sudo docker logs <nombre-contenedor>` ([+info](https://docs.docker.com/engine/reference/commandline/logs/))
+
+- Seguir los logs con docker-compose: `sudo docker-compose logs -f` ([+info](https://docs.docker.com/compose/reference/logs/))
+
+- Listar los volúmenes: `sudo docker volume ls` ([+info](https://docs.docker.com/engine/reference/commandline/volume/))
