@@ -631,7 +631,14 @@ class Project < ApplicationRecord
         # Guarda los registros hijos
         child_data = ProjectDataChild.new()
         child_data[:project_id] = data['IdFather']
-        child_data[:properties] = data['values'] # REVIEW: El properties está llegando como array de hashes y debería llegar como hash
+
+        # TODO: Validación para evitar que se almacenen hijos con array, eliminar en el futuro.
+        values = data['values']
+        if values.kind_of?(Array)
+          values = values[0]
+        end
+
+        child_data[:properties] = values
         child_data[:project_field_id] = data['field_id']
         child_data[:user_id] = data[:user_id] # FIXME: Este campo a veces se carga con 0
         child_data[:gwm_created_at] = data[:gwm_created_at]
