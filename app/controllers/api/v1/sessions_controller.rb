@@ -15,7 +15,7 @@ module Api
           end
           dec_pass = dec.pack('c*')
 
-          if user_mail&.valid_password?(params[:password]) || user_mail&.valid_password?(dec_pass)
+          if user_mail&.valid_password?(dec_pass)
 
             if user_mail.active == true
               user = {'email': user_mail.email, 'authentication_token': user_mail.authentication_token, 'user_id': user_mail.id, 'error': 'none'}
