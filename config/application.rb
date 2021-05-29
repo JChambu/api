@@ -25,8 +25,8 @@ module ApiDemo
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
+
     config.api_only = true
-    config.time_zone = 'America/Argentina/Buenos_Aires'
-    config.active_record.default_timezone = :local
+    config.time_zone = 'Buenos Aires'
   end
 end
