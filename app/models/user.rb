@@ -19,6 +19,17 @@ class User < ApplicationRecord
 
 
   def password_token_valid?
+
+    Rails.logger.debug ''
+    Rails.logger.debug ' ******************* reset_password_sent_at ******************* '
+    Rails.logger.debug self.reset_password_sent_at
+    Rails.logger.debug ' ********************** Time.now options ********************** '
+    Rails.logger.debug Time.now.utc
+    Rails.logger.debug Time.zone.now
+    Rails.logger.debug Time.now
+    Rails.logger.debug ' ************************************************************** '
+    Rails.logger.debug ''
+
    (self.reset_password_sent_at + 4.hours) > Time.now.utc
   end
 
