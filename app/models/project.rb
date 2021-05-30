@@ -325,14 +325,14 @@ class Project < ApplicationRecord
                   project_data_children_to_disable.each do |pdt|
 
                     pdt.row_enabled = false
-                    pdt.disabled_at = Time.now
+                    pdt.disabled_at = Time.zone.now
                     pdt.save
 
                   end
                 end
 
                 p.row_enabled = false
-                p.disabled_at = Time.now
+                p.disabled_at = Time.zone.now
                 p.save
 
               end
@@ -569,8 +569,8 @@ class Project < ApplicationRecord
 
       if !@project.nil?
 
-        # Si la fecha del registro es más nueva que la almacenada, lo actualiza
         if @project.gwm_updated_at < data[:gwm_updated_at]
+
           value_name = {}
           data['values'].each do |v,k|
             field = ProjectField.where(id: v.to_i).select(:key).first

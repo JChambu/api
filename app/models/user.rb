@@ -13,13 +13,13 @@ class User < ApplicationRecord
 
   def generate_password_token!
    self.reset_password_token = generate_token
-   self.reset_password_sent_at = Time.now.utc
+   self.reset_password_sent_at = Time.zone.now
    save!
   end
 
 
   def password_token_valid?
-   (self.reset_password_sent_at + 4.hours) > Time.now.utc
+   (self.reset_password_sent_at + 4.hours) > Time.zone.now
   end
 
 

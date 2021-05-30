@@ -5,7 +5,7 @@ class PasswordsController < ApplicationController
 
     token = params[:token].to_s
     @user = User.find_by(reset_password_token: token)
-    
+
   end
 
 
