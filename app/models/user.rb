@@ -30,7 +30,7 @@ class User < ApplicationRecord
     Rails.logger.debug ' ************************************************************** '
     Rails.logger.debug ''
 
-   (self.reset_password_sent_at + 4.hours) > Time.now.utc
+   (self.reset_password_sent_at + 4.hours) > Time.zone.now
   end
 
 
