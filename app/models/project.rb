@@ -569,24 +569,7 @@ class Project < ApplicationRecord
 
       if !@project.nil?
 
-        Rails.logger.debug ''
-        Rails.logger.debug ' *********************** fecha_server *********************** '
-        Rails.logger.debug @project.gwm_updated_at
-        Rails.logger.debug ' ************************************************************ '
-        Rails.logger.debug ''
-
-        Rails.logger.debug ''
-        Rails.logger.debug ' *********************** fecha_celu *********************** '
-        Rails.logger.debug data[:gwm_updated_at]
-        Rails.logger.debug ' *********************************************************** '
-        Rails.logger.debug ''
-
-        # Si la fecha del registro es más nueva que la almacenada, lo actualiza
         if @project.gwm_updated_at < data[:gwm_updated_at]
-
-          Rails.logger.debug ''
-          Rails.logger.debug ' *********************** ENTRA *********************** '
-          Rails.logger.debug ''
 
           value_name = {}
           data['values'].each do |v,k|
@@ -619,11 +602,6 @@ class Project < ApplicationRecord
             localID = data[:localID]
             result_hash.merge!({"#{@project.id}": "ok"})
           end
-
-        else
-          Rails.logger.debug ''
-          Rails.logger.debug ' *********************** NOOOOOOO ENTRA *********************** '
-          Rails.logger.debug ''
         end
       end
     end
