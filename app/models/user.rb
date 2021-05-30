@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   def generate_password_token!
    self.reset_password_token = generate_token
-   self.reset_password_sent_at = Time.now.utc
+   self.reset_password_sent_at = Time.zone.now
 
    Rails.logger.debug ''
    Rails.logger.debug ' ******************* hora de reset token ******************* '
