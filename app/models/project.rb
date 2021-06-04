@@ -500,57 +500,70 @@ class Project < ApplicationRecord
     result_hash = {}
 
     if !project_data[:projects].nil?
+
       project_data[:projects].each do |data|
 
-        @project = Project.new()
-        value_name = {}
-        @project_type = ProjectType.find(data['project_type_id'])
-        values = data['values']
+        # Revisa si el registros ya ha sido cargado para evitar duplicación (FIX TEMPORAL)
+        parsed_data = DateTime.parse(data['gwm_created_at'])
+        record_loaded = Project
+          .where(gwm_created_at: parsed_data)
+          .where(user_id: data['user_id'])
+          .where(project_type_id: data['project_type_id'])
+          .first
 
-        # Si llega un registro vacío, se cargan los valores por defecto
-        if values.blank?
-          values['app_id'] = ''
-          values['app_estado'] = ''
-          values['app_usuario'] = ''
-          values['gwm_created_at'] = ''
-          values['gwm_updated_at'] = ''
-        end
+        if record_loaded.blank?
 
-        # Cicla los registros
-        values.each do |v,k|
+          @project = Project.new()
+          value_name = {}
+          @project_type = ProjectType.find(data['project_type_id'])
+          values = data['values']
 
-          # Busca el key de cada registro según su id y guarda key y valor en un hash
-          field = ProjectField.where(id: v.to_i).select(:key).first
-          if !field.nil?
-            if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id' && field.key != 'gwm_created_at' && field.key != 'gwm_updated_at'
-              value_name.merge!("#{field.key}": k )
-            end
+          # Si llega un registro vacío, se cargan los valores por defecto
+          if values.blank?
+            values['app_id'] = ''
+            values['app_estado'] = ''
+            values['app_usuario'] = ''
+            values['gwm_created_at'] = ''
+            values['gwm_updated_at'] = ''
           end
 
-          # Actualiza los valores dentro del json
-          value_name.merge!('app_usuario': data[:user_id])
-          value_name.merge!('app_estado': data[:status_id])
-          value_name.merge!('gwm_created_at': data['gwm_created_at'].to_date)
-          value_name.merge!('gwm_updated_at': data['gwm_updated_at'].to_date)
+          # Cicla los registros
+          values.each do |v,k|
 
-          # Carga los valores
-          @project['properties'] = value_name
-          @project['project_type_id'] = data['project_type_id']
-          @project['user_id'] = data['user_id']
-          type_geometry = @project_type.type_geometry
-          @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
-          @project['project_status_id'] = data['status_id']
-          @project['row_active'] = data['row_active']
-          @project['gwm_created_at'] = data['gwm_created_at']
-          @project['gwm_updated_at'] = data['gwm_updated_at']
-        end
+            # Busca el key de cada registro según su id y guarda key y valor en un hash
+            field = ProjectField.where(id: v.to_i).select(:key).first
+            if !field.nil?
+              if field.key != 'app_estado' && field.key != 'app_usuario' && field.key != 'app_id' && field.key != 'gwm_created_at' && field.key != 'gwm_updated_at'
+                value_name.merge!("#{field.key}": k )
+              end
+            end
 
+            # Actualiza los valores dentro del json
+            value_name.merge!('app_usuario': data[:user_id])
+            value_name.merge!('app_estado': data[:status_id])
+            value_name.merge!('gwm_created_at': data['gwm_created_at'].to_date)
+            value_name.merge!('gwm_updated_at': data['gwm_updated_at'].to_date)
 
-        if @project.save
-          @project['properties'].merge!('app_id': @project.id)
-          @project.save!
-          localID = data[:localID]
-          result_hash.merge!({"#{localID}":@project.id})
+            # Carga los valores
+            @project['properties'] = value_name
+            @project['project_type_id'] = data['project_type_id']
+            @project['user_id'] = data['user_id']
+            type_geometry = @project_type.type_geometry
+            @project['the_geom'] = data['geometry'] if !data['geometry'].nil?
+            @project['project_status_id'] = data['status_id']
+            @project['row_active'] = data['row_active']
+            @project['gwm_created_at'] = data['gwm_created_at']
+            @project['gwm_updated_at'] = data['gwm_updated_at']
+          end
+
+          if @project.save
+            @project['properties'].merge!('app_id': @project.id)
+            @project.save!
+            result_hash.merge!({"#{data[:localID]}":@project.id})
+          end
+
+        else
+          result_hash.merge!( { "#{data[:localID]}": record_loaded.id } )
         end
       end
       update_inheritable_statuses
